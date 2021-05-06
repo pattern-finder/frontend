@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+[![Actions Status](https://github.com/pattern-finder/api/workflows/build/badge.svg)](https://github.com/pattern-finder/api/actions)
+[![Actions Status](https://github.com/pattern-finder/api/workflows/tests/badge.svg)](https://github.com/pattern-finder/api/actions)
+[![Actions Status](https://github.com/pattern-finder/api/workflows/release/badge.svg)](https://github.com/pattern-finder/api/actions)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# PicSpy
 
-## Available Scripts
+This is the API for the app Pattern-finder, which consists of coding challenges focused on pattern detection in images.
 
-In the project directory, you can run:
+# Setup
+The intent behind having different docker configuration is to have one optimized with development (JIT) and one optimized for production(no watching, 2 stage dockerfile...)
 
-### `npm start`
+The setup needs an environment, provided in `.env`.
+.env should look like `.env.example`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Dev
+To run the dev version, go to root of project and run `docker-compose up`.
+It will start a stack (database, minio...) based on the Dockerfile.dev, which is prepared to run NestJs with JIT and the watcher up.
 
-### `npm test`
+Other programs from the stack (frontend...) will be added as images to pull from the registry, so you will have the latest release to work with
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prod
+To run the production version, run docker-compose.prod.yml or paste it in the  configuration of Portainer.
+This will pull an image from a private registry, that was build during CI using Dockerfile, and run it.
 
-### `npm run build`
+# Contribute
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1) Assing yourself an issue, so everyone is aware that this issue is being taken care of.
+2) Create a branch locally and eventually push it.
+3) Once you think the code is ready, you can test prettier and eslint on it to check that the code is clean, and try running tests. Or you can commit it, and then create a pull requestfrom your branch to main/master.
+4) Wait for the pipeline to run if you are not sure that your code passes tests.
+5) Once the pipeline has run, merge the PR and preferably delete your branch.
+6) If your issue remains open, close it.
+7) get yourself a coffee and enjoy a well deserved break
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# CI/CD
+CI/CD is automated via github actions.
+## Tests
+Before merging a pull request, pipeline runs tests , eslint, and prettier via test.yml
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Build
+Whenever a change is pushed to the main branch, tests, eslint and prettier are run, followed by a build. This allows us to unsure the code is safe before deploying it.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Release
+When a release is published, a docker image is built and pushed into a docker registry, for it to then be pulled by the production server. Then, a webhook is called on the production server for it to pull the new image.
