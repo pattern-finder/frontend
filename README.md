@@ -1,6 +1,6 @@
-[![Actions Status](https://github.com/pattern-finder/api/workflows/build/badge.svg)](https://github.com/pattern-finder/api/actions)
-[![Actions Status](https://github.com/pattern-finder/api/workflows/tests/badge.svg)](https://github.com/pattern-finder/api/actions)
-[![Actions Status](https://github.com/pattern-finder/api/workflows/release/badge.svg)](https://github.com/pattern-finder/api/actions)
+[![Actions Status](https://github.com/pattern-finder/frontend/workflows/build/badge.svg)](https://github.com/pattern-finder/api/actions)
+[![Actions Status](https://github.com/pattern-finder/frontend/workflows/tests/badge.svg)](https://github.com/pattern-finder/api/actions)
+[![Actions Status](https://github.com/pattern-finder/frontend/workflows/release/badge.svg)](https://github.com/pattern-finder/api/actions)
 
 # PicSpy
 
@@ -17,7 +17,7 @@ The setup needs an environment, provided in `.env`.
 To run the dev version, go to root of project and run `docker-compose up`.
 It will start a stack (database, minio...) based on the Dockerfile.dev, which is prepared to run NestJs with JIT and the watcher up.
 
-Other programs from the stack (frontend...) will be added as images to pull from the registry, so you will have the latest release to work with
+Other programs from the stack (api...) will be added as images to pull from the registry, so you will have the latest release to work with
 
 ## Prod
 To run the production version, run docker-compose.prod.yml or paste it in the  configuration of Portainer.
