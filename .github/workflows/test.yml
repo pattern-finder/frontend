@@ -1,0 +1,18 @@
+name: tests
+
+on:
+  pull_request:
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: deps
+        run: npm i 
+
+      - name: tests
+        run: npm run test
