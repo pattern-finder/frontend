@@ -6,6 +6,18 @@ networks:
   frontend:
 
 services:
+
+  picspy-api:
+    image: registry.qtmsheep.com/vagahbond/picspy/api:latest
+    ports:
+      - "${API_EXTERNAL_PORT}:${API_INTERNAL_PORT}"
+    depends_on: 
+      - picspy-mongo
+    networks: 
+      - backend
+    env_file: 
+      - .env
+
   picspy-api:
     image: registry.qtmsheep.com/vagahbond/picspy/api:latest
     ports:

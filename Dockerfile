@@ -9,7 +9,6 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-RUN npm run export
 
 FROM nginx:1.17.10-alpine
 
