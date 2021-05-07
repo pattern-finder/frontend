@@ -41,7 +41,7 @@ services:
     restart: always
     image: mongo:4.2.0
     volumes:
-      - ./data:/data/db
+      - data:/data/db
     ports: 
       - "${MONGO_PORT}:27017"
     environment:
@@ -95,3 +95,4 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  data:
