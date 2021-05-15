@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { LoginForm } from "../../components/login/LoginForm";
-import { Register } from "../../components/login/Register";
+import { RegisterForm } from "../../components/login/RegisterForm";
 import "./Login.scss"
 
 export const LoginPage = () => {
   const [loggingIn, setLoggingIn] = useState(false);
 
-  const changeState = () => {
+  const switchState = () => {
     const currentLoggingInState = loggingIn;
     setLoggingIn(!currentLoggingInState);
   }
@@ -16,15 +16,18 @@ export const LoginPage = () => {
     <div className="login">
       <div className="container" >
         { 
-          loggingIn ? <LoginForm/> : <Register/>
+          loggingIn ? <LoginForm/> : <RegisterForm/>
         }
       </div>
       <div
-        className="right-side"
+        className={`switch-button ${loggingIn ? "right" : "left"}`}
       >
-        <div className="inner-container">
+        <div 
+          className="inner-container"
+          onClick={ switchState }
+        >
           <div className="text">
-            { loggingIn ? "Login" : "Register" }
+            { loggingIn ? "Register" : "Login" }
           </div>
         </div>
       </div>

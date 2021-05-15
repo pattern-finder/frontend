@@ -1,7 +1,8 @@
 import React from "react";
+import "./style.scss"
 import loginImg from "../../login.svg";
 
-export const Register = () => {
+export const RegisterForm = () => {
 
     return (
       <div className="base-container">

@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.scss"
 import loginImg from "../../login.svg";
 
 export const LoginForm = () => {
