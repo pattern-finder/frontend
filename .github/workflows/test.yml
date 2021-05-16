@@ -16,3 +16,9 @@ jobs:
 
       - name: tests
         run: npm run test
+
+      - name: eslint
+        run: npm run lint
+
+      - name: pretier
+        run: npm run format

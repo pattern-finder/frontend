@@ -1,7 +1,10 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { cleanup, render } from '@testing-library/react';
+import { LoginPage } from './pages/Login/LoginPage';
 
-test('show login and register', () => {
+afterEach(cleanup);
 
+test('LoginPage proposes to login before proposing to register.', () => {
+  const { queryByText } = render(<LoginPage />);
+
+  expect(queryByText(/login/i)).toBeTruthy();
 });

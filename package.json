@@ -12,6 +12,7 @@
     "@types/react-dom": "^17.0.3",
     "install": "^0.13.0",
     "npm": "^7.13.0",
+    "prettier": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
@@ -23,8 +24,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:watch": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"**/*.{jsx,tsx,js,ts}\"",
+    "format": "prettier --check \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint:fix": "eslint \"**/*.{jsx,tsx,js,ts}\" --fix",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +52,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-test-renderer": "^17.0.1",
+    "husky": "^6.0.0"
   }
 }

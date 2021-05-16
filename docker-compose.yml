@@ -1,13 +1,4 @@
 version: "3.4"
-
-
-x-logging:
-  &default-logging
-  logging:
-    driver: json-file
-    options:
-      max-size: 100m
-
 services:
   picspy-front:
     build: 
