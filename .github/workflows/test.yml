@@ -22,3 +22,6 @@ jobs:
 
       - name: pretier
         run: npm run format
+
+      - name: build
+        run: npm run build 
