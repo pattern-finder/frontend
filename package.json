@@ -26,9 +26,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"src/*.{jsx,tsx,js,ts}\"",
+    "lint": "eslint \"**/*.{jsx,tsx,js,ts}\"",
     "format": "prettier --check \"src/**/*.ts\" \"src/**/*.tsx\"",
-    "lint:fix": "eslint \"src/*.{jsx,tsx,js,ts}\" --fix",
+    "lint:fix": "eslint \"**/*.{jsx,tsx,js,ts}\" --fix",
     "format:fix": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\""
   },
   "eslintConfig": {
