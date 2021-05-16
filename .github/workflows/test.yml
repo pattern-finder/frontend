@@ -14,5 +14,11 @@ jobs:
       - name: deps
         run: npm i 
 
-      - name: tests
-        run: npm run test
+      # - name: tests
+      #   run: npm run test
+
+      - name: eslint
+        run: npm run lint
+
+      - name: pretier
+        run: npm run format
