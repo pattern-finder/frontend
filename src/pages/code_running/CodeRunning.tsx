@@ -38,7 +38,10 @@ export const CodeRunning = () => {
           // defaultValue="// some comment"
           />
         </div>
-        <button onClick={runOnClick}>Run</button>
+        <div className="sortie">
+          <textarea className="sortieArea">Sortie</textarea>
+        </div>
+        <button onClick={() => runOnClick()}>Run</button>
       </div>
     </>
   );
