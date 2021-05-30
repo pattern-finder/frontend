@@ -1,6 +1,6 @@
 import React from 'react';
 import pattern from '../../assets/pattern.svg';
-import './CodeRunning.scss';
+// import './CodeRunning.scss';
 
 import Editor from '@monaco-editor/react';
 
