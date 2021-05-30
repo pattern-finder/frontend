@@ -1,10 +1,8 @@
 import React from 'react';
 import pattern from "../../assets/pattern.svg"
 import "./CodeRunning.scss"
-import ReactDOM from "react-dom";
 
 import Editor from "@monaco-editor/react";
-import loader from "@monaco-editor/loader";
 
 
 export const CodeRunning = () => {
@@ -19,8 +17,8 @@ export const CodeRunning = () => {
         <div className="navExercises">
           <nav>
             <ul>
-              <li><a href="#">Exercice 1</a></li>
-              <li><a href="#">Exercice 2</a></li>
+              <li>Exercice 1</li>
+              <li>Exercice 2</li>
             </ul>
           </nav>
         </div>

@@ -20,7 +20,7 @@ export const App = () => {
             <nav>
               <ul>
                 <li><Link to="/">Overview</Link></li>
-                <li><Link to="/">Liste des exercices</Link></li>
+                <li><Link to="/code">Liste des exercices</Link></li>
               </ul>
             </nav>
           </div>
