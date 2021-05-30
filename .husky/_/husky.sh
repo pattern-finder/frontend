@@ -22,7 +22,7 @@ if [ -z "$husky_skip_init" ]; then
   exitCode="$?"
 
   if [ $exitCode != 0 ]; then
-    echo "husky - $hook_name hook exited with code $exitCode (error). Please use `npm run lint:fix`, `npm run format:fix`, or `npm run test` to know more about htis issue."
+    echo "husky - $hook_name hook exited with code $exitCode (error)"
     exit $exitCode
   fi
 

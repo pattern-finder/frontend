@@ -25,6 +25,18 @@ This will pull an image from a private registry, that was build during CI using 
 
 # Contribute
 
+Husky has been installed to this project. 
+
+If you cannot push to the repos, it means there is soemthing wrong with the code. 
+
+Husky will run tests, eslint, and prettier, without fixing. If you want to try fixing them automatically, use `npm run lint:fix` and `npm run format:fix`.
+
+For tests, you can run `npm run tests`.
+
+If the fix cannot be done automatically however, you will have to read the error message and find a solution.
+
+If you're lost with this, please send me a message on discord. :)
+
 1) Assing yourself an issue, so everyone is aware that this issue is being taken care of.
 2) Create a branch locally and eventually push it.
 3) Once you think the code is ready, you can test prettier and eslint on it to check that the code is clean, and try running tests. Or you can commit it, and then create a pull requestfrom your branch to main/master.

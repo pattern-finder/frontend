@@ -1,15 +1,13 @@
 import React from 'react';
-import pattern from "../../assets/pattern.svg"
-import "./CodeRunning.scss"
+import pattern from '../../assets/pattern.svg';
+import './CodeRunning.scss';
 
-import Editor from "@monaco-editor/react";
-
+import Editor from '@monaco-editor/react';
 
 export const CodeRunning = () => {
-
   const runOnClick = () => {
-    console.log("running");
-  }
+    console.log('running');
+  };
 
   return (
     <>
@@ -33,7 +31,7 @@ export const CodeRunning = () => {
           <Editor
             height="50vh"
             defaultLanguage="bash"
-          // defaultValue="// some comment"
+            // defaultValue="// some comment"
           />
         </div>
         <div className="sortie">
@@ -43,5 +41,4 @@ export const CodeRunning = () => {
       </div>
     </>
   );
-
-}
+};
