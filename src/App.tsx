@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.scss';
+// import './App.scss';
 import { Link, Route, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from './pages/Login/LoginPage';
 import { CodeRunning } from './pages/code_running/CodeRunning';
