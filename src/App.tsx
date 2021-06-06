@@ -4,6 +4,8 @@ import { Link, Route, BrowserRouter } from "react-router-dom"
 import { LoginPage } from "./pages/Login/LoginPage";
 import logo from "./assets/PicSpyLogo.png"
 import { CodeRunning } from "./pages/code_running/CodeRunning";
+import { Home } from "./pages/homepage/Home";
+
 
 
 export const App = () => {
@@ -26,8 +28,10 @@ export const App = () => {
           </div>
         </div>
 
-        <Route path="/" exact component={LoginPage} />
+        <Route path="/" exact component={Home} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/code" component={CodeRunning} />
+
         {/* <Route path="/contact"  component={Contact} /> */}
 
         </main>
