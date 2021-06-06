@@ -5,11 +5,9 @@ import pattern from '../../assets/pattern.svg';
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
 
-
-
 export const CodeRunning = () => {
   const [code, setCode] = useState('');
-  const [stdout, setStdout] = useState('');
+  // const [stdout, setStdout] = useState('');
 
   const runOnClick = async () => {
     const { data } = await axios.post('/attempts', { code });
@@ -43,15 +41,20 @@ export const CodeRunning = () => {
                   setCode(value as string);
                 }}
                 theme="vs-dark"
-                
               />
             </div>
             <div className="h-20 grid grid-cols-12 justify-center overflow-hidden rounded-b">
-              <span className="bg-black max-h-full h-full col-span-11 p-2">Sortie</span>
+              <span className="bg-black max-h-full h-full col-span-11 p-2">
+                Sortie
+              </span>
               <div className="bg-black col-span-1 flex justify-center items-center">
-                <button className="bg-blue-500 px-2 rounded max-h-10" onClick={runOnClick}>Run</button>
+                <button
+                  className="bg-blue-500 px-2 rounded max-h-10"
+                  onClick={runOnClick}
+                >
+                  Run
+                </button>
               </div>
-              
             </div>
           </div>
 
