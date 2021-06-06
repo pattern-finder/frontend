@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "${FRONTEND_EXTERNAL_PORT}:3000"
     volumes:
       - ./src:/usr/src/app/src
     env_file: 
