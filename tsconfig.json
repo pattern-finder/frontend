@@ -26,5 +26,5 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "src/components/Cards.js", "src/components/CardItem.tsx"  ]
 }
