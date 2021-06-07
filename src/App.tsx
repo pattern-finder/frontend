@@ -2,7 +2,7 @@ import React from 'react';
 // import './App.scss';
 import { Link, Route, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from './pages/Login/LoginPage';
-import { CodeRunning } from './pages/code_running/CodeRunning';
+import { ChallengePage } from './pages/ChallengePage';
 
 export const App = () => {
   return (
@@ -15,7 +15,7 @@ export const App = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/code">Code</Link>
+                <Link to="/challenges/609bef12c32facdd3fdc66e4">Code</Link>
               </li>
               <li>
                 <Link to="/contact">Contact</Link>
@@ -24,7 +24,7 @@ export const App = () => {
           </nav>
 
           <Route path="/" exact component={LoginPage} />
-          <Route path="/code" exact component={CodeRunning} />
+          <Route path="/challenges/:id" exact component={ChallengePage} />
         </main>
       </div>
     </BrowserRouter>
