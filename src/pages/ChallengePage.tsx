@@ -14,7 +14,7 @@ type Challenge = {
 export const ChallengePage = (props: { match: { params: { id: string } } }) => {
   const [challenge, setChallenge] = useState({} as Challenge);
   const [code, setCode] = useState('');
-  const [stdout, setStdout] = useState('');
+  const [stdout, setStdout] = useState('STDOUT');
 
   useEffect(() => {
     const fetchChallenge = async (id: string) => {
