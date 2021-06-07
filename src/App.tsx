@@ -1,6 +1,6 @@
 import React from 'react';
 // import './App.scss';
-import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import About from './pages/About';
 import { ChallengePage } from './pages/ChallengePage';
