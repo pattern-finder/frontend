@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import loginImg from '../login.svg';
+import loginImg from '../assets/login.svg';
 
 export const LoginForm = () => {
   return (

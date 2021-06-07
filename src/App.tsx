@@ -1,22 +1,23 @@
-import './App.scss';
+import React from 'react';
+// import './App.scss';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import { LoginPage } from './pages/LoginPage';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
 import About from './pages/About';
-import Contact from './pages/Contact';
+import { ChallengePage } from './pages/ChallengePage';
+import Home from './pages/Home';
+import { LoginPage } from './pages/LoginPage';
 
 export const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
       <div className="App">
+        <Navbar />
         <main>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/about" exact component={About} />
             <Route path="/sign-up" exact component={LoginPage} />
-            <Route path="/About" exact component={About} />
-            <Route path="/Contact" exact component={Contact} />
+            <Route path="/challenges/:id" exact component={ChallengePage} />
 
             {/* <Route path="/about"  component={About} />
       <Route path="/contact"  component={Contact} /> */}

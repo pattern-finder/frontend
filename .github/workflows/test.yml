@@ -20,7 +20,7 @@ jobs:
       - name: eslint
         run: npm run lint
 
-      - name: pretier
+      - name: prettier
         run: npm run format
 
       - name: build

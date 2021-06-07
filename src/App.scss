@@ -30,13 +30,31 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  vertical-align: baseline;
+}
+
+#exercices li {
+  display: block;
+  list-style: none;
+
+}
+
+a:hover {
+  background-color: #555;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#consigne {
+  background-color: #669999;
+  vertical-align: middle;
 }
 
+img {
+  vertical-align: bottom;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
