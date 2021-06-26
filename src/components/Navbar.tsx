@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSignOut } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
@@ -8,6 +9,7 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const signOut = useSignOut();
   return (
     <>
       <nav className="navbar">
@@ -20,11 +22,11 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                 Home
               </Link>
-            </li>
+            </li> */}
 
             <li className="nav-item">
               <Link to="/About" className="nav-links" onClick={closeMobileMenu}>
@@ -57,6 +59,11 @@ function Navbar() {
                 onClick={closeMobileMenu}
               >
                 Sign-up
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/" className="nav-links" onClick={(_) => signOut()}>
+                Sign out
               </Link>
             </li>
           </ul>

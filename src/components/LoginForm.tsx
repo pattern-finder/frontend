@@ -7,11 +7,12 @@ import Axios from '../axios-config';
 import toast from 'react-hot-toast';
 
 export const LoginForm = () => {
-  // const signIn = useSignIn();
+  const signIn = useSignIn();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   async function login() {
+    const toastId = toast.loading('Creating user...');
     Axios.post('/auth/login', { username, password })
       .then(
         ({
@@ -19,20 +20,35 @@ export const LoginForm = () => {
             content: { access_token },
           },
         }) => {
-          const tokenObject = JSON.parse(atob(access_token));
-          console.log(tokenObject);
-          toast.success('Logged in successfuly !');
+          // const header: { alg: string, typ: string } = JSON.parse(atob(access_token.split('.')[0]))
+          const userInfo: { username: string; sub: string; iat: number } =
+            JSON.parse(atob(access_token.split('.')[1]));
+          console.log(userInfo);
+          if (
+            signIn({
+              token: access_token,
+              expiresIn: 30,
+              tokenType: 'Bearer',
+              authState: userInfo,
+            })
+          )
+            toast.success(`Logged in successfuly as ${username} !`, {
+              id: toastId,
+            });
+          else {
+            throw new Error('Could not login.');
+          }
         },
       )
-      .catch(
-        ({
-          response: {
-            data: { message },
-          },
-        }) => {
-          toast.error(`Could not login: ${message}`);
-        },
-      );
+      .catch((err) => {
+        if (err.isAxiosError) {
+          toast.error(`Could not login: ${err.response.data.message}`, {
+            id: toastId,
+          });
+        } else {
+          toast.error(`Could not login: ${err}`, { id: toastId });
+        }
+      });
   }
 
   return (
