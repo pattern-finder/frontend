@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import { LoginPage } from './pages/LoginPage';
 import { AuthProvider } from 'react-auth-kit';
 import { Toaster } from 'react-hot-toast';
+import { PrivateRoute } from 'react-auth-kit';
 
 export const App = () => {
   return (
@@ -25,7 +26,12 @@ export const App = () => {
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
               <Route path="/sign-up" exact component={LoginPage} />
-              <Route path="/challenges/:id" exact component={ChallengePage} />
+              <PrivateRoute
+                path="/challenges/:id"
+                exact
+                component={ChallengePage}
+                loginPath="/sign-up"
+              />
 
               {/* <Route path="/about"  component={About} />
       <Route path="/contact"  component={Contact} /> */}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import Editor from '@monaco-editor/react';
 import Axios from '../axios-config';
+import { useAuthHeader } from 'react-auth-kit';
 
 type Challenge = {
   _id: string;
@@ -16,16 +17,20 @@ export const ChallengePage = (props: { match: { params: { id: string } } }) => {
   const [code, setCode] = useState('');
   const [stdout, setStdout] = useState('STDOUT');
 
+  const authHeader = useAuthHeader();
+
   useEffect(() => {
     const fetchChallenge = async (id: string) => {
       const {
         data: { content },
-      } = await Axios.get(`/challenges/${id}`);
+      } = await Axios.get(`/challenges/${id}`, {
+        headers: { Authorization: authHeader() },
+      });
       setChallenge(content);
     };
 
     fetchChallenge(props.match.params.id);
-  }, [props.match.params.id]);
+  }, [props.match.params.id, authHeader]);
 
   const runOnClick = async () => {
     const { data } = await Axios.post(
