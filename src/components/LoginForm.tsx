@@ -5,13 +5,13 @@ import { useSignIn } from 'react-auth-kit';
 import { useState } from 'react';
 import Axios from '../axios-config';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
-
+import { Redirect } from 'react-router-dom';
 
 export const LoginForm = () => {
   const signIn = useSignIn();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   async function login() {
     const toastId = toast.loading('Creating user...');
@@ -34,11 +34,11 @@ export const LoginForm = () => {
               authState: userInfo,
             })
           ) {
+            setRedirect(true);
             toast.success(`Logged in successfuly as ${username} !`, {
               id: toastId,
             });
-          }
-          else {
+          } else {
             throw new Error('Could not login.');
           }
         },
@@ -52,6 +52,10 @@ export const LoginForm = () => {
           toast.error(`Could not login: ${err}`, { id: toastId });
         }
       });
+  }
+
+  if (redirect) {
+    return <Redirect to="/" />;
   }
 
   return (
@@ -85,7 +89,7 @@ export const LoginForm = () => {
         </div>
       </div>
       <div className="footer">
-      <Link to="/" className="nav-links">
+        {/* <Link to="/" className="nav-links"> */}
         <button
           onClick={(e) => login()}
           type="button"
@@ -93,7 +97,7 @@ export const LoginForm = () => {
         >
           Login
         </button>
-      </Link>
+        {/* </Link> */}
       </div>
     </div>
   );
