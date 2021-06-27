@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Axios from '../axios-config';
 import ProgressBar from '@ramonak/react-progress-bar';
+import picspyLogo from '../assets/PicSpyLogo.png';
+import { Link } from 'react-router-dom';
 
-type Challenge = {
+interface ChallengeAttributes {
   _id: string;
   name: string;
   instructions: string;
   imageUrl: string;
-  pourcentage: number;
-};
+  done: boolean;
+}
 
-export default function Challenge(props: Challenge) {
-  const { name, instructions, imageUrl, pourcentage } = props;
+export const Challenge = ({
+  challenge: { _id, name, instructions, imageUrl, done },
+}: {
+  challenge: ChallengeAttributes;
+}) => {
   return (
-    <div className="Challenge">
-      <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
-        <div className="bg-gray-600 rounded m-15 p-10 col-span-2">
+    <Link
+        to="/"
+      >
+    <div className="w-full bg-gray-600 rounded">
+      <div className="grid grid-cols-2 gap-4 rounded  ">
+        <div className="rounded m-15 px-10 py-4 col-span-2">
           <div className="image">
-            <div className="md:flex rounded-xl shadow-xl">
-              <div className="md:flex-shrink-0">
-                <img className="w-full p-4" src={imageUrl} />
-              </div>
-            </div>
             <div className="Name">
               <h2> {name} </h2>
             </div>
@@ -29,14 +32,29 @@ export default function Challenge(props: Challenge) {
               <p> {instructions} </p>
             </div>
           </div>
-          <div className="testBar">
-            <ProgressBar completed={pourcentage} />
+          <div className="flex flex-row mt-4 text-sm">
+            <div> Completion  : 
+              {done ? (
+                <i className="fas fa-check pl-2" />
+              ) : (
+                <i className="fas fa-times pl-2" />
+              )}
+            </div>
+
+            <div className="ml-auto flex flex-row text-sm ">
+              <div className="my-auto">Created by USERNAME</div>
+              <img
+                className=" max-h-full h-8 object-contain"
+                src={picspyLogo}
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+    </Link>
   );
-}
+};
 
 // export const Challenge = () => {
 //

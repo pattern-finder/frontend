@@ -4,7 +4,7 @@ import { LoginPage } from './pages/LoginPage';
 afterEach(cleanup);
 
 test('LoginPage proposes to login before proposing to register.', () => {
-  const { queryByText } = render(<LoginPage />);
+  const { queryAllByText } = render(<LoginPage />);
 
-  expect(queryByText(/Login/i)).toBeTruthy();
+  expect(queryAllByText(/Login/i)).toBeTruthy();
 });

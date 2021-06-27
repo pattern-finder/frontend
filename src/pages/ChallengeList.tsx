@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Challenge from '../components/Challenge';
+import {Challenge} from '../components/Challenge';
 import data from '../components/testChallengeData';
 import { Redirect } from 'react-router-dom';
 
@@ -8,14 +8,10 @@ export const ChallengeList = () => {
 
   return (
     <>
-      <div className="Test" onClick={() => <a href="/challenges/:id" />}>
+      <div className="grid grid-cols-3 gap-4 m-5" onClick={() => <a href="/challenges/:id" />}>
         {data.map((challenge) => (
           <Challenge
-            _id={challenge._id}
-            name={challenge.name}
-            instructions={challenge.instructions}
-            imageUrl={challenge.imageUrl}
-            pourcentage={challenge.pourcentage}
+            challenge={challenge}
           />
         ))}
       </div>

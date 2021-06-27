@@ -1,68 +1,75 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+import picspyLogo from '../assets/PicSpyLogo.png';
+// import './Navbar.css';
 
 function Navbar() {
-  const [click, setClick] = useState(false);
-
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const signOut = useSignOut();
+  const isAuth = useIsAuthenticated();
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            PicSpy
-            <i className="fab fa-typo3" />
+    <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600">
+      <Link
+        to="/"
+        className="col-span-6 text-left  max-h-full font-sans text-3xl flex flex-row"
+      >
+        <img
+          src={picspyLogo}
+          className="max-h-full h-16 object-contain"
+          alt="logo"
+        />
+        <span className="my-auto flex content-center">PicSpy</span>
+      </Link>
+
+      <div className="flex flex-row w-full max-h-full m-auto col-span-4 text-lg ">
+        <div className="m-auto">
+          {/* This is a test route and it will be replaced with real ones when the site is done  */}
+          <Link to="/challenges" className="nav-links">
+            <i className="fas fa-hard-hat pr-2" />
+            Challenges
           </Link>
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to="/About" className="nav-links" onClick={closeMobileMenu}>
-                About
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/challenges"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Challenges
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/challenges/609bef12c32facdd3fdc66e4"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Test
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                to="/sign-up"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Sign-up
-              </Link>
-            </li>
-          </ul>
         </div>
-      </nav>
-    </>
+        <div className="m-auto">
+          {/* This is a test route and it will be replaced with real ones when the site is done  */}
+          <Link to="/challenges/create" className="nav-links">
+            <i className="fas fa-hard-hat pr-2" />
+            Test
+          </Link>
+        </div>
+
+        <div className="m-auto">
+          {/* This is a test route and it will be replaced with real ones when the site is done  */}
+          <Link to="/challenges/609bef12c32facdd3fdc66e4" className="nav-links">
+            <i className="fas fa-hard-hat pr-2" />
+            Test
+          </Link>
+        </div>
+
+        <div className="m-auto">
+          <Link to="/About" className="nav-links">
+            <i className="fas fa-info pr-2" />
+            About
+          </Link>
+        </div>
+
+        {isAuth() ? (
+          <div className="m-auto">
+            <Link to="/" className="" onClick={(_) => signOut()}>
+              <i className="fas fa-sign-out-alt pr-2" />
+              Sign out
+            </Link>
+          </div>
+        ) : (
+          <div className="m-auto">
+            <Link to="/sign-up" className="nav-links">
+              <i className="fas fa-sign-in-alt pr-2" />
+              Login or register
+            </Link>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 }
 
