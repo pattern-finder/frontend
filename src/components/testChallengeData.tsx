@@ -1,4 +1,4 @@
-export default [
+const challenges = [
   {
     _id: 'challenge1',
     name: 'first',
@@ -82,12 +82,14 @@ export default [
     instructions: 'test instructions 2',
     imageUrl: '../images/contact-petit-3.png',
     done: true,
-  },{
+  },
+  {
     _id: 'challenge2',
     name: 'second',
     instructions: 'test instructions 2',
     imageUrl: '../images/contact-petit-3.png',
     done: true,
   },
-
 ];
+
+export default challenges;

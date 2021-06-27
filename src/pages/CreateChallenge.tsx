@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import './CodeRunning.scss';
 
-import Editor from '@monaco-editor/react';
 import Axios from '../axios-config';
 
 type Challenge = {
@@ -15,8 +14,6 @@ export const CreateChallenge = (props: {
   match: { params: { id: string } };
 }) => {
   const [challenge, setChallenge] = useState({} as Challenge);
-  const [code, setCode] = useState('');
-  const [stdout, setStdout] = useState('STDOUT');
 
   useEffect(() => {
     const fetchChallenge = async (id: string) => {
@@ -34,7 +31,6 @@ export const CreateChallenge = (props: {
       `/attempts`,
       {
         challenge: challenge._id.split('/').pop(),
-        code,
         language: 'bash',
       },
       {
@@ -44,7 +40,6 @@ export const CreateChallenge = (props: {
         },
       },
     );
-    setStdout(data.stdout);
     console.log(data);
   };
 

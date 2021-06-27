@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import {Challenge} from '../components/Challenge';
+import React from 'react';
+import { Challenge } from '../components/Challenge';
 import data from '../components/testChallengeData';
-import { Redirect } from 'react-router-dom';
 
 export const ChallengeList = () => {
   // const [challenge, setChallenge] = useState({} as Challenge);
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 m-5" onClick={() => <a href="/challenges/:id" />}>
+      <div className="grid grid-cols-3 gap-4 m-5">
         {data.map((challenge) => (
-          <Challenge
-            challenge={challenge}
-          />
+          <Challenge challenge={challenge} />
         ))}
       </div>
     </>
