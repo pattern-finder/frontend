@@ -1,100 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useAuthHeader } from 'react-auth-kit';
+import '../components/style.scss';
 // import './CodeRunning.scss';
 
 import Axios from '../axios-config';
 
-type Challenge = {
-  _id: string;
-  name: string;
-  instructions: string;
-  imageUrl: string;
-};
+// type Challenge = {
+//   _id: string;
+//   name: string;
+//   instructions: string;
+//   imageUrl: string;
+// };
 
 export const CreateChallenge = (props: {
   match: { params: { id: string } };
 }) => {
-  const [challenge, setChallenge] = useState({} as Challenge);
+  const [name, setName] = useState('');
+  const [instructions, setInstructions] = useState('');
+  // const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    const fetchChallenge = async (id: string) => {
-      const {
-        data: { content },
-      } = await Axios.get(`/challenges/${id}`);
-      setChallenge(content);
-    };
+  const getAuthToken = useAuthHeader();
+  // const getUser = useAuthUser()
 
-    fetchChallenge(props.match.params.id);
-  }, [props.match.params.id]);
+  const postChallenge = async () => {
+    const params = new FormData();
+    params.append('name', name);
+    params.append('instructions', instructions);
 
-  const runOnClick = async () => {
-    const { data } = await Axios.post(
-      `/attempts`,
-      {
-        challenge: challenge._id.split('/').pop(),
-        language: 'bash',
+    // images.forEach((image) => {
+    //   params.append('pictures', image);
+    // });
+
+    Axios.post(`/challenges`, params, {
+      headers: {
+        Authorization: getAuthToken(),
+        'content-type': 'multipart/form-data',
       },
-      {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbG9pc2UiLCJzdWIiOiI2MGE5MTE1MzA3NmQ0OGVjMTljN2MxYjgiLCJpYXQiOjE2MjMwNjExNjJ9.EpDB71Kd2HmjrSr57Oace5r7efolXK-9Ffiv-lmnmoI',
-        },
-      },
-    );
-    console.log(data);
+    })
+      .then(({ data: { content } }) => {
+        console.log(content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <>
-      <h1>Create your own challenge</h1>
-      <div className="min-h-screen py-6 flex flex-col justify-center">
-        <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
-          <div className="bg-gray-600 rounded m-15 p-10 col-span-2">
-            <div className="font-bold text-xl mb-2">{challenge.name}</div>
-            <p>{challenge.instructions}</p>
-          </div>
-          {/* <div className="h-auto text-center bg-gray-600 rounded p-5"> */}
-          <div className="h-auto text-center bg-gray-600 rounded p-5">
-            <h2>Challenge</h2>
-            <input
-              className="browser"
-              type="file"
-              id="pattern"
-              name="pattern"
-            />
-            {/*<button
-                className="absolute top-0 right-0 bg-blue-500 px-2 rounded-bl-lg h-10 w-20 "
-                onClick={runOnClick}
-              >
-                Run
-              </button>*/}
-            {/*<div className="h-full w-full overflow-hidden rounded-b">
-              <div className="bg-black max-h-full h-full p-2 w-full text-left font-light">
-                {stdout || "Aucune sortie après l'execution de ce code."}
-              </div>
-            </div>*/}
-          </div>
-          {/* </div> */}
-          <div className="h-auto text-center bg-gray-600 rounded p-5">
-            {/*}<img
-              className="h-full max-h-full object-contain"
-              alt="pattern"
-              src={challenge.imageUrl}
-            />*/}
-            <h2>Pattern</h2>
-            <input
-              className="browser"
-              type="file"
-              id="pattern"
-              name="pattern"
-              accept="image/png, image/jpeg"
-            />
+      <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
+        <div className="col-span-2 bg-gray-600 rounded p-10">
+          <h1>Create your own challenge</h1>
+          <div className="form">
+            <div className="form-group">
+              <label htmlFor="username">Name</label>
+              <input
+                className="text-black"
+                type="text"
+                name="name"
+                placeholder="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Instructions</label>
+              <input
+                className="text-black"
+                type="text"
+                name="instructions"
+                placeholder="instructions"
+                onChange={(e) => setInstructions(e.target.value)}
+              />
+            </div>
           </div>
         </div>
-        <div className="validate">
-          <button className="arounded-bl-lg h-10 w-20 " onClick={runOnClick}>
-            Save
-          </button>
+        <div className="h-auto text-center bg-gray-600 rounded p-5">
+          <h2>Challenge</h2>
+          <input className="browser" type="file" id="pattern" name="pattern" />
         </div>
+        <div className="h-auto text-center rounded p-5">
+          <h2>Pattern</h2>
+          <input
+            className="browser"
+            type="file"
+            id="pattern"
+            name="pattern"
+            accept="image/png, image/jpeg"
+          />
+        </div>
+      </div>
+      <div className="validate">
+        <button className="arounded-bl-lg h-10 w-20 " onClick={postChallenge}>
+          Save
+        </button>
       </div>
     </>
   );
