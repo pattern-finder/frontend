@@ -5,6 +5,8 @@ import { useSignIn } from 'react-auth-kit';
 import { useState } from 'react';
 import Axios from '../axios-config';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+
 
 export const LoginForm = () => {
   const signIn = useSignIn();
@@ -31,10 +33,11 @@ export const LoginForm = () => {
               tokenType: 'Bearer',
               authState: userInfo,
             })
-          )
+          ) {
             toast.success(`Logged in successfuly as ${username} !`, {
               id: toastId,
             });
+          }
           else {
             throw new Error('Could not login.');
           }
@@ -82,6 +85,7 @@ export const LoginForm = () => {
         </div>
       </div>
       <div className="footer">
+      <Link to="/" className="nav-links">
         <button
           onClick={(e) => login()}
           type="button"
@@ -89,6 +93,7 @@ export const LoginForm = () => {
         >
           Login
         </button>
+      </Link>
       </div>
     </div>
   );
