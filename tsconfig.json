@@ -26,5 +26,5 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-, "craco.config.js"  ]
+, "craco.config.js", "src/index.tsx" ]
 }
