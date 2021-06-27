@@ -1,4 +1,5 @@
 module.exports = {
+  main: 'src/index.tsx',
   style: {
     postcss: {
       plugins: [
