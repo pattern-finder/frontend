@@ -10,26 +10,30 @@ export const ChallengeListPage = () => {
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      Axios.get('/challenges').then(({ data }) => {
-        console.log(data)
-        setChallenges(data.content)
-      }).catch((err) => {
-        if (err.isAxiosError) {
-          toast.error(`Could not load challegnes: ${err.response?.data.message}`);
-        } else {
-          toast.error(`Could not load challegnes: ${err}`);
-        }
-      });
-    }
+      Axios.get('/challenges')
+        .then(({ data }) => {
+          console.log(data);
+          setChallenges(data.content);
+        })
+        .catch((err) => {
+          if (err.isAxiosError) {
+            toast.error(
+              `Could not load challegnes: ${err.response?.data.message}`,
+            );
+          } else {
+            toast.error(`Could not load challegnes: ${err}`);
+          }
+        });
+    };
 
-    fetchChallenges()
-  }, [])
+    fetchChallenges();
+  }, []);
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4 m-5">
         {challenges.map((challenge, index) => (
-          <ChallengeListitem challenge={challenge} key={`challenge-${index}`}/>
+          <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
         ))}
       </div>
     </>
