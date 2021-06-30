@@ -21,16 +21,15 @@ export const CreateChallenge = (props: {
   const [images, setImages] = useState([] as File[]);
 
   const getAuthToken = useAuthHeader();
-  // const getUser = useAuthUser()
 
   const postChallenge = async () => {
     const params = new FormData();
     params.append('name', name);
     params.append('instructions', instructions);
 
-    // images.forEach((image) => {
-    //   params.append('pictures', image);
-    // });
+    images.forEach((image) => {
+      params.append('pictures', image);
+    });
 
     Axios.post(`/challenges`, params, {
       headers: {
@@ -54,12 +53,25 @@ export const CreateChallenge = (props: {
     }
 
     setImages(files);
-    console.log(images);
   }
+
+  function removeImage(index: number) {
+    const currentImages = [...images];
+    currentImages.splice(index, 1);
+
+    setImages(currentImages);
+  }
+
   return (
     <>
       <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
-        <div className="col-span-5 bg-gray-600 rounded p-10">
+        <div className="col-span-5 bg-gray-600 rounded p-10 pt-8 relative overflow-hidden">
+          <button
+            className="absolute top-0 right-0 bg-blue-500 py-2 px-3 rounded-bl-lg text-lg"
+            onClick={postChallenge}
+          >
+            Save
+          </button>
           <h1 className="text-3xl">Create your own challenge</h1>
           <div className="mt-2 flex flex-col items-start">
             <div className="flex flex-col items-start w-auto p-4">
@@ -93,7 +105,10 @@ export const CreateChallenge = (props: {
             key={index}
             className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden"
           >
-            <button className="absolute top-0 right-0 bg-blue-500 py-1 px-2 rounded-bl-lg">
+            <button
+              className="absolute top-0 right-0 bg-blue-500 py-1 px-3 rounded-bl-lg"
+              onClick={(_) => removeImage(index)}
+            >
               <i className="fas fa-times" />
             </button>
             <h2 className="text-lg">{image.name}</h2>
@@ -108,23 +123,16 @@ export const CreateChallenge = (props: {
         ))}
 
         {images.length < 10 && (
-          <div className="h-auto text-center bg-gray-600 rounded p-5">
-            <h2 className="text-lg">Challenge</h2>
-            <input
-              className="browser"
-              type="file"
-              id="pattern"
-              name="pattern"
-              accept="image/*"
-              onChange={onFileChange}
-            />
+          <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
+            <h2 className="text-lg mb-5">Add a picture</h2>
+
+            <label className="w-32 flex flex-col items-center px-4 py-6 bg-blue-500 rounded-md shadow-md tracking-wide cursor-pointer">
+              <i className="fas fa-cloud-upload-alt fa-2x"></i>
+              <span className="mt-2 text-base ">Browse</span>
+              <input type="file" className="hidden" onChange={onFileChange} />
+            </label>
           </div>
         )}
-      </div>
-      <div className="validate">
-        <button className="arounded-bl-lg h-10 w-20 " onClick={postChallenge}>
-          Save
-        </button>
       </div>
     </>
   );
