@@ -1,12 +1,12 @@
-version: "3.4"
+version: '3.4'
 services:
   picspy-front:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "${FRONTEND_EXTERNAL_PORT}:3000"
+      - '${FRONTEND_EXTERNAL_PORT}:3000'
     volumes:
       - ./src:/usr/src/app/src
-    env_file: 
+    env_file:
       - .env

@@ -25,6 +25,21 @@ function Navbar() {
       <div className="flex flex-row w-full max-h-full m-auto col-span-4 text-lg ">
         <div className="m-auto">
           {/* This is a test route and it will be replaced with real ones when the site is done  */}
+          <Link to="/challenges" className="nav-links">
+            <i className="fas fa-hard-hat pr-2" />
+            Challenges
+          </Link>
+        </div>
+        <div className="m-auto">
+          {/* This is a test route and it will be replaced with real ones when the site is done  */}
+          <Link to="/create_challenge" className="nav-links">
+            <i className="fas fa-hard-hat pr-2" />
+            Test
+          </Link>
+        </div>
+
+        <div className="m-auto">
+          {/* This is a test route and it will be replaced with real ones when the site is done  */}
           <Link to="/challenges/609bef12c32facdd3fdc66e4" className="nav-links">
             <i className="fas fa-hard-hat pr-2" />
             Test
@@ -37,6 +52,15 @@ function Navbar() {
             About
           </Link>
         </div>
+
+        {isAuth() && (
+          <div className="m-auto">
+            <Link to="/create_challenge" className="nav-links">
+              <i className="fas fa-info pr-2" />
+              Create challenge
+            </Link>
+          </div>
+        )}
 
         {isAuth() ? (
           <div className="m-auto">

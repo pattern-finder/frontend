@@ -4,11 +4,13 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import About from './pages/About';
 import { ChallengePage } from './pages/ChallengePage';
+import { ChallengeListPage } from './pages/ChallengeListPage';
 import Home from './pages/Home';
 import { LoginPage } from './pages/LoginPage';
 import { AuthProvider } from 'react-auth-kit';
 import { Toaster } from 'react-hot-toast';
 import { PrivateRoute } from 'react-auth-kit';
+import { CreateChallenge } from './pages/CreateChallenge';
 
 export const App = () => {
   return (
@@ -23,6 +25,14 @@ export const App = () => {
           <Navbar />
           <main>
             <Switch>
+              <Route path="/sign-up" exact component={LoginPage} />
+              <Route path="/challenges" exact component={ChallengeListPage} />
+              <Route path="/challenges/:id" exact component={ChallengePage} />
+              <Route
+                path="/create_challenge"
+                exact
+                component={CreateChallenge}
+              />
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
               <Route path="/sign-up" exact component={LoginPage} />
@@ -32,9 +42,6 @@ export const App = () => {
                 component={ChallengePage}
                 loginPath="/sign-up"
               />
-
-              {/* <Route path="/about"  component={About} />
-      <Route path="/contact"  component={Contact} /> */}
             </Switch>
           </main>
         </div>
