@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import '../components/style.scss';
 
 // import './CodeRunning.scss';
 
 import Axios from '../axios-config';
+import toast from 'react-hot-toast';
+import {
+  CreateExecBootstrapListElement,
+} from '../components/challenges/CreateExecBootstrapListElement';
 
 // type Challenge = {
 //   _id: string;
@@ -19,8 +23,21 @@ export const CreateChallenge = (props: {
   const [name, setName] = useState('');
   const [instructions, setInstructions] = useState('');
   const [images, setImages] = useState([] as File[]);
+  const [bootstraps, setBootstraps] = useState({} as any);
+  const [languages, setLanguages] = useState([] as { name: string }[]);
+  const [usedLanguages, setUsedLanguages] = useState([] as { name: string }[]);
 
   const getAuthToken = useAuthHeader();
+
+  useEffect(() => {
+    Axios.get('/languages')
+      .then(({ data: { content } }) => {
+        setLanguages(content);
+      })
+      .catch((err) => {
+        toast.error(`Could not login: ${err}`);
+      });
+  }, []);
 
   const postChallenge = async () => {
     const params = new FormData();
@@ -62,12 +79,31 @@ export const CreateChallenge = (props: {
     setImages(currentImages);
   }
 
+  function onAddLanguage(language: string) {
+    const usedLanguagesCopy = [...usedLanguages, { name: language }];
+    setUsedLanguages(usedLanguagesCopy);
+  }
+
+  function onExecBootstrapUpdate(
+    execBootstrap: { tests: string; functionTemplate: string },
+    language: string,
+  ) {
+    const bootstrapsCopy = { ...bootstraps, [language]: execBootstrap };
+    setBootstraps(bootstrapsCopy);
+  }
+
+  function onExecBootstrapRemove(language: string) {
+    delete bootstraps[language];
+
+    setUsedLanguages([...usedLanguages.filter((ul) => ul.name !== language)]);
+  }
+
   return (
     <>
       <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
         <div className="col-span-5 bg-gray-600 rounded p-10 pt-8 relative overflow-hidden">
           <button
-            className="absolute top-0 right-0 bg-blue-500 py-2 px-3 rounded-bl-lg text-lg"
+            className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
             onClick={postChallenge}
           >
             Save
@@ -99,14 +135,55 @@ export const CreateChallenge = (props: {
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
+        {usedLanguages.map((language, index) => (
+          <CreateExecBootstrapListElement
+            key={`exec-bootstrap-${index}`}
+            language={language.name}
+            onChange={(ebPartial) =>
+              onExecBootstrapUpdate(ebPartial, language.name)
+            }
+            onRemove={() => onExecBootstrapRemove(language.name)}
+          />
+        ))}
+        {languages.length > usedLanguages.length && (
+          <div
+            className={`h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center ${
+              bootstraps.length % 2 === 0 && 'col-span-2'
+            }`}
+          >
+            <h2 className="text-lg mb-5">Add a language</h2>
+            <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6  ">
+              {languages
+                .filter((l) => !usedLanguages.some((ul) => l.name === ul.name))
+                .map((language, index) => (
+                  <div
+                    className="w-full mx-auto bg-blue-500 hover:bg-blue-700 rounded-lg"
+                    key={`language-button-${index}`}
+                  >
+                    <button
+                      className="w-full h-full px-2 py-4"
+                      onClick={(_) => onAddLanguage(language.name)}
+                    >
+                      {language.name}
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
         {images.map((image, index) => (
           <div
-            key={index}
+            key={`image-${index}`}
             className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden"
           >
             <button
-              className="absolute top-0 right-0 bg-blue-500 py-1 px-3 rounded-bl-lg"
+              className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
               onClick={(_) => removeImage(index)}
             >
               <i className="fas fa-times" />
@@ -121,12 +198,11 @@ export const CreateChallenge = (props: {
             </div>
           </div>
         ))}
-
         {images.length < 10 && (
           <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
             <h2 className="text-lg mb-5">Add a picture</h2>
 
-            <label className="w-32 flex flex-col items-center px-4 py-6 bg-blue-500 rounded-md shadow-md tracking-wide cursor-pointer">
+            <label className="w-32 flex flex-col items-center px-4 py-6 bg-blue-500 hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
               <i className="fas fa-cloud-upload-alt fa-2x"></i>
               <span className="mt-2 text-base ">Browse</span>
               <input type="file" className="hidden" onChange={onFileChange} />
