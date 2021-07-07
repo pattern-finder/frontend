@@ -9,6 +9,9 @@ import { LoginPage } from './pages/LoginPage';
 import { AuthProvider } from 'react-auth-kit';
 import { Toaster } from 'react-hot-toast';
 import { PrivateRoute } from 'react-auth-kit';
+import { Profile } from './pages/Profile';
+import { ModifyProfile } from './pages/ModifyProfile';
+
 
 export const App = () => {
   return (
@@ -32,6 +35,8 @@ export const App = () => {
                 component={ChallengePage}
                 loginPath="/sign-up"
               />
+              <Route path="/profile" exact component={Profile} />
+              <Route path="/profile/modif" exact component={ModifyProfile} />
 
               {/* <Route path="/about"  component={About} />
       <Route path="/contact"  component={Contact} /> */}
