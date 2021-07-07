@@ -27,11 +27,16 @@ export const App = () => {
             <Switch>
               <Route path="/sign-up" exact component={LoginPage} />
               <Route path="/challenges" exact component={ChallengeListPage} />
-              <Route path="/challenges/:id" exact component={ChallengePage} />
               <Route
+                path="/challenges/:id/:language"
+                exact
+                component={ChallengePage}
+              />
+              <PrivateRoute
                 path="/create_challenge"
                 exact
                 component={CreateChallenge}
+                loginPath="/sign-up"
               />
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
