@@ -8,6 +8,7 @@ import Axios from '../axios-config';
 import toast from 'react-hot-toast';
 import {
   CreateExecBootstrapListElement,
+  ExecBootstrap,
 } from '../components/challenges/CreateExecBootstrapListElement';
 
 // type Challenge = {
@@ -23,7 +24,9 @@ export const CreateChallenge = (props: {
   const [name, setName] = useState('');
   const [instructions, setInstructions] = useState('');
   const [images, setImages] = useState([] as File[]);
-  const [bootstraps, setBootstraps] = useState({} as any);
+  const [bootstraps, setBootstraps] = useState(
+    {} as Record<string, ExecBootstrap>,
+  );
   const [languages, setLanguages] = useState([] as { name: string }[]);
   const [usedLanguages, setUsedLanguages] = useState([] as { name: string }[]);
 
@@ -39,7 +42,7 @@ export const CreateChallenge = (props: {
       });
   }, []);
 
-  const postChallenge = async () => {
+  async function postChallenge() {
     const params = new FormData();
     params.append('name', name);
     params.append('instructions', instructions);
@@ -48,6 +51,7 @@ export const CreateChallenge = (props: {
       params.append('pictures', image);
     });
 
+    const toastId = toast.loading('Sending Challenge...');
     Axios.post(`/challenges`, params, {
       headers: {
         Authorization: getAuthToken(),
@@ -55,12 +59,42 @@ export const CreateChallenge = (props: {
       },
     })
       .then(({ data: { content } }) => {
+        toast.loading(`Sending implementations...`, {
+          id: toastId,
+        });
+
         console.log(content);
+        const payload = Object.values(bootstraps).map((b) => {
+          return { ...b, challenge: content._id };
+        });
+
+        Promise.all(payload.map(async (p) => await postExecBootstrap(p)))
+          .then(() => {
+            toast.success(`Successfully uploaded challenge !`, {
+              id: toastId,
+            });
+          })
+          .catch((err) => {
+            toast.error(`Could not create execBootstrap: ${err}`, {
+              id: toastId,
+            });
+            console.log(err);
+          });
       })
       .catch((err) => {
+        toast.error(`Could not create challenge: ${err}`, { id: toastId });
         console.log(err);
       });
-  };
+  }
+
+  async function postExecBootstrap(bootstrap: ExecBootstrap) {
+    await Axios.post('/exec-bootstraps', bootstrap, {
+      headers: {
+        Authorization: getAuthToken(),
+        'content-type': 'multipart/form-data',
+      },
+    });
+  }
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = [...images];
@@ -88,7 +122,10 @@ export const CreateChallenge = (props: {
     execBootstrap: { tests: string; functionTemplate: string },
     language: string,
   ) {
-    const bootstrapsCopy = { ...bootstraps, [language]: execBootstrap };
+    const bootstrapsCopy = {
+      ...bootstraps,
+      [language]: { ...execBootstrap, language },
+    };
     setBootstraps(bootstrapsCopy);
   }
 
@@ -151,7 +188,7 @@ export const CreateChallenge = (props: {
         {languages.length > usedLanguages.length && (
           <div
             className={`h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center ${
-              bootstraps.length % 2 === 0 && 'col-span-2'
+              usedLanguages.length % 2 === 0 && 'col-span-2'
             }`}
           >
             <h2 className="text-lg mb-5">Add a language</h2>
