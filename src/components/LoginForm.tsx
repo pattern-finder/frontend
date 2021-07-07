@@ -24,7 +24,6 @@ export const LoginForm = () => {
           // const header: { alg: string, typ: string } = JSON.parse(atob(access_token.split('.')[0]))
           const userInfo: { username: string; sub: string; iat: number } =
             JSON.parse(atob(access_token.split('.')[1]));
-          console.log(userInfo);
           if (
             signIn({
               token: access_token,

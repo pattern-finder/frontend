@@ -34,7 +34,7 @@ export const ChallengeListitem = ({
                 {execBootstraps.map((bs) => (
                   <Link to={`/challenges/${_id}/${bs.language}`}>
                     <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-4 py-2 bg-blue-500 hover:bg-blue-700">
-                      <span>{bs.language}</span>
+                      <span className="text-center">{bs.language}</span>
                       {/* {false ? (
                         <i className="fas fa-check pl-2" />
                       ) : (

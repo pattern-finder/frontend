@@ -5,12 +5,15 @@ import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import Axios from '../axios-config';
 import { useAuthHeader } from 'react-auth-kit';
+import { Carousel } from '../components/challenges/Carousel';
+import toast from 'react-hot-toast';
 
 type Challenge = {
   _id: string;
   name: string;
   instructions: string;
-  imageUrl: string;
+  pictures: { file: string }[];
+  execBootstraps: { functionTemplate: string; language: string }[];
 };
 
 export const ChallengePage = (props: {
@@ -18,6 +21,7 @@ export const ChallengePage = (props: {
 }) => {
   const [challenge, setChallenge] = useState({} as Challenge);
   const [code, setCode] = useState('');
+
   const [stdout, setStdout] = useState('STDOUT');
 
   const authHeader = useAuthHeader();
@@ -36,8 +40,10 @@ export const ChallengePage = (props: {
     fetchChallenge(props.match.params.id);
   }, [props.match.params.id]);
 
-  const runOnClick = async () => {
-    const { data } = await Axios.post(
+  const runOnClick = () => {
+    const toastId = toast.loading('Running code...');
+
+    Axios.post(
       `/attempts`,
       {
         challenge: challenge._id.split('/').pop(),
@@ -49,9 +55,23 @@ export const ChallengePage = (props: {
           Authorization: authHeader(),
         },
       },
-    );
-    setStdout(data.stdout);
-    console.log(data);
+    )
+      .then(({ data }) => {
+        console.log(data);
+        toast.success(`Successfully ran the code.`, {
+          id: toastId,
+        });
+        setStdout(data.stdout);
+      })
+      .catch((err) => {
+        if (err.isAxiosError) {
+          toast.error(`Could not login: ${err.response?.data.message}`, {
+            id: toastId,
+          });
+        } else {
+          toast.error(`Could not login: ${err}`, { id: toastId });
+        }
+      });
   };
 
   return (
@@ -68,7 +88,11 @@ export const ChallengePage = (props: {
               <Editor
                 defaultLanguage="bash"
                 height="80vh"
-                // defaultValue="// some comment"
+                defaultValue={
+                  challenge?.execBootstraps?.find(
+                    (eb) => eb.language === props.match.params.language,
+                  )?.functionTemplate
+                }
                 onChange={(value) => {
                   setCode(value as string);
                 }}
@@ -88,14 +112,7 @@ export const ChallengePage = (props: {
               </div>
             </div>
           </div>
-          {/* </div> */}
-          <div className="h-auto text-center bg-gray-600 rounded p-5">
-            <img
-              className="h-full max-h-full object-contain"
-              alt="pattern"
-              src={challenge.imageUrl}
-            />
-          </div>
+          <Carousel picturesUrls={challenge.pictures} />
         </div>
       </div>
     </>
