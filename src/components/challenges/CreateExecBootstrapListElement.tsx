@@ -1,6 +1,8 @@
-import React, { useCallback } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
 import { useState } from 'react';
 import Editor from '@monaco-editor/react';
+import { useEffect } from 'react';
 
 export interface ExecBootstrap {
   challenge?: string;
@@ -27,12 +29,12 @@ export const CreateExecBootstrapListElement = ({
 
   const [functionTemplate, setFunctionTemplate] = useState('');
 
-  useCallback(() => {
+  useEffect(() => {
     onChange({
       tests,
       functionTemplate,
     });
-  }, [tests, functionTemplate, onChange]);
+  }, [tests, functionTemplate]);
 
   return (
     <div className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden">
@@ -43,7 +45,7 @@ export const CreateExecBootstrapListElement = ({
         <i className="fas fa-times" />
       </button>
       <h2 className="text-lg mb-5">{language} implementation</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-rows-2 gap-4">
         <div>
           <h2 className="text-lg mb-2">Test implementations</h2>
           <div className="rounded-lg overflow-hidden flex flex-col justify-center items-center">

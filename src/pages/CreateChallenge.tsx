@@ -63,7 +63,7 @@ export const CreateChallenge = (props: {
           id: toastId,
         });
 
-        console.log(content);
+        console.log(bootstraps);
         const payload = Object.values(bootstraps).map((b) => {
           return { ...b, challenge: content._id };
         });
@@ -75,23 +75,30 @@ export const CreateChallenge = (props: {
             });
           })
           .catch((err) => {
-            toast.error(`Could not create execBootstrap: ${err}`, {
-              id: toastId,
-            });
-            console.log(err);
+            toast.error(
+              `Could not add language option: ${
+                err.response.data.message || 'An unknown error occured'
+              }`,
+              { id: toastId },
+            );
           });
       })
       .catch((err) => {
-        toast.error(`Could not create challenge: ${err}`, { id: toastId });
+        toast.error(
+          `Could not create challenge: ${
+            err.response.data.message || 'An unknown error occured'
+          }`,
+          { id: toastId },
+        );
         console.log(err);
       });
   }
 
   async function postExecBootstrap(bootstrap: ExecBootstrap) {
+    console.log(bootstrap);
     await Axios.post('/exec-bootstraps', bootstrap, {
       headers: {
         Authorization: getAuthToken(),
-        'content-type': 'multipart/form-data',
       },
     });
   }
@@ -126,6 +133,7 @@ export const CreateChallenge = (props: {
       ...bootstraps,
       [language]: { ...execBootstrap, language },
     };
+    console.log(bootstrapsCopy);
     setBootstraps(bootstrapsCopy);
   }
 
@@ -192,7 +200,7 @@ export const CreateChallenge = (props: {
             }`}
           >
             <h2 className="text-lg mb-5">Add a language</h2>
-            <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6  ">
+            <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6 m-auto">
               {languages
                 .filter((l) => !usedLanguages.some((ul) => l.name === ul.name))
                 .map((language, index) => (

@@ -30,28 +30,6 @@ function Navbar() {
             Challenges
           </Link>
         </div>
-        <div className="m-auto">
-          {/* This is a test route and it will be replaced with real ones when the site is done  */}
-          <Link to="/create_challenge" className="nav-links">
-            <i className="fas fa-hard-hat pr-2" />
-            Test
-          </Link>
-        </div>
-
-        <div className="m-auto">
-          {/* This is a test route and it will be replaced with real ones when the site is done  */}
-          <Link to="/challenges/609bef12c32facdd3fdc66e4" className="nav-links">
-            <i className="fas fa-hard-hat pr-2" />
-            Test
-          </Link>
-        </div>
-
-        <div className="m-auto">
-          <Link to="/About" className="nav-links">
-            <i className="fas fa-info pr-2" />
-            About
-          </Link>
-        </div>
 
         {isAuth() && (
           <div className="m-auto">
@@ -77,6 +55,13 @@ function Navbar() {
             </Link>
           </div>
         )}
+
+        {/* <div className="m-auto">
+          <Link to="/About" className="nav-links">
+            <i className="fas fa-info pr-2" />
+            About
+          </Link>
+        </div> */}
       </div>
     </nav>
   );

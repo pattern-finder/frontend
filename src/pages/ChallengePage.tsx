@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 // import './CodeRunning.scss';
 
@@ -12,7 +13,9 @@ type Challenge = {
   imageUrl: string;
 };
 
-export const ChallengePage = (props: { match: { params: { id: string } } }) => {
+export const ChallengePage = (props: {
+  match: { params: { id: string; language: string } };
+}) => {
   const [challenge, setChallenge] = useState({} as Challenge);
   const [code, setCode] = useState('');
   const [stdout, setStdout] = useState('STDOUT');
@@ -26,11 +29,12 @@ export const ChallengePage = (props: { match: { params: { id: string } } }) => {
       } = await Axios.get(`/challenges/${id}`, {
         headers: { Authorization: authHeader() },
       });
+      console.log(content);
       setChallenge(content);
     };
 
     fetchChallenge(props.match.params.id);
-  }, [props.match.params.id, authHeader]);
+  }, [props.match.params.id]);
 
   const runOnClick = async () => {
     const { data } = await Axios.post(
@@ -38,12 +42,11 @@ export const ChallengePage = (props: { match: { params: { id: string } } }) => {
       {
         challenge: challenge._id.split('/').pop(),
         code,
-        language: 'bash',
+        language: props.match.params.language,
       },
       {
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbG9pc2UiLCJzdWIiOiI2MGE5MTE1MzA3NmQ0OGVjMTljN2MxYjgiLCJpYXQiOjE2MjMwNjExNjJ9.EpDB71Kd2HmjrSr57Oace5r7efolXK-9Ffiv-lmnmoI',
+          Authorization: authHeader(),
         },
       },
     );
