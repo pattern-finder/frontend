@@ -5,6 +5,7 @@ import Editor from '@monaco-editor/react';
 import { useEffect } from 'react';
 
 export interface ExecBootstrap {
+  _id?: string;
   language: string;
   tests: string;
   functionTemplate: string;
@@ -18,22 +19,19 @@ export const CreateExecBootstrapListElement = ({
 }: {
   language: string;
   onRemove: () => void;
-  onChange: (execBootstrap: {
-    tests: string;
-    functionTemplate: string;
-  }) => void;
+  onChange: (execBootstrap: ExecBootstrap) => void;
   initialValues?: ExecBootstrap;
 }) => {
   const [tests, setTests] = useState(initialValues?.tests || '');
 
   const [functionTemplate, setFunctionTemplate] = useState(initialValues?.functionTemplate || '');
 
-  console.log(initialValues)
-
   useEffect(() => {
     onChange({
       tests,
       functionTemplate,
+      language,
+      _id: initialValues?._id
     });
   }, [tests, functionTemplate]);
 

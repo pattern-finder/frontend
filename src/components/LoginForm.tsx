@@ -27,7 +27,7 @@ export const LoginForm = () => {
           if (
             signIn({
               token: access_token,
-              expiresIn: 30,
+              expiresIn: userInfo.iat,
               tokenType: 'Bearer',
               authState: userInfo,
             })
