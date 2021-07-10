@@ -33,7 +33,13 @@ export const App = () => {
                 component={ChallengePage}
               />
               <PrivateRoute
-                path="/create_challenge"
+                path="/create/challenge"
+                exact
+                component={CreateChallenge}
+                loginPath="/sign-up"
+              />
+              <PrivateRoute
+                path="/edit/challenge/:id"
                 exact
                 component={CreateChallenge}
                 loginPath="/sign-up"

@@ -33,7 +33,7 @@ function Navbar() {
 
         {isAuth() && (
           <div className="m-auto">
-            <Link to="/create_challenge" className="nav-links">
+            <Link to="/create/challenge" className="nav-links">
               <i className="fas fa-info pr-2" />
               Create challenge
             </Link>

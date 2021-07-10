@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import '../components/style.scss';
 
-// import './CodeRunning.scss';
-
 import Axios from '../axios-config';
 import toast from 'react-hot-toast';
 import {
   CreateExecBootstrapListElement,
   ExecBootstrap,
 } from '../components/challenges/CreateExecBootstrapListElement';
+import { useHistory } from 'react-router-dom';
 
 // type Challenge = {
 //   _id: string;
@@ -19,11 +18,11 @@ import {
 // };
 
 export const CreateChallenge = (props: {
-  match: { params: { id: string } };
+  match?: { params?: { id?: string } };
 }) => {
   const [name, setName] = useState('');
   const [instructions, setInstructions] = useState('');
-  const [images, setImages] = useState([] as File[]);
+  const [images, setImages] = useState([] as (File | string)[]);
   const [bootstraps, setBootstraps] = useState(
     {} as Record<string, ExecBootstrap>,
   );
@@ -31,6 +30,7 @@ export const CreateChallenge = (props: {
   const [usedLanguages, setUsedLanguages] = useState([] as { name: string }[]);
 
   const getAuthToken = useAuthHeader();
+  const history = useHistory();
 
   useEffect(() => {
     Axios.get('/languages')
@@ -38,9 +38,41 @@ export const CreateChallenge = (props: {
         setLanguages(content);
       })
       .catch((err) => {
-        toast.error(`Could not login: ${err}`);
+        toast.error(`Could not load languages: ${err}`);
       });
   }, []);
+
+  //load existing challenge if exists
+  useEffect(() => {
+    if (!props.match?.params?.id) {
+      return;
+    }
+    const id = props.match?.params?.id;
+
+    Axios.get(`/challenges/${id}`)
+      .then(({ data }) => {
+        setName(data.content.name);
+        setInstructions(data.content.instructions);
+
+        setImages(data.content.pictures.map((p: {file: string}) => p.file))
+
+        const bootstrapsObject = {} as Record<string, ExecBootstrap>;
+        data.content.execBootstraps.forEach((bs: ExecBootstrap) => {
+          bootstrapsObject[bs.language] = bs;
+        });
+        console.log(bootstrapsObject)
+        setBootstraps(bootstrapsObject);
+
+        setUsedLanguages(
+          data.content.execBootstraps.map(
+            (bs: { language: string}) => { return { name: bs.language } },
+          ),
+        );
+      })
+      .catch((err) => {
+        toast.error(`Failed to load challenge with id: ${id} \n ${err}`);
+      });
+  }, [props.match?.params?.id]);
 
   async function postChallenge() {
     const params = new FormData();
@@ -63,7 +95,6 @@ export const CreateChallenge = (props: {
           id: toastId,
         });
 
-        console.log(bootstraps);
         const payload = Object.values(bootstraps).map((b) => {
           return { ...b, challenge: content._id };
         });
@@ -73,6 +104,7 @@ export const CreateChallenge = (props: {
             toast.success(`Successfully uploaded challenge !`, {
               id: toastId,
             });
+            history.push('/challenges')
           })
           .catch((err) => {
             toast.error(
@@ -81,6 +113,7 @@ export const CreateChallenge = (props: {
               }`,
               { id: toastId },
             );
+            history.push(`/edit/challenge/${content._id}`)
           });
       })
       .catch((err) => {
@@ -90,8 +123,11 @@ export const CreateChallenge = (props: {
           }`,
           { id: toastId },
         );
-        console.log(err);
-      });
+      })
+  }
+
+  async function updateChallenge() {
+
   }
 
   async function postExecBootstrap(bootstrap: ExecBootstrap) {
@@ -165,6 +201,7 @@ export const CreateChallenge = (props: {
                 name="name"
                 placeholder="name"
                 onChange={(e) => setName(e.target.value)}
+                value={name}
               />
             </div>
             <div className="flex flex-col items-start w-full p-4">
@@ -176,6 +213,7 @@ export const CreateChallenge = (props: {
                 name="instructions"
                 placeholder="instructions"
                 onChange={(e) => setInstructions(e.target.value)}
+                value={instructions}
               />
             </div>
           </div>
@@ -191,6 +229,7 @@ export const CreateChallenge = (props: {
               onExecBootstrapUpdate(ebPartial, language.name)
             }
             onRemove={() => onExecBootstrapRemove(language.name)}
+            initialValues={bootstraps[language.name]}
           />
         ))}
         {languages.length > usedLanguages.length && (
@@ -233,12 +272,12 @@ export const CreateChallenge = (props: {
             >
               <i className="fas fa-times" />
             </button>
-            <h2 className="text-lg">{image.name}</h2>
+            <h2 className="text-lg">{typeof(image) !== 'string' ? image.name : "Uploaded"}</h2>
             <div className="flex h-full">
               <img
                 alt="user defined"
                 className="w-full max-h-full object-contain m-auto pb-4"
-                src={URL.createObjectURL(image)}
+                src={typeof(image) !== 'string' ? URL.createObjectURL(image) : image}
               />
             </div>
           </div>

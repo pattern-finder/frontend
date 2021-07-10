@@ -5,7 +5,6 @@ import Editor from '@monaco-editor/react';
 import { useEffect } from 'react';
 
 export interface ExecBootstrap {
-  challenge?: string;
   language: string;
   tests: string;
   functionTemplate: string;
@@ -13,21 +12,23 @@ export interface ExecBootstrap {
 
 export const CreateExecBootstrapListElement = ({
   language,
-  challenge,
   onRemove,
   onChange,
+  initialValues
 }: {
   language: string;
-  challenge?: string;
   onRemove: () => void;
   onChange: (execBootstrap: {
     tests: string;
     functionTemplate: string;
   }) => void;
+  initialValues?: ExecBootstrap;
 }) => {
-  const [tests, setTests] = useState('');
+  const [tests, setTests] = useState(initialValues?.tests || '');
 
-  const [functionTemplate, setFunctionTemplate] = useState('');
+  const [functionTemplate, setFunctionTemplate] = useState(initialValues?.functionTemplate || '');
+
+  console.log(initialValues)
 
   useEffect(() => {
     onChange({
@@ -47,7 +48,7 @@ export const CreateExecBootstrapListElement = ({
       <h2 className="text-lg mb-5">{language} implementation</h2>
       <div className="grid grid-rows-2 gap-4">
         <div>
-          <h2 className="text-lg mb-2">Test implementations</h2>
+          <h2 className="text-base mb-2">Tests implementations</h2>
           <div className="rounded-lg overflow-hidden flex flex-col justify-center items-center">
             <Editor
               defaultLanguage="bash"
@@ -57,11 +58,12 @@ export const CreateExecBootstrapListElement = ({
                 setTests(value as string);
               }}
               theme="vs-dark"
+              value={tests}
             />
           </div>
         </div>
         <div>
-          <h2 className="text-lg mb-2">User function wireframe</h2>
+          <h2 className="text-base mb-2">User function wireframe</h2>
           <div className="rounded-lg overflow-hidden flex flex-col justify-center items-center">
             <Editor
               defaultLanguage="bash"
@@ -71,6 +73,7 @@ export const CreateExecBootstrapListElement = ({
                 setFunctionTemplate(value as string);
               }}
               theme="vs-dark"
+              value={functionTemplate}
             />
           </div>
         </div>
