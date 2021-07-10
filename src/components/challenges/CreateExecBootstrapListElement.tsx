@@ -15,7 +15,7 @@ export const CreateExecBootstrapListElement = ({
   language,
   onRemove,
   onChange,
-  initialValues
+  initialValues,
 }: {
   language: string;
   onRemove: () => void;
@@ -24,14 +24,16 @@ export const CreateExecBootstrapListElement = ({
 }) => {
   const [tests, setTests] = useState(initialValues?.tests || '');
 
-  const [functionTemplate, setFunctionTemplate] = useState(initialValues?.functionTemplate || '');
+  const [functionTemplate, setFunctionTemplate] = useState(
+    initialValues?.functionTemplate || '',
+  );
 
   useEffect(() => {
     onChange({
       tests,
       functionTemplate,
       language,
-      _id: initialValues?._id
+      _id: initialValues?._id,
     });
   }, [tests, functionTemplate]);
 

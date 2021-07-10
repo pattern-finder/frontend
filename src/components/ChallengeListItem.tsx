@@ -22,7 +22,7 @@ export const ChallengeListitem = ({
 }) => {
   const getUserSession = useAuthUser();
   const [user, setUser] = useState(
-    {} as { username: string; avatarUrl?: string, _id: string },
+    {} as { username: string; avatarUrl?: string; _id: string },
   );
 
   useEffect(() => {
@@ -73,14 +73,13 @@ export const ChallengeListitem = ({
                 src={user.avatarUrl || picspyLogo}
                 alt="profile pic"
               />
-              {
-                user._id === getUserSession()?.sub &&
+              {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/challenge/${_id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
                     <i className="fas fa-edit"></i>
                   </div>
                 </Link>
-              }
+              )}
             </div>
           </div>
         </div>

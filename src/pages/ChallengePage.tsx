@@ -42,13 +42,13 @@ export const ChallengePage = (props: {
   useEffect(() => {
     const placeholder = challenge?.execBootstraps?.find(
       (eb) => eb.language === props.match.params.language,
-    )?.functionTemplate
+    )?.functionTemplate;
 
     if (placeholder) {
       // setCodePlaceholder(placeholder);
       setCode(placeholder);
     }
-  }, [challenge])
+  }, [challenge]);
 
   const runOnClick = () => {
     const toastId = toast.loading('Running code...');
@@ -72,10 +72,10 @@ export const ChallengePage = (props: {
           id: toastId,
         });
 
-        if (data.content.stdout === "") {
-          setStdout(data.content.stderr)
+        if (data.content.stdout === '') {
+          setStdout(data.content.stderr);
         } else {
-          setStdout(data.content.stdout)
+          setStdout(data.content.stdout);
         }
       })
       .catch((err) => {
@@ -128,7 +128,7 @@ export const ChallengePage = (props: {
             </div>
             <div className="h-full w-full overflow-hidden rounded-b">
               <div className="bg-black max-h-full h-full p-2 w-full text-left font-light">
-                {stdout ||  "Aucune sortie après l'execution de ce code."}
+                {stdout || "Aucune sortie après l'execution de ce code."}
               </div>
             </div>
           </div>
