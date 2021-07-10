@@ -9,20 +9,20 @@ import {
   ExecBootstrap,
 } from '../components/challenges/CreateExecBootstrapListElement';
 import { useHistory } from 'react-router-dom';
+import { Picture } from '../components/challenges/Picture';
 
-// type Challenge = {
-//   _id: string;
-//   name: string;
-//   instructions: string;
-//   imageUrl: string;
-// };
+type ImageEntity = {
+  file: string;
+  _id: string;
+};
 
 export const CreateChallenge = (props: {
   match?: { params?: { id?: string } };
 }) => {
   const [name, setName] = useState('');
   const [instructions, setInstructions] = useState('');
-  const [images, setImages] = useState([] as (File | string)[]);
+  const [fetchedImages, setFetchedImages] = useState([] as ImageEntity[]);
+  const [images, setImages] = useState([] as File[]);
   const [bootstraps, setBootstraps] = useState(
     {} as Record<string, ExecBootstrap>,
   );
@@ -54,19 +54,19 @@ export const CreateChallenge = (props: {
         setName(data.content.name);
         setInstructions(data.content.instructions);
 
-        setImages(data.content.pictures.map((p: {file: string}) => p.file))
+        setFetchedImages(data.content.pictures);
 
         const bootstrapsObject = {} as Record<string, ExecBootstrap>;
         data.content.execBootstraps.forEach((bs: ExecBootstrap) => {
           bootstrapsObject[bs.language] = bs;
         });
-        console.log(bootstrapsObject)
+        console.log(bootstrapsObject);
         setBootstraps(bootstrapsObject);
 
         setUsedLanguages(
-          data.content.execBootstraps.map(
-            (bs: { language: string}) => { return { name: bs.language } },
-          ),
+          data.content.execBootstraps.map((bs: { language: string }) => {
+            return { name: bs.language };
+          }),
         );
       })
       .catch((err) => {
@@ -91,7 +91,7 @@ export const CreateChallenge = (props: {
       },
     })
       .then(({ data: { content } }) => {
-        toast.loading(`Sending implementations...`, {
+        toast.loading(`Sending languages...`, {
           id: toastId,
         });
 
@@ -104,7 +104,7 @@ export const CreateChallenge = (props: {
             toast.success(`Successfully uploaded challenge !`, {
               id: toastId,
             });
-            history.push('/challenges')
+            history.push('/challenges');
           })
           .catch((err) => {
             toast.error(
@@ -113,7 +113,7 @@ export const CreateChallenge = (props: {
               }`,
               { id: toastId },
             );
-            history.push(`/edit/challenge/${content._id}`)
+            history.push(`/edit/challenge/${content._id}`);
           });
       })
       .catch((err) => {
@@ -123,16 +123,79 @@ export const CreateChallenge = (props: {
           }`,
           { id: toastId },
         );
-      })
+      });
   }
 
   async function updateChallenge() {
+    const id = props.match?.params?.id;
 
+    const params = new FormData();
+    params.append('name', name);
+    params.append('instructions', instructions);
+
+    images.forEach((image) => {
+      params.append('pictures', image);
+    });
+
+    const toastId = toast.loading('Sending Challenge...');
+
+    Axios.put(`/challenges/${id}`, params, {
+      headers: {
+        Authorization: getAuthToken(),
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((_) => {
+        toast.loading(`Sending languages...`, {
+          id: toastId,
+        });
+
+        const payload = Object.values(bootstraps).map((b) => {
+          return { ...b, challenge: id };
+        });
+
+        Promise.all(
+          payload.map(async (p) =>
+            p._id ? await updateExecBootstrap(p) : await postExecBootstrap(p),
+          ),
+        )
+          .then(() => {
+            toast.success(`Successfully uploaded challenge !`, {
+              id: toastId,
+            });
+            history.push('/challenges');
+          })
+          .catch((err) => {
+            toast.error(
+              `Could not add or modify language option: ${
+                err.response.data.message || 'An unknown error occured'
+              }`,
+              { id: toastId },
+            );
+            history.push(`/edit/challenge/${id}`);
+          });
+      })
+      .catch((err) => {
+        toast.error(
+          `Could not update challenge: ${
+            err?.response?.data?.message || 'An unknown error occured'
+          }`,
+          { id: toastId },
+        );
+        console.error(err);
+      });
   }
 
   async function postExecBootstrap(bootstrap: ExecBootstrap) {
-    console.log(bootstrap);
     await Axios.post('/exec-bootstraps', bootstrap, {
+      headers: {
+        Authorization: getAuthToken(),
+      },
+    });
+  }
+
+  async function updateExecBootstrap(bootstrap: ExecBootstrap) {
+    await Axios.put(`/exec-bootstraps/${bootstrap._id}`, bootstrap, {
       headers: {
         Authorization: getAuthToken(),
       },
@@ -149,11 +212,36 @@ export const CreateChallenge = (props: {
     setImages(files);
   }
 
-  function removeImage(index: number) {
+  function removeLocalImage(index: number) {
     const currentImages = [...images];
     currentImages.splice(index, 1);
 
     setImages(currentImages);
+  }
+
+  function removeFetchedImage(index: number, image: ImageEntity) {
+    const toastId = toast.loading('Deleting remote image...');
+    Axios.delete(`/pictures/picspy-challenges/${image._id}`, {
+      headers: {
+        Authorization: getAuthToken(),
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((_) => {
+        toast.success('Image deleted !', { id: toastId });
+        const currentImages = [...fetchedImages];
+        currentImages.splice(index, 1);
+
+        setFetchedImages(currentImages);
+      })
+      .catch((err) => {
+        toast.error(
+          `Could not delete Image : ${
+            err?.response?.data?.message || 'An unknown error occured'
+          }`,
+          { id: toastId },
+        );
+      });
   }
 
   function onAddLanguage(language: string) {
@@ -169,14 +257,37 @@ export const CreateChallenge = (props: {
       ...bootstraps,
       [language]: { ...execBootstrap, language },
     };
-    console.log(bootstrapsCopy);
     setBootstraps(bootstrapsCopy);
   }
 
   function onExecBootstrapRemove(language: string) {
-    delete bootstraps[language];
-
-    setUsedLanguages([...usedLanguages.filter((ul) => ul.name !== language)]);
+    if (bootstraps[language]._id) {
+      const toastId = toast.loading('Deleting Language option...');
+      Axios.delete(`/exec-bootstraps/${bootstraps[language]._id}`, {
+        headers: {
+          Authorization: getAuthToken(),
+          'content-type': 'multipart/form-data',
+        },
+      })
+        .then((_) => {
+          toast.success('Deleted language option.', { id: toastId });
+          delete bootstraps[language];
+          setUsedLanguages([
+            ...usedLanguages.filter((ul) => ul.name !== language),
+          ]);
+        })
+        .catch((err) => {
+          toast.error(
+            `Could not delete Image : ${
+              err?.response?.data?.message || 'An unknown error occured'
+            }`,
+            { id: toastId },
+          );
+        });
+    } else {
+      delete bootstraps[language];
+      setUsedLanguages([...usedLanguages.filter((ul) => ul.name !== language)]);
+    }
   }
 
   return (
@@ -185,7 +296,7 @@ export const CreateChallenge = (props: {
         <div className="col-span-5 bg-gray-600 rounded p-10 pt-8 relative overflow-hidden">
           <button
             className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
-            onClick={postChallenge}
+            onClick={props.match?.params?.id ? updateChallenge : postChallenge}
           >
             Save
           </button>
@@ -261,28 +372,21 @@ export const CreateChallenge = (props: {
       </div>
 
       <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
-        {images.map((image, index) => (
-          <div
-            key={`image-${index}`}
-            className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden"
-          >
-            <button
-              className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
-              onClick={(_) => removeImage(index)}
-            >
-              <i className="fas fa-times" />
-            </button>
-            <h2 className="text-lg">{typeof(image) !== 'string' ? image.name : "Uploaded"}</h2>
-            <div className="flex h-full">
-              <img
-                alt="user defined"
-                className="w-full max-h-full object-contain m-auto pb-4"
-                src={typeof(image) !== 'string' ? URL.createObjectURL(image) : image}
-              />
-            </div>
-          </div>
+        {fetchedImages.map((image, index) => (
+          <Picture
+            image={image.file}
+            key={`linked-picture-${index}`}
+            onRemoveImage={() => removeFetchedImage(index, image)}
+          />
         ))}
-        {images.length < 10 && (
+        {images.map((image, index) => (
+          <Picture
+            image={image}
+            key={`loaded-picture-${index}`}
+            onRemoveImage={() => removeLocalImage(index)}
+          />
+        ))}
+        {images.length + fetchedImages.length < 10 && (
           <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
             <h2 className="text-lg mb-5">Add a picture</h2>
 
