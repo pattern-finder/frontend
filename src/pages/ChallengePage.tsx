@@ -33,12 +33,22 @@ export const ChallengePage = (props: {
       } = await Axios.get(`/challenges/${id}`, {
         headers: { Authorization: authHeader() },
       });
-      console.log(content);
       setChallenge(content);
     };
 
     fetchChallenge(props.match.params.id);
   }, [props.match.params.id]);
+
+  useEffect(() => {
+    const placeholder = challenge?.execBootstraps?.find(
+      (eb) => eb.language === props.match.params.language,
+    )?.functionTemplate
+
+    if (placeholder) {
+      // setCodePlaceholder(placeholder);
+      setCode(placeholder);
+    }
+  }, [challenge])
 
   const runOnClick = () => {
     const toastId = toast.loading('Running code...');
@@ -61,15 +71,20 @@ export const ChallengePage = (props: {
         toast.success(`Successfully ran the code.`, {
           id: toastId,
         });
-        setStdout(data.stdout);
+
+        if (data.content.stdout === "") {
+          setStdout(data.content.stderr)
+        } else {
+          setStdout(data.content.stdout)
+        }
       })
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`Could not login: ${err.response?.data.message}`, {
+          toast.error(`An error occured: ${err.response?.data.message}`, {
             id: toastId,
           });
         } else {
-          toast.error(`Could not login: ${err}`, { id: toastId });
+          toast.error(`An unknown error occured: ${err}`, { id: toastId });
         }
       });
   };
@@ -79,23 +94,28 @@ export const ChallengePage = (props: {
       <div className="min-h-screen py-6 flex flex-col justify-center">
         <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
           <div className="bg-gray-600 rounded m-15 p-10 col-span-2">
-            <div className="font-bold text-xl mb-2">{challenge.name}</div>
+            <div className="font-bold text-xl mb-2 flex flex-row">
+              {challenge.name}
+              <div className="bg-blue-500 py-1 px-2 rounded-full text-sm w-min ml-2">
+                {props.match.params.language}
+              </div>
+            </div>
             <p>{challenge.instructions}</p>
           </div>
           {/* <div className="h-auto text-center bg-gray-600 rounded p-5"> */}
           <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center">
             <div className="relative max-h-full w-full">
               <Editor
-                defaultLanguage="bash"
+                language={props.match.params.language}
+                defaultLanguage={props.match.params.language}
                 height="80vh"
-                defaultValue={
-                  challenge?.execBootstraps?.find(
-                    (eb) => eb.language === props.match.params.language,
-                  )?.functionTemplate
-                }
+                // defaultValue={
+                //   codePlaceHolder
+                // }
                 onChange={(value) => {
                   setCode(value as string);
                 }}
+                value={code}
                 theme="vs-dark"
               />
 
@@ -108,7 +128,7 @@ export const ChallengePage = (props: {
             </div>
             <div className="h-full w-full overflow-hidden rounded-b">
               <div className="bg-black max-h-full h-full p-2 w-full text-left font-light">
-                {stdout || "Aucune sortie après l'execution de ce code."}
+                {stdout ||  "Aucune sortie après l'execution de ce code."}
               </div>
             </div>
           </div>
