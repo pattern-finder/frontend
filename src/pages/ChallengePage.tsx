@@ -102,16 +102,12 @@ export const ChallengePage = (props: {
             </div>
             <p>{challenge.instructions}</p>
           </div>
-          {/* <div className="h-auto text-center bg-gray-600 rounded p-5"> */}
           <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center">
             <div className="relative max-h-full w-full">
               <Editor
                 language={props.match.params.language}
                 defaultLanguage={props.match.params.language}
                 height="80vh"
-                // defaultValue={
-                //   codePlaceHolder
-                // }
                 onChange={(value) => {
                   setCode(value as string);
                 }}
@@ -126,9 +122,11 @@ export const ChallengePage = (props: {
                 Run
               </button>
             </div>
-            <div className="h-full w-full overflow-hidden rounded-b">
+            <div className="h-auto w-full overflow-hidden rounded-b">
               <div className="bg-black max-h-full h-full p-2 w-full text-left font-light">
-                {stdout || "Aucune sortie après l'execution de ce code."}
+                <span className="whitespace-pre">
+                  {stdout || "Aucune sortie après l'execution de ce code."}
+                </span>
               </div>
             </div>
           </div>
