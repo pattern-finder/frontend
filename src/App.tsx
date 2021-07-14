@@ -10,6 +10,8 @@ import { LoginPage } from './pages/LoginPage';
 import { AuthProvider } from 'react-auth-kit';
 import { Toaster } from 'react-hot-toast';
 import { PrivateRoute } from 'react-auth-kit';
+import { Profile } from './pages/Profile';
+import { ModifyProfile } from './pages/ModifyProfile';
 import { CreateChallenge } from './pages/CreateChallenge';
 
 export const App = () => {
@@ -23,7 +25,7 @@ export const App = () => {
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <main>
+          <main className="h-screen w-full pt-16">
             <Switch>
               <Route path="/sign-up" exact component={LoginPage} />
               <Route path="/challenges" exact component={ChallengeListPage} />
@@ -53,6 +55,8 @@ export const App = () => {
                 component={ChallengePage}
                 loginPath="/sign-up"
               />
+              <Route path="/profile/:id" exact component={Profile} />
+              <Route path="/edit/profile" exact component={ModifyProfile} />
             </Switch>
           </main>
         </div>

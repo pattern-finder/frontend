@@ -11,3 +11,5 @@ services:
     environment: 
       REACT_APP_API_EXTERNAL_HOST: ${API_EXTERNAL_HOST}
       REACT_APP_FRONTEND_EXTERNAL_PORT: ${FRONTEND_EXTERNAL_PORT}
+    env_file:
+      - .env

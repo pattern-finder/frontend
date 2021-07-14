@@ -9,7 +9,7 @@ function Navbar() {
   const isAuth = useIsAuthenticated();
 
   return (
-    <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600">
+    <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600 fixed w-full z-50">
       <Link
         to="/"
         className="col-span-6 text-left  max-h-full font-sans text-3xl flex flex-row"
