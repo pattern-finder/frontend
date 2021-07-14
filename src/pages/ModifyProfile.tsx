@@ -1,182 +1,160 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
 import icone from '../assets/profile-icon.png';
-import { useAuthUser, useIsAuthenticated } from 'react-auth-kit';
+import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 
 // import { ChallengeListitem } from '../components/ChallengeListItem';
 
 type ProfileAttributes = {
   _id: string;
   username: string;
-  // password: string;
   email: string;
-  icone: string;
+  avatarUrl: string;
 };
 
 export const ModifyProfile = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [image, setImage] = useState([] as File[]);
+  const [image, setImage] = useState(undefined as unknown as File);
+  const [currentImage, setCurrentImage] = useState('' as string);
 
   const getUser = useAuthUser();
-  const [user, setUser] = useState({} as ProfileAttributes);
-  const isAuth = useIsAuthenticated();
-
-  const userTest = getUser();
-  console.log(userTest);
+  const getAuthToken = useAuthHeader();
 
   async function save() {
-    const toastId = toast.loading('Creating user...');
-    Axios.post('/users', { username, password })
-      .then(
-        ({
-          data: {
-            content: { access_token },
-          },
-        }) => {
-          // const header: { alg: string, typ: string } = JSON.parse(atob(access_token.split('.')[0]))
-          const userInfo: { username: string; sub: string; iat: number } =
-            JSON.parse(atob(access_token.split('.')[1]));
-          console.log(userInfo);
-        },
-      )
+    const toastId = toast.loading('Updating user...');
+
+    const params = new FormData();
+    email && params.append('email', email);
+    image && params.append('avatar', image);
+
+    if (password) {
+      if (password !== confirmPassword) {
+        toast.error("Passwords don't match.", { id: toastId });
+        return;
+      } else {
+        params.append('password', password);
+      }
+    }
+
+    Axios.put('/users', params, {
+      headers: {
+        Authorization: getAuthToken(),
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((_) => {
+        toast.success('Profile modified successfully! :)', { id: toastId });
+      })
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`Could not ...: ${err.response.data.message}`, {
+          toast.error(`Could not update user : ${err.response.data.message}`, {
             id: toastId,
           });
         } else {
-          toast.error(`Could not ...: ${err}`, { id: toastId });
+          toast.error(`Could not update user : ${err}`, { id: toastId });
         }
       });
   }
 
-  // useState(() => {
-  //   setUser(userTest?.content);
-  // });
-
   useEffect(() => {
-    const fetchUsers = async () => {
-      Axios.get('/users')
-        .then(({ data }) => {
-          data.content.map((userProfile: ProfileAttributes) => {
-            if(userTest?.sub == userProfile._id) setUser(userProfile)
-          })
-        })
-        .catch((err) => {
-          if (err.isAxiosError) {
-            toast.error(`Could not load profile: ${err.response.data.message}`);
-          } else {
-            toast.error(`Could not load profile: ${err}`);
-          }
-        });
-    };
-
-    fetchUsers();
+    Axios.get(`/users/${getUser()?.sub}`)
+      .then(({ data }) => {
+        const user: ProfileAttributes = data.content;
+        setUsername(user.username);
+        setEmail(user.email);
+        setCurrentImage(user.avatarUrl);
+      })
+      .catch((err) => {
+        if (err.isAxiosError) {
+          toast.error(`Could not load profile: ${err.response.data.message}`);
+        } else {
+          toast.error(`Could not load profile: ${err}`);
+        }
+      });
   }, []);
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = [...image];
+    let file = image;
 
     if (e.target.files && e.target.files?.length > 0) {
-      files.push(e.target.files[0]);
+      file = e.target.files[0];
     }
 
-    setImage(files);
-  }
-
-  function removeImage(index: number) {
-    const currentImages = [...image];
-    currentImages.splice(index, 1);
-
-    setImage(currentImages);
+    setImage(file);
   }
 
   return (
-    <div className="v-auto h-auto text-center bg-gray-600 overflow-hidden">
-      <div className="header">Profile</div>
-
-      <div className="content">
-        <div className="form">
+    <div className="grid justify-items-center bg-gray-800 p-10">
+      <div className="bg-gray-600 rounded h-min px-16 py-6 transition-all relative">
         <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
           {/*<div className="h-auto text-center bg-gray-600 rounded p-5">*/}
           <img
+            alt="profile"
             className="max-h-full h-20 object-contain bg-cover bg-center mx-auto"
-            src={icone}
+            src={(image && URL.createObjectURL(image)) || currentImage || icone}
           />
-          <div className="grid grid-cols-5 gap-4 rounded m-5">
-            {image.map((image, index) => (
-              <div
-                key={`image-${index}`}
-                className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden"
-              >
-                <button
-                  className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
-                  onClick={(_) => removeImage(index)}
-                >
-                  <i className="fas fa-times" />
-                </button>
-                <div className="flex h-full">
-                  <img
-                    alt="user defined"
-                    className="w-full max-h-full object-contain m-auto p-4"
-                    src={URL.createObjectURL(image)}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="text-2xl font-bold text-center mb-8">{username}</div>
 
           <label className="w-32 flex flex-col items-center p-5 bg-blue-500 hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
             <i className="fas fa-cloud-upload-alt fa-2x"></i>
-            <span className="mt-2 text-base ">Browse</span>
-            <input type="file" className="hidden" accept="image/*" onChange={onFileChange} />
+            <span className="mt-2 text-base ">Browse for an avatar</span>
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={onFileChange}
+            />
           </label>
-          </div>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              className="text-black"
-              alt={user.username}
-              type="text"
-              name="username"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              className="text-black"
-              alt=""
-              type="password"
-              name="password"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Email</label>
-            <input
-              className="text-black"
-              type="text"
-              name="email"
-              placeholder="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+        </div>
+        <div className="flex flex-col items-start w-auto p-4">
+          <label htmlFor="email">Email</label>
+          <input
+            className="text-black rounded-md py-1 px-2"
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+        </div>
+        <div className="flex flex-col items-start w-auto p-4">
+          <label htmlFor="password">Password</label>
+          <input
+            className="text-black rounded-md py-1 px-2"
+            type="password"
+            name="password"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col items-start w-auto p-4">
+          <label htmlFor="confirm-password">Confirm password</label>
+          <input
+            className="text-black rounded-md py-1 px-2"
+            type="password"
+            name="confirm-password"
+            placeholder="confirm password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+
+        <div className="w-full flex p-6">
+          <button
+            onClick={(e) => save()}
+            type="button"
+            className="bg-blue-500 hover:bg-blue-700 rounded-lg px-6 py-2 m-auto"
+          >
+            Save
+          </button>
         </div>
       </div>
-      {/*<div className="footer">
-        <Link to="/" className="nav-links"> */}
-        <button onClick={(e) => save()} type="button" className="bg-blue-500 rounded-lg px-6 py-2">
-          Save
-        </button>
-      {/*</div>*/}
     </div>
   );
 };

@@ -25,7 +25,7 @@ export const App = () => {
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <main>
+          <main className="h-screen w-full pt-16">
             <Switch>
               <Route path="/sign-up" exact component={LoginPage} />
               <Route path="/challenges" exact component={ChallengeListPage} />
@@ -55,8 +55,8 @@ export const App = () => {
                 component={ChallengePage}
                 loginPath="/sign-up"
               />
-              <Route path="/profile" exact component={Profile} />
-              <Route path="/profile/modif" exact component={ModifyProfile} />
+              <Route path="/profile/:id" exact component={Profile} />
+              <Route path="/edit/profile" exact component={ModifyProfile} />
             </Switch>
           </main>
         </div>
