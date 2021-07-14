@@ -10,10 +10,10 @@ interface ProfileAttributes {
 
 export const ProfileElements = ({
   profile: { _id, username, email },
-}:{
+}: {
   profile: ProfileAttributes;
 }) => {
-  return(
+  return (
     <div className="username">
       <p> Test {username} </p>
     </div>

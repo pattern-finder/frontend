@@ -12,7 +12,6 @@ import { PrivateRoute } from 'react-auth-kit';
 import { Profile } from './pages/Profile';
 import { ModifyProfile } from './pages/ModifyProfile';
 
-
 export const App = () => {
   return (
     <AuthProvider
