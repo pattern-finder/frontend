@@ -12,7 +12,6 @@ import { Toaster } from 'react-hot-toast';
 import { PrivateRoute } from 'react-auth-kit';
 import { Profile } from './pages/Profile';
 import { ModifyProfile } from './pages/ModifyProfile';
-
 import { CreateChallenge } from './pages/CreateChallenge';
 
 export const App = () => {
