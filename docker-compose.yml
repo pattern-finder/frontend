@@ -1,12 +1,13 @@
-version: "3.4"
+version: '3.4'
 services:
   picspy-front:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "${FRONTEND_EXTERNAL_PORT}:3000"
+      - '${FRONTEND_EXTERNAL_PORT}:3000'
     volumes:
       - ./src:/usr/src/app/src
-    env_file: 
-      - .env
+    environment: 
+      REACT_APP_API_EXTERNAL_HOST: ${API_EXTERNAL_HOST}
+      REACT_APP_FRONTEND_EXTERNAL_PORT: ${FRONTEND_EXTERNAL_PORT}

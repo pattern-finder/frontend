@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import loginImg from '../assets/login.svg';
 import { useSignIn } from 'react-auth-kit';
 import { useState } from 'react';
@@ -14,7 +13,7 @@ export const LoginForm = () => {
   const [redirect, setRedirect] = useState(false);
 
   async function login() {
-    const toastId = toast.loading('Creating user...');
+    const toastId = toast.loading('Logging in...');
     Axios.post('/auth/login', { username, password })
       .then(
         ({
@@ -25,11 +24,10 @@ export const LoginForm = () => {
           // const header: { alg: string, typ: string } = JSON.parse(atob(access_token.split('.')[0]))
           const userInfo: { username: string; sub: string; iat: number } =
             JSON.parse(atob(access_token.split('.')[1]));
-          console.log(userInfo);
           if (
             signIn({
               token: access_token,
-              expiresIn: 30,
+              expiresIn: userInfo.iat,
               tokenType: 'Bearer',
               authState: userInfo,
             })
@@ -45,7 +43,7 @@ export const LoginForm = () => {
       )
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`Could not login: ${err.response.data.message}`, {
+          toast.error(`Could not login: ${err.response?.data.message}`, {
             id: toastId,
           });
         } else {

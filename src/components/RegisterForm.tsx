@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import loginImg from '../assets/login.svg';
 import { useState } from 'react';
 import Axios from '../axios-config';
