@@ -1,5 +1,5 @@
 import React from 'react';
-import loginImg from '../assets/login.svg';
+import picspyLogo from '../assets/PicSpyLogo.png';
 import { useSignIn } from 'react-auth-kit';
 import { useState } from 'react';
 import Axios from '../axios-config';
@@ -58,11 +58,11 @@ export const LoginForm = () => {
 
   return (
     <div className="base-container">
-      <div className="header">Login</div>
       <div className="content">
-        <div className="image">
-          <img alt="Login" src={loginImg} />
+        <div className="image h-32">
+          <img className="object-contain" alt="Login" src={picspyLogo} />
         </div>
+        <div className="header text-center">Login</div>
         <div className="form">
           <div className="form-group">
             <label htmlFor="username">Username</label>
