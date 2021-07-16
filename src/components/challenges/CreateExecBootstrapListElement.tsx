@@ -51,7 +51,8 @@ export const CreateExecBootstrapListElement = ({
           <h2 className="text-base mb-2">Tests implementations</h2>
           <div className="rounded-lg overflow-hidden flex flex-col justify-center items-center">
             <Editor
-              defaultLanguage="bash"
+              language={language}
+              defaultLanguage={language}
               height="40vh"
               // defaultValue="// some comment"
               onChange={(value) => {
@@ -66,7 +67,8 @@ export const CreateExecBootstrapListElement = ({
           <h2 className="text-base mb-2">User function wireframe</h2>
           <div className="rounded-lg overflow-hidden flex flex-col justify-center items-center">
             <Editor
-              defaultLanguage="bash"
+              language={language}
+              defaultLanguage={language}
               height="40vh"
               // defaultValue="// some comment"
               onChange={(value) => {
