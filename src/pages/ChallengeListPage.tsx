@@ -32,9 +32,7 @@ export const ChallengeListPage = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-4 m-5">
-        {
-          challenges.length === 0 && <span>Nothing to show here.</span>
-        }
+        {challenges.length === 0 && <span>Nothing to show here.</span>}
         {challenges.map((challenge, index) => (
           <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
         ))}
