@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 export const Carousel = (props: { picturesUrls: { file: string }[] }) => {
   const [index, setIndex] = useState(0);
-  console.log(props);
 
   function nextImage() {
     const currentIndex = index;

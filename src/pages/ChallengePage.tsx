@@ -77,7 +77,6 @@ export const ChallengePage = (props: {
       },
     )
       .then(({ data }) => {
-        console.log(data);
         toast.success(`Successfully ran the code.`, {
           id: toastId,
         });
