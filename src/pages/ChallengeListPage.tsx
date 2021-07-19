@@ -12,7 +12,6 @@ export const ChallengeListPage = () => {
     const fetchChallenges = async () => {
       Axios.get('/challenges')
         .then(({ data }) => {
-          console.log(data);
           setChallenges(data.content);
         })
         .catch((err) => {
