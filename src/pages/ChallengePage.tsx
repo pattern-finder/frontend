@@ -7,13 +7,14 @@ import Axios from '../axios-config';
 import { useAuthHeader } from 'react-auth-kit';
 import { Carousel } from '../components/challenges/Carousel';
 import toast from 'react-hot-toast';
+import { editor } from 'monaco-editor';
 
 type Challenge = {
   _id: string;
   name: string;
   instructions: string;
   pictures: { file: string }[];
-  execBootstraps: { functionTemplate: string; language: string }[];
+  execBootstraps: { tests: string, functionTemplate: string; language: string }[];
 };
 
 export const ChallengePage = (props: {
@@ -23,6 +24,8 @@ export const ChallengePage = (props: {
   const [code, setCode] = useState('');
 
   const [stdout, setStdout] = useState('STDOUT');
+
+  const [startLine, setStartLine] = useState(0);
 
   const authHeader = useAuthHeader();
 
@@ -34,6 +37,8 @@ export const ChallengePage = (props: {
         headers: { Authorization: authHeader() },
       });
       setChallenge(content);
+      const testsString = (content as Challenge).execBootstraps.find(eb => eb.language === props.match.params.language)?.tests
+      setStartLine(testsString?.split('\n')?.length || 0)
     };
 
     fetchChallenge(props.match.params.id);
@@ -105,6 +110,7 @@ export const ChallengePage = (props: {
           <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center">
             <div className="relative max-h-full w-full">
               <Editor
+                options={{lineNumbers: (lineNumber: number) => { return (lineNumber + startLine).toString()}}}
                 language={props.match.params.language}
                 defaultLanguage={props.match.params.language}
                 height="80vh"
