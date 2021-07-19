@@ -45,7 +45,7 @@ export const ChallengeListitem = ({
               <h2> {name} </h2>
             </div>
             <div className="overflow-hidden">
-                {`${instructions.substring(0, 64)}...`}
+              {`${instructions.substring(0, 64)}...`}
             </div>
           </div>
           <div className="flex flex-row mt-4 text-sm">
