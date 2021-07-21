@@ -27,6 +27,7 @@ export const ChallengePage = (props: {
   const [code, setCode] = useState('');
 
   const [stdout, setStdout] = useState('STDOUT');
+  const [stderr, setStderr] = useState('STDERR');
 
   const [startLine, setStartLine] = useState(0);
 
@@ -81,11 +82,8 @@ export const ChallengePage = (props: {
           id: toastId,
         });
 
-        if (data.content.stdout === '') {
-          setStdout(data.content.stderr);
-        } else {
-          setStdout(data.content.stdout);
-        }
+        setStderr(data.content.stderr);
+        setStdout(data.content.stdout);
       })
       .catch((err) => {
         if (err.isAxiosError) {
@@ -100,9 +98,9 @@ export const ChallengePage = (props: {
 
   return (
     <>
-      <div className="min-h-screen py-6 flex flex-col justify-center">
-        <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
-          <div className="bg-gray-600 rounded m-15 p-10 col-span-2">
+      <div className="py-6 flex flex-col justify-center">
+        <div className="grid grid-cols-12 gap-4 rounded px-5 h-screen">
+          <div className="bg-gray-600 rounded m-15 p-10 col-span-9">
             <div className="font-bold text-xl mb-2 flex flex-row">
               {challenge.name}
               <div className="bg-blue-500 py-1 px-2 rounded-full text-sm w-min ml-2">
@@ -111,7 +109,11 @@ export const ChallengePage = (props: {
             </div>
             <p>{challenge.instructions}</p>
           </div>
-          <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center">
+          <Carousel
+            className="h-full flex flex-col items-center bg-gray-600 rounded p-5 col-span-3"
+            picturesUrls={challenge.pictures}
+          />
+          <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center col-span-6">
             <div className="relative max-h-full w-full">
               <Editor
                 options={{
@@ -136,15 +138,19 @@ export const ChallengePage = (props: {
                 Run
               </button>
             </div>
-            <div className="h-auto w-full overflow-hidden rounded-b">
-              <div className="bg-black max-h-full h-full p-2 w-full text-left font-light">
-                <span className="whitespace-pre">
-                  {stdout || "Aucune sortie après l'execution de ce code."}
-                </span>
-              </div>
+          </div>
+          <div className="h-auto w-full overflow-hidden rounded col-span-6 divide-y-4 divide-gray-600 divide-dotted">
+            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light">
+              <span className="whitespace-pre">
+                {stderr || "Aucune erreur durant l'execution de ce code."}
+              </span>
+            </div>
+            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light">
+              <span className="whitespace-pre">
+                {stdout || "Aucune sortie après l'execution de ce code."}
+              </span>
             </div>
           </div>
-          <Carousel picturesUrls={challenge.pictures} />
         </div>
       </div>
     </>
