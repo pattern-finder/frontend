@@ -19,7 +19,7 @@ export const Carousel = (props: {
   return (
     <div className={props.className}>
       <img
-        className="h- w-80 object-contain m-auto"
+        className="h-4/6 w-80 object-contain m-auto"
         alt="pattern"
         src={props.picturesUrls && props.picturesUrls[index].file}
       />
