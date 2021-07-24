@@ -7,6 +7,7 @@ import Axios from '../axios-config';
 import { useAuthHeader } from 'react-auth-kit';
 import { Carousel } from '../components/challenges/Carousel';
 import toast from 'react-hot-toast';
+import { AttemptsList } from '../components/challenges/AttemptsList';
 
 type Challenge = {
   _id: string;
@@ -14,6 +15,7 @@ type Challenge = {
   instructions: string;
   pictures: { file: string }[];
   execBootstraps: {
+    _id: string;
     tests: string;
     functionTemplate: string;
     language: string;
@@ -25,6 +27,7 @@ export const ChallengePage = (props: {
 }) => {
   const [challenge, setChallenge] = useState({} as Challenge);
   const [code, setCode] = useState('');
+  const [bootstrap, setBootstrap] = useState({} as { _id: string});
 
   const [stdout, setStdout] = useState('STDOUT');
   const [stderr, setStderr] = useState('STDERR');
@@ -41,10 +44,11 @@ export const ChallengePage = (props: {
         headers: { Authorization: authHeader() },
       });
       setChallenge(content);
-      const testsString = (content as Challenge).execBootstraps.find(
+      const bootstrap = (content as Challenge).execBootstraps.find(
         (eb) => eb.language === props.match.params.language,
-      )?.tests;
-      setStartLine(testsString?.split('\n')?.length || 0);
+      );
+      setStartLine(bootstrap?.tests?.split('\n')?.length || 0);
+      setBootstrap(bootstrap || {} as { _id: string })
     };
 
     fetchChallenge(props.match.params.id);
@@ -67,9 +71,8 @@ export const ChallengePage = (props: {
     Axios.post(
       `/attempts`,
       {
-        challenge: challenge._id.split('/').pop(),
+        execBootstrap: bootstrap?._id,
         code,
-        language: props.match.params.language,
       },
       {
         headers: {
@@ -99,8 +102,8 @@ export const ChallengePage = (props: {
   return (
     <>
       <div className="py-6 flex flex-col justify-center">
-        <div className="grid grid-cols-12 gap-4 rounded px-5 h-screen">
-          <div className="bg-gray-600 rounded m-15 p-10 col-span-9">
+        <div className="grid grid-cols-12 gap-2 rounded px-5 h-screen">
+          <div className="bg-gray-600 rounded m-15 p-4 col-span-9">
             <div className="font-bold text-xl mb-2 flex flex-row">
               {challenge.name}
               <div className="bg-blue-500 py-1 px-2 rounded-full text-sm w-min ml-2">
@@ -110,7 +113,7 @@ export const ChallengePage = (props: {
             <p>{challenge.instructions}</p>
           </div>
           <Carousel
-            className="h-full flex flex-col items-center bg-gray-600 rounded p-5 col-span-3"
+            className="h-64 max-h-64 flex flex-col items-center bg-gray-600 rounded p-5 col-span-3"
             picturesUrls={challenge.pictures}
           />
           <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center col-span-6">
@@ -132,25 +135,26 @@ export const ChallengePage = (props: {
               />
 
               <button
-                className="absolute top-0 right-0 bg-blue-500 px-2 rounded-bl-lg h-10 w-20 "
+                className="absolute bottom-0 right-0 bg-blue-500 px-2 rounded-tl-lg h-10 w-20 "
                 onClick={runOnClick}
               >
                 Run
               </button>
             </div>
           </div>
-          <div className="h-auto w-full overflow-hidden rounded col-span-6 divide-y-4 divide-gray-600 divide-dotted">
-            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light">
-              <span className="whitespace-pre">
+          <div className="h-auto w-full overflow-hidden rounded-lg col-span-6 divide-y-4 divide-gray-800 divide-dotted">
+            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light overflow-y-scroll">
+              <span className="whitespace-pre-line">
                 {stderr || "Aucune erreur durant l'execution de ce code."}
               </span>
             </div>
-            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light">
-              <span className="whitespace-pre">
+            <div className="bg-black max-h-1/2 h-1/2 p-2 w-full text-left font-light overflow-y-scroll">
+              <span className="whitespace-pre-line">
                 {stdout || "Aucune sortie après l'execution de ce code."}
               </span>
             </div>
           </div>
+          <AttemptsList className="col-span-12" execBootstrapId={bootstrap._id}/>
         </div>
       </div>
     </>
