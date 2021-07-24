@@ -7,7 +7,7 @@ import Axios from '../axios-config';
 import { useAuthHeader } from 'react-auth-kit';
 import { Carousel } from '../components/challenges/Carousel';
 import toast from 'react-hot-toast';
-import { AttemptsList } from '../components/challenges/AttemptsList';
+import { AttemptsCarousel } from '../components/challenges/AttemptsCarousel';
 
 type Challenge = {
   _id: string;
@@ -154,7 +154,7 @@ export const ChallengePage = (props: {
               </span>
             </div>
           </div>
-          <AttemptsList
+          <AttemptsCarousel
             className="col-span-12"
             execBootstrapId={bootstrap._id}
           />
