@@ -27,7 +27,7 @@ export const ChallengePage = (props: {
 }) => {
   const [challenge, setChallenge] = useState({} as Challenge);
   const [code, setCode] = useState('');
-  const [bootstrap, setBootstrap] = useState({} as { _id: string});
+  const [bootstrap, setBootstrap] = useState({} as { _id: string });
 
   const [stdout, setStdout] = useState('STDOUT');
   const [stderr, setStderr] = useState('STDERR');
@@ -48,7 +48,7 @@ export const ChallengePage = (props: {
         (eb) => eb.language === props.match.params.language,
       );
       setStartLine(bootstrap?.tests?.split('\n')?.length || 0);
-      setBootstrap(bootstrap || {} as { _id: string })
+      setBootstrap(bootstrap || ({} as { _id: string }));
     };
 
     fetchChallenge(props.match.params.id);
@@ -154,7 +154,10 @@ export const ChallengePage = (props: {
               </span>
             </div>
           </div>
-          <AttemptsList className="col-span-12" execBootstrapId={bootstrap._id}/>
+          <AttemptsList
+            className="col-span-12"
+            execBootstrapId={bootstrap._id}
+          />
         </div>
       </div>
     </>

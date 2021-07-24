@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useAuthUser } from 'react-auth-kit';
 import Axios from '../../axios-config';
@@ -75,7 +77,9 @@ export const AttemptsList = (props: {
         }`}
       >
         <div className="flex h-3/4 w-3/4 bg-gray-600 rounded text-center justify-middle z-50">
-          <div className=" m-auto">{attempts[shownAttemptIndex].stdout || 'blblblblbl'}</div>
+          <div className=" m-auto">
+            {attempts[shownAttemptIndex].stdout || 'blblblblbl'}
+          </div>
         </div>
       </div>
     </div>
