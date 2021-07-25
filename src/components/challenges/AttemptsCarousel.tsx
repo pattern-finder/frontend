@@ -21,6 +21,7 @@ export type AttemptProps = {
 export const AttemptsCarousel = (props: {
   execBootstrapId?: string;
   className?: string;
+  onLoadCode: (code: string) => void;
 }) => {
   const [attempts, setAttempts] = useState([] as AttemptProps[]);
   const [shownAttemptIndex, setShownAttemptIndex] = useState(0);
@@ -118,7 +119,16 @@ export const AttemptsCarousel = (props: {
         </div>
 
         <div></div>
-        <div></div>
+
+        <div className="flex">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-lg m-auto"
+            onClick={(_) => props.onLoadCode(attempts[shownAttemptIndex].code)}
+          >
+            Load code
+          </button>
+        </div>
+
         <div className="flex flex-col">
           <div className="grid grid-flow-col grid-rows-2 gap-2">
             <button

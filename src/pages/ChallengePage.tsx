@@ -155,6 +155,9 @@ export const ChallengePage = (props: {
             </div>
           </div>
           <AttemptsCarousel
+            onLoadCode={(code) => {
+              setCode(code);
+            }}
             className="col-span-12"
             execBootstrapId={bootstrap._id}
           />
