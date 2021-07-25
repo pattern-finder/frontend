@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-export const Carousel = (props: { picturesUrls: { file: string }[] }) => {
+export const Carousel = (props: {
+  picturesUrls: { file: string }[];
+  className: string;
+}) => {
   const [index, setIndex] = useState(0);
-  console.log(props);
 
   function nextImage() {
     const currentIndex = index;
@@ -15,9 +17,9 @@ export const Carousel = (props: { picturesUrls: { file: string }[] }) => {
   }
 
   return (
-    <div className="h-full flex flex-col items-center bg-gray-600 rounded p-5">
+    <div className={props.className}>
       <img
-        className="h- w-80 object-contain m-auto"
+        className="h-4/6 w-80 object-contain m-auto"
         alt="pattern"
         src={props.picturesUrls && props.picturesUrls[index].file}
       />

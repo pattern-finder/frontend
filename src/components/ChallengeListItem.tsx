@@ -38,18 +38,29 @@ export const ChallengeListitem = ({
 
   return (
     <div className="w-full bg-gray-600 rounded">
-      <div className="grid grid-cols-2 gap-4 rounded  ">
-        <div className="rounded m-15 px-4 py-2 col-span-2">
-          <div className="image">
-            <div className="Name">
-              <h2> {name} </h2>
-            </div>
-            <div className="instructions">
-              <p> {instructions} </p>
-            </div>
+      <div className="grid grid-cols-2 gap-4 rounded h-full">
+        <div className="rounded m-15 px-4 py-2 col-span-2 flex flex-col">
+          <h2 className="font-bold"> {name} </h2>
+          <div className="overflow-hidden h-auto">
+            {`${instructions.substring(0, 64)}...`}
           </div>
-          <div className="flex flex-row mt-4 text-sm">
-            <div className="ml-auto flex flex-row text-sm ">
+          <div className="flex flex-row mt-4 text-sm mt-auto pt-4">
+            <div className="flex flex-row grid-cols-8 gap-2 w-full">
+              {execBootstraps.map((bs) => (
+                <Link to={`/challenges/${_id}/${bs.language}`}>
+                  <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-2 py-1 bg-blue-500 hover:bg-blue-700">
+                    <span className="text-center">{bs.language}</span>
+                    {/* {false ? (
+                        <i className="fas fa-check pl-2" />
+                      ) : (
+                        <i className="fas fa-times pl-2" />
+                      )} */}
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="ml-auto flex flex-row text-sm">
               <div className="my-auto">Created by {user.username}</div>
               <img
                 className=" max-h-full h-8 object-contain"

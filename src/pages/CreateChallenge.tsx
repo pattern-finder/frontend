@@ -60,7 +60,6 @@ export const CreateChallenge = (props: {
         data.content.execBootstraps.forEach((bs: ExecBootstrap) => {
           bootstrapsObject[bs.language] = bs;
         });
-        console.log(bootstrapsObject);
         setBootstraps(bootstrapsObject);
 
         setUsedLanguages(
