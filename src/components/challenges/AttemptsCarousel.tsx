@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuthUser } from 'react-auth-kit';
-import Axios from '../../axios-config';
 
 export type AttemptProps = {
   code: string;
@@ -19,11 +18,10 @@ export type AttemptProps = {
 };
 
 export const AttemptsCarousel = (props: {
-  execBootstrapId?: string;
+  attempts: AttemptProps[];
   className?: string;
   onLoadCode: (code: string) => void;
 }) => {
-  const [attempts, setAttempts] = useState([] as AttemptProps[]);
   const [shownAttemptIndex, setShownAttemptIndex] = useState(0);
 
   const [showStderr, setShowStderr] = useState(false);
@@ -31,24 +29,7 @@ export const AttemptsCarousel = (props: {
 
   const currentUser = useAuthUser();
 
-  useEffect(() => {
-    const fetchAttempts = async () => {
-      const {
-        data: { content },
-      } = await Axios.get(
-        `attempts/find-by-user-and-bootstrap/${currentUser()?.sub}/${
-          props.execBootstrapId
-        }`,
-      );
-      setAttempts(content);
-    };
-
-    if (props.execBootstrapId) {
-      fetchAttempts();
-    }
-  }, [props.execBootstrapId]);
-
-  if (attempts.length === 0) {
+  if (props.attempts.length === 0) {
     return (
       <div
         className={`h-full w-full bg-gray-600 rounded grid grid-flow-col grid-cols-8 grid-cols-1 ${props.className}`}
@@ -72,41 +53,44 @@ export const AttemptsCarousel = (props: {
         <div className="grid grid-flow-col grid-rows-2 col-span-2">
           <div className="font-bold"> Attempted at : </div>
           <div className="">
-            {' '}
-            {new Date(attempts[shownAttemptIndex].createdAt).toUTCString() ||
-              'N/A'}{' '}
+            {new Date(
+              props.attempts[shownAttemptIndex].createdAt,
+            ).toUTCString() || 'N/A'}
           </div>
         </div>
         <div className="grid grid-flow-col grid-rows-2">
           <div className="font-bold"> Time : </div>
-          <div className=""> {attempts[shownAttemptIndex].time || 'N/A'} </div>
+          <div className="">
+            {' '}
+            {props.attempts[shownAttemptIndex].time || 'N/A'}{' '}
+          </div>
         </div>
         <div className="grid grid-flow-col grid-rows-2">
           <div className="font-bold"> Time wall : </div>
           <div className="">
             {' '}
-            {attempts[shownAttemptIndex].time_wall || 'N/A'}{' '}
+            {props.attempts[shownAttemptIndex].time_wall || 'N/A'}{' '}
           </div>
         </div>
         <div className="grid grid-flow-col grid-rows-2">
           <div className="font-bold"> Used memory : </div>
           <div className="">
             {' '}
-            {attempts[shownAttemptIndex].used_memory || 'N/A'}{' '}
+            {props.attempts[shownAttemptIndex].used_memory || 'N/A'}{' '}
           </div>
         </div>
         <div className="grid grid-flow-col grid-rows-2">
           <div className="font-bold"> CSW volontary : </div>
           <div className="">
             {' '}
-            {attempts[shownAttemptIndex].csw_voluntary || 'N/A'}{' '}
+            {props.attempts[shownAttemptIndex].csw_voluntary || 'N/A'}{' '}
           </div>
         </div>
         <div className="grid grid-flow-col grid-rows-2">
           <div className="font-bold"> CSW forced : </div>
           <div className="">
             {' '}
-            {attempts[shownAttemptIndex].csw_forced || 'N/A'}{' '}
+            {props.attempts[shownAttemptIndex].csw_forced || 'N/A'}{' '}
           </div>
         </div>
 
@@ -114,7 +98,9 @@ export const AttemptsCarousel = (props: {
           <div className="font-bold"> Phase : </div>
           <div className="flex flex-cols">
             <div className="bg-green-500 rounded-full w-5 h-5" />
-            <p className="px-2">{attempts[shownAttemptIndex].phase || 'N/A'}</p>
+            <p className="px-2">
+              {props.attempts[shownAttemptIndex].phase || 'N/A'}
+            </p>
           </div>
         </div>
 
@@ -123,7 +109,9 @@ export const AttemptsCarousel = (props: {
         <div className="flex">
           <button
             className="bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-lg m-auto"
-            onClick={(_) => props.onLoadCode(attempts[shownAttemptIndex].code)}
+            onClick={(_) =>
+              props.onLoadCode(props.attempts[shownAttemptIndex].code)
+            }
           >
             Load code
           </button>
@@ -155,7 +143,10 @@ export const AttemptsCarousel = (props: {
               <i className="fas fa-chevron-up ml-auto"></i>
             </button>
             <button
-              disabled={!attempts || shownAttemptIndex === attempts.length - 1}
+              disabled={
+                !props.attempts ||
+                shownAttemptIndex === props.attempts.length - 1
+              }
               className="bg-blue-500 hover:bg-blue-700 rounded m-auto w-full disabled:bg-blue-700 disabled:opacity-50"
               onClick={() => changeAttempt(1)}
             >
@@ -181,7 +172,7 @@ export const AttemptsCarousel = (props: {
           </button>
           <div className="h-full w-full flex overflow-y-scroll">
             <div className="m-auto whitespace-pre-line">
-              {attempts[shownAttemptIndex].stdout ||
+              {props.attempts[shownAttemptIndex].stdout ||
                 'No output for this execution'}
             </div>
           </div>
@@ -205,7 +196,7 @@ export const AttemptsCarousel = (props: {
           </button>
           <div className="h-full w-full flex overflow-y-scroll">
             <div className=" m-auto whitespace-pre-line">
-              {attempts[shownAttemptIndex].stdout ||
+              {props.attempts[shownAttemptIndex].stdout ||
                 'No error for this execution'}
             </div>
           </div>

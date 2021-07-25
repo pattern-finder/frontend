@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-// import './CodeRunning.scss';
-
 import Editor from '@monaco-editor/react';
 import Axios from '../axios-config';
-import { useAuthHeader } from 'react-auth-kit';
+import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 import { Carousel } from '../components/challenges/Carousel';
 import toast from 'react-hot-toast';
-import { AttemptsCarousel } from '../components/challenges/AttemptsCarousel';
+import {
+  AttemptProps,
+  AttemptsCarousel,
+} from '../components/challenges/AttemptsCarousel';
 
 type Challenge = {
   _id: string;
@@ -29,12 +30,50 @@ export const ChallengePage = (props: {
   const [code, setCode] = useState('');
   const [bootstrap, setBootstrap] = useState({} as { _id: string });
 
+  const [attempts, setAttempts] = useState([] as AttemptProps[]);
+
   const [stdout, setStdout] = useState('STDOUT');
   const [stderr, setStderr] = useState('STDERR');
 
   const [startLine, setStartLine] = useState(0);
 
   const authHeader = useAuthHeader();
+  const currentUser = useAuthUser();
+
+  useEffect(() => {
+    const fetchAttempts = async () => {
+      const {
+        data: { content },
+      } = await Axios.get(
+        `attempts/find-by-user-and-bootstrap/${currentUser()?.sub}/${
+          bootstrap._id
+        }`,
+      );
+      setAttempts(content);
+    };
+
+    if (bootstrap._id) {
+      fetchAttempts();
+    }
+  }, [bootstrap._id, stdout]);
+
+  useEffect(() => {
+    const fetchChallenge = async (id: string) => {
+      const {
+        data: { content },
+      } = await Axios.get(`/challenges/${id}`, {
+        headers: { Authorization: authHeader() },
+      });
+      setChallenge(content);
+      const bootstrap = (content as Challenge).execBootstraps.find(
+        (eb) => eb.language === props.match.params.language,
+      );
+      setStartLine(bootstrap?.tests?.split('\n')?.length || 0);
+      setBootstrap(bootstrap || ({} as { _id: string }));
+    };
+
+    fetchChallenge(props.match.params.id);
+  }, [props.match.params.id]);
 
   useEffect(() => {
     const fetchChallenge = async (id: string) => {
@@ -159,7 +198,7 @@ export const ChallengePage = (props: {
               setCode(code);
             }}
             className="col-span-12"
-            execBootstrapId={bootstrap._id}
+            attempts={attempts}
           />
         </div>
       </div>
