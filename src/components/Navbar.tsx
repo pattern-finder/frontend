@@ -9,7 +9,6 @@ function Navbar() {
   const signOut = useSignOut();
   const isAuth = useIsAuthenticated();
   const getUserSession = useAuthUser();
-  console.log(getUserSession()?.sub);
 
   return (
     <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600 fixed w-full z-50">
@@ -45,7 +44,10 @@ function Navbar() {
 
         {isAuth() && (
           <div className="m-auto">
-            <Link to="/profile/:id" className="nav-links">
+            <Link
+              to={`/profile/${getUserSession()?.sub}`}
+              className="nav-links"
+            >
               <i className="fas fa-info pr-2" />
               My profile
             </Link>

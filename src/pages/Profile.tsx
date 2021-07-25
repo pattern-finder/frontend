@@ -51,8 +51,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           data.content.forEach((c: ListChallengeEntity[]) => {
             const chList = data.content.filter(
               (ch: ListChallengeEntity) =>
-                ch.owner ===
-                `users/${props.match.params.id}`
+                ch.owner === `users/${props.match.params.id}`,
             );
             setChallenges(chList);
           });
