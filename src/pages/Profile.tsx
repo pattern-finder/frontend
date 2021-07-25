@@ -48,16 +48,12 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     const fetchChallenges = async () => {
       Axios.get('/challenges')
         .then(({ data }) => {
-          console.log(data);
-          data.content.map((c: ListChallengeEntity[]) => {
-            console.log(c);
+          data.content.forEach((c: ListChallengeEntity[]) => {
             const chList = data.content.filter(
               (ch: ListChallengeEntity) =>
                 ch.owner ===
-                'https://api.picspy.vagahbond.com/users/' +
-                  props.match.params.id,
+                `users/${props.match.params.id}`
             );
-            console.log(chList);
             setChallenges(chList);
           });
         })
@@ -73,7 +69,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     };
 
     fetchChallenges();
-  }, []);
+  }, [props.match.params.id]);
 
   return (
     <div className="h-auto w-full grid grid-flow-col grid-cols-12 gap-4 mb-4">

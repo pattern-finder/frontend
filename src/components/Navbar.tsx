@@ -2,7 +2,6 @@ import React from 'react';
 import { useIsAuthenticated, useSignOut, useAuthUser } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
 import picspyLogo from '../assets/PicSpyLogo.png';
-import { Profile } from '../pages/Profile';
 
 // import './Navbar.css';
 
