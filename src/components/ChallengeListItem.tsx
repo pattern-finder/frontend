@@ -49,23 +49,6 @@ export const ChallengeListitem = ({
             </div>
           </div>
           <div className="flex flex-row mt-4 text-sm">
-            <div>
-              <div className="flex flex-row grid-cols-8 gap-2 w-full">
-                {execBootstraps.map((bs) => (
-                  <Link to={`/challenges/${_id}/${bs.language}`}>
-                    <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-2 py-1 bg-blue-500 hover:bg-blue-700">
-                      <span className="text-center">{bs.language}</span>
-                      {/* {false ? (
-                        <i className="fas fa-check pl-2" />
-                      ) : (
-                        <i className="fas fa-times pl-2" />
-                      )} */}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
             <div className="ml-auto flex flex-row text-sm ">
               <div className="my-auto">Created by {user.username}</div>
               <img

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
 import icone from '../assets/profile-icon.png';
+import { ChallengeListitem } from '../components/ChallengeListItem';
 
 type ProfileAttributes = {
   _id: string;
@@ -14,8 +15,11 @@ type ProfileAttributes = {
 type ListChallengeEntity = {
   _id: string;
   name: string;
-  description: string;
-  execBootstraps: { language: string };
+  instructions: string;
+  execBootstraps: { language: string }[];
+  imageUrl: string;
+  done: boolean;
+  owner: string;
 };
 
 export const Profile = (props: { match: { params: { id: string } } }) => {
@@ -41,19 +45,34 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   }, [props.match.params.id]);
 
   useEffect(() => {
-    Axios.get('/challenges')
-      .then(({ data }) => {
-        setChallenges(data.content);
-      })
-      .catch((err) => {
-        if (err.isAxiosError) {
-          toast.error(
-            `Could not load challenges: ${err.response.data.message}`,
-          );
-        } else {
-          toast.error(`Could not load challenges: ${err}`);
-        }
-      });
+    const fetchChallenges = async () => {
+      Axios.get('/challenges')
+        .then(({ data }) => {
+          console.log(data);
+          data.content.map((c: ListChallengeEntity[]) => {
+            console.log(c);
+            const chList = data.content.filter(
+              (ch: ListChallengeEntity) =>
+                ch.owner ===
+                'https://api.picspy.vagahbond.com/users/' +
+                  props.match.params.id,
+            );
+            console.log(chList);
+            setChallenges(chList);
+          });
+        })
+        .catch((err) => {
+          if (err.isAxiosError) {
+            toast.error(
+              `Could not load challenges: ${err.response?.data.message}`,
+            );
+          } else {
+            toast.error(`Could not load challenges: ${err}`);
+          }
+        });
+    };
+
+    fetchChallenges();
   }, []);
 
   return (
@@ -77,8 +96,18 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-600 m-4 rounded h-auto col-span-10">
-        {challenges.map((challenge) => challenge.name)}
+      <div className="grid col-span-7 rounded m-4">
+        <div className="grid row-span-3 bg-gray-600 col-span-7 rounded m-4">
+          Progression
+        </div>
+        <div className="grid row-span-2 bg-gray-600 col-span-7 rounded m-4">
+          Statistiques
+        </div>
+      </div>
+      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4">
+        {challenges.map((challenge, index) => (
+          <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
+        ))}
       </div>
     </div>
   );

@@ -18,10 +18,10 @@ export const ChallengeListPage = () => {
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challegnes: ${err.response?.data.message}`,
+              `Could not load challenges: ${err.response?.data.message}`,
             );
           } else {
-            toast.error(`Could not load challegnes: ${err}`);
+            toast.error(`Could not load challenges: ${err}`);
           }
         });
     };

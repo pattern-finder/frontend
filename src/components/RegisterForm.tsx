@@ -116,6 +116,11 @@ export const RegisterForm = () => {
               type="password"
               placeholder="confirm-password"
               onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  createUser();
+                }
+              }}
             />
           </div>
         </div>

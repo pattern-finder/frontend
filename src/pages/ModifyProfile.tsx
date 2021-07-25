@@ -142,6 +142,11 @@ export const ModifyProfile = () => {
             name="confirm-password"
             placeholder="confirm password"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                save();
+              }
+            }}
           />
         </div>
 
