@@ -51,7 +51,7 @@ export const AttemptsCarousel = (props: {
   if (attempts.length === 0) {
     return (
       <div
-        className={`h-full w-full bg-gray-600 rounded grid grid-flow-col grid-cols-8 grid-cols-1 ${props.className}`}
+        className={`h-full w-full bg-gray-600 rounded grid grid-flow-col grid-cols-8 grid-cols-1 p-4 ${props.className}`}
       >
         No attempt were made yet.
       </div>
