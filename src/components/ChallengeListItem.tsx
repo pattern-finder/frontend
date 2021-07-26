@@ -62,11 +62,13 @@ export const ChallengeListitem = ({
 
             <div className="ml-auto flex flex-row text-sm">
               <div className="my-auto">Created by {user.username}</div>
+              <Link to={`/profile/${user._id}`}>
               <img
                 className=" max-h-full h-8 object-contain"
                 src={user.avatarUrl || picspyLogo}
                 alt="profile pic"
               />
+              </Link>
               {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/challenge/${_id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
