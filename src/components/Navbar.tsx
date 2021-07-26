@@ -69,13 +69,6 @@ function Navbar() {
             </Link>
           </div>
         )}
-
-        {/* <div className="m-auto">
-          <Link to="/About" className="nav-links">
-            <i className="fas fa-info pr-2" />
-            About
-          </Link>
-        </div> */}
       </div>
     </nav>
   );

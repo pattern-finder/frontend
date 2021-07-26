@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
 import icone from '../assets/profile-icon.png';
-import { ChallengeListitem } from '../components/ChallengeListItem';
+import {
+  ChallengeAttributes,
+  ChallengeListitem,
+} from '../components/ChallengeListItem';
 
 type ProfileAttributes = {
   _id: string;
@@ -12,19 +15,9 @@ type ProfileAttributes = {
   avatarUrl: string;
 };
 
-type ListChallengeEntity = {
-  _id: string;
-  name: string;
-  instructions: string;
-  execBootstraps: { language: string }[];
-  imageUrl: string;
-  done: boolean;
-  owner: string;
-};
-
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
-  const [challenges, setChallenges] = useState([] as ListChallengeEntity[]);
+  const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,15 +39,9 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      Axios.get('/challenges')
+      Axios.get(`/challenges/user/${props.match.params.id}`)
         .then(({ data }) => {
-          data.content.forEach((c: ListChallengeEntity[]) => {
-            const chList = data.content.filter(
-              (ch: ListChallengeEntity) =>
-                ch.owner === `users/${props.match.params.id}`,
-            );
-            setChallenges(chList);
-          });
+          setChallenges(data.content);
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -97,10 +84,15 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       <div className="grid bg-gray-600 col-span-7 rounded m-4 p-4">
         Statistiques
       </div>
-      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4 row-span-2">
-        {challenges.map((challenge, index) => (
-          <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
-        ))}
+      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4 p-4 row-span-2">
+        {challenges.length > 0
+          ? challenges.map((challenge, index) => (
+              <ChallengeListitem
+                challenge={challenge}
+                key={`challenge-${index}`}
+              />
+            ))
+          : 'This user did not create any challenges.'}
       </div>
     </div>
   );

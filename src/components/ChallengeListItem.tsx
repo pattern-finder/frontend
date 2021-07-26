@@ -5,7 +5,7 @@ import { useAuthUser } from 'react-auth-kit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-interface ChallengeAttributes {
+export interface ChallengeAttributes {
   _id: string;
   name: string;
   instructions: string;
@@ -37,7 +37,7 @@ export const ChallengeListitem = ({
   }, [owner]);
 
   return (
-    <div className="w-full bg-gray-600 rounded">
+    <div className="w-full bg-gray-600 rounded shadow-lg">
       <div className="grid grid-cols-2 gap-4 rounded h-full">
         <div className="rounded m-15 px-4 py-2 col-span-2 flex flex-col">
           <h2 className="font-bold"> {name} </h2>
@@ -46,7 +46,7 @@ export const ChallengeListitem = ({
           </div>
           <div className="flex flex-row mt-4 text-sm mt-auto pt-4">
             <div className="flex flex-row grid-cols-8 gap-2 w-full">
-              {execBootstraps.map((bs) => (
+              {(execBootstraps || []).map((bs) => (
                 <Link to={`/challenges/${_id}/${bs.language}`}>
                   <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-2 py-1 bg-blue-500 hover:bg-blue-700">
                     <span className="text-center">{bs.language}</span>
