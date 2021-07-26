@@ -30,8 +30,7 @@ export const ChallengeListitem = ({
       .then(({ data }) => {
         setUser(data.content);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, [owner]);
 
   return (

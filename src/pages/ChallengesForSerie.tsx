@@ -11,10 +11,10 @@ export const ChallengesForSeries = () => {
   useEffect(() => {
     const fetchChallenges = async () => {
       var chaineGET = window.location.href;
-      var newString = chaineGET.split('=')
-      var id = newString[newString.length-1];
-      
-      Axios.get('/series/'+id)
+      var newString = chaineGET.split('=');
+      var id = newString[newString.length - 1];
+
+      Axios.get('/series/' + id)
         .then(({ data }) => {
           setChallenges(data.content.challenges);
         })

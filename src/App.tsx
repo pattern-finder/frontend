@@ -17,7 +17,7 @@ import { CreateSeries } from './pages/CreateSeries';
 import { Series } from './pages/SeriesChallenges';
 import { ChallengesForSeries } from './pages/ChallengesForSerie';
 
-export const App = () => { 
+export const App = () => {
   return (
     <AuthProvider
       authType={'cookie'}
@@ -67,7 +67,7 @@ export const App = () => {
                 component={Series}
                 loginPath="/sign-up"
               />
-              
+
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
               <Route path="/sign-up" exact component={LoginPage} />

@@ -12,7 +12,7 @@ export const Series = () => {
     const fetchChallenges = async () => {
       Axios.get('/series')
         .then(({ data }) => {
-            setSeries(data.content);
+          setSeries(data.content);
         })
         .catch((err) => {
           if (err.isAxiosError) {
