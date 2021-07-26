@@ -71,8 +71,8 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   }, [props.match.params.id]);
 
   return (
-    <div className="h-auto w-full grid grid-flow-col grid-cols-12 gap-4 mb-4">
-      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-2 rounded m-4">
+    <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 mb-4">
+      <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-gray-600 col-span-2 rounded m-4">
         <div className=" rounded h-min px-16 py-6">
           <img
             alt="profile"
@@ -91,15 +91,13 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
         </div>
       </div>
-      <div className="grid col-span-7 rounded m-4">
-        <div className="grid row-span-3 bg-gray-600 col-span-7 rounded m-4">
-          Progression
-        </div>
-        <div className="grid row-span-2 bg-gray-600 col-span-7 rounded m-4">
-          Statistiques
-        </div>
+      <div className="grid bg-gray-600 col-span-7 rounded m-4 p-4">
+        Progression
       </div>
-      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4">
+      <div className="grid bg-gray-600 col-span-7 rounded m-4 p-4">
+        Statistiques
+      </div>
+      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4 row-span-2">
         {challenges.map((challenge, index) => (
           <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
         ))}
