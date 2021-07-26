@@ -13,8 +13,11 @@ import { PrivateRoute } from 'react-auth-kit';
 import { Profile } from './pages/Profile';
 import { ModifyProfile } from './pages/ModifyProfile';
 import { CreateChallenge } from './pages/CreateChallenge';
+import { CreateSeries } from './pages/CreateSeries';
+import { Series } from './pages/SeriesChallenges';
+import { ChallengesForSeries } from './pages/ChallengesForSerie';
 
-export const App = () => {
+export const App = () => { 
   return (
     <AuthProvider
       authType={'cookie'}
@@ -46,6 +49,25 @@ export const App = () => {
                 component={CreateChallenge}
                 loginPath="/sign-up"
               />
+              <PrivateRoute
+                path="/create/serie"
+                exact
+                component={CreateSeries}
+                loginPath="/sign-up"
+              />
+              <PrivateRoute
+                path="/view/challengesSeries/:idseries"
+                exact
+                component={ChallengesForSeries}
+                loginPath="/sign-up"
+              />
+              <PrivateRoute
+                path="/series"
+                exact
+                component={Series}
+                loginPath="/sign-up"
+              />
+              
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
               <Route path="/sign-up" exact component={LoginPage} />

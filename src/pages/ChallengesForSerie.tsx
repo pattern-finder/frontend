@@ -3,24 +3,28 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
-import { ChallengeListitem } from '../components/ChallengeListItem';
+import { ChallengeListitem } from '../components/ChallengeForSeriesComponent';
 
-export const ChallengeListPage = () => {
+export const ChallengesForSeries = () => {
   const [challenges, setChallenges] = useState([]);
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      Axios.get('/challenges')
+      var chaineGET = window.location.href;
+      var newString = chaineGET.split('=')
+      var id = newString[newString.length-1];
+      
+      Axios.get('/series/'+id)
         .then(({ data }) => {
-          setChallenges(data.content);
+          setChallenges(data.content.challenges);
         })
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challenges: ${err.response?.data.message}`,
+              `Could not load challegnes: ${err.response?.data.message}`,
             );
           } else {
-            toast.error(`Could not load challenges: ${err}`);
+            toast.error(`Could not load challegnes: ${err}`);
           }
         });
     };

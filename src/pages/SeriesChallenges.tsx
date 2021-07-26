@@ -3,24 +3,24 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
-import { ChallengeListitem } from '../components/ChallengeListItem';
+import { SeriesListitem } from '../components/SeriesListItemToAddToList';
 
-export const ChallengeListPage = () => {
-  const [challenges, setChallenges] = useState([]);
+export const Series = () => {
+  const [series, setSeries] = useState([]);
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      Axios.get('/challenges')
+      Axios.get('/series')
         .then(({ data }) => {
-          setChallenges(data.content);
+            setSeries(data.content);
         })
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challenges: ${err.response?.data.message}`,
+              `Could not load challegnes: ${err.response?.data.message}`,
             );
           } else {
-            toast.error(`Could not load challenges: ${err}`);
+            toast.error(`Could not load challegnes: ${err}`);
           }
         });
     };
@@ -31,9 +31,9 @@ export const ChallengeListPage = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-4 m-5">
-        {challenges.length === 0 && <span>Nothing to show here.</span>}
-        {challenges.map((challenge, index) => (
-          <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
+        {series.length === 0 && <span>Nothing to show here.</span>}
+        {series.map((serie, index) => (
+          <SeriesListitem serie={serie} key={`challenge-${index}`} />
         ))}
       </div>
     </>
