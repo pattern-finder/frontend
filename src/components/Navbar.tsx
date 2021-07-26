@@ -1,12 +1,14 @@
 import React from 'react';
-import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
+import { useIsAuthenticated, useSignOut, useAuthUser } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
 import picspyLogo from '../assets/PicSpyLogo.png';
+
 // import './Navbar.css';
 
 function Navbar() {
   const signOut = useSignOut();
   const isAuth = useIsAuthenticated();
+  const getUserSession = useAuthUser();
 
   return (
     <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600 fixed w-full z-50">
@@ -33,9 +35,39 @@ function Navbar() {
 
         {isAuth() && (
           <div className="m-auto">
+            <Link to="/series" className="nav-links">
+              <i className="fas fa-info pr-2" />
+              Series
+            </Link>
+          </div>
+        )}
+
+        {isAuth() && (
+          <div className="m-auto">
             <Link to="/create/challenge" className="nav-links">
               <i className="fas fa-info pr-2" />
               Create challenge
+            </Link>
+          </div>
+        )}
+
+        {isAuth() && (
+          <div className="m-auto">
+            <Link to="/create/serie" className="nav-links">
+              <i className="fas fa-info pr-2" />
+              Create series
+            </Link>
+          </div>
+        )}
+
+        {isAuth() && (
+          <div className="m-auto">
+            <Link
+              to={`/profile/${getUserSession()?.sub}`}
+              className="nav-links"
+            >
+              <i className="fas fa-info pr-2" />
+              My profile
             </Link>
           </div>
         )}

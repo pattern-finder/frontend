@@ -8,7 +8,7 @@ services:
       - '${FRONTEND_EXTERNAL_PORT}:3000'
     volumes:
       - ./src:/usr/src/app/src
-    environment: 
+    environment:
       REACT_APP_API_EXTERNAL_HOST: ${API_EXTERNAL_HOST}
       REACT_APP_FRONTEND_EXTERNAL_PORT: ${FRONTEND_EXTERNAL_PORT}
     env_file:

@@ -72,6 +72,11 @@ export const LoginForm = () => {
               name="username"
               placeholder="username"
               onChange={(e) => setUsername(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  login();
+                }
+              }}
             />
           </div>
           <div className="form-group">
@@ -82,6 +87,11 @@ export const LoginForm = () => {
               name="password"
               placeholder="password"
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  login();
+                }
+              }}
             />
           </div>
         </div>
