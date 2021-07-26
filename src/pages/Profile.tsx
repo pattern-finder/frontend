@@ -38,6 +38,24 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   }, [props.match.params.id]);
 
   useEffect(() => {
+    const fetchStats = async () => {
+      Axios.get(`attempts/user/${props.match.params.id}`)
+        .then(({ data }) => {
+          console.log(data.content);
+        })
+        .catch((err) => {
+          if (err.isAxiosError) {
+            toast.error(`Could not load profile: ${err.response.data.message}`);
+          } else {
+            toast.error(`Could not load profile: ${err}`);
+          }
+        });
+    };
+
+    fetchStats();
+  });
+
+  useEffect(() => {
     const fetchChallenges = async () => {
       Axios.get(`/challenges/user/${props.match.params.id}`)
         .then(({ data }) => {
@@ -58,8 +76,8 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   }, [props.match.params.id]);
 
   return (
-    <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 mb-4">
-      <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-gray-600 col-span-2 rounded m-4">
+    <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 p-4">
+      <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-gray-600 col-span-2 rounded ">
         <div className=" rounded h-min px-16 py-6">
           <img
             alt="profile"
@@ -78,19 +96,22 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
         </div>
       </div>
-      <div className="grid bg-gray-600 col-span-7 rounded m-4 p-4">
-        Progression
+      <div className="grid bg-gray-600 col-span-7 rounded p-4">
+        <div className="font-bold">Progression :</div>
       </div>
-      <div className="grid bg-gray-600 col-span-7 rounded m-4 p-4">
-        Statistiques
+      <div className="grid bg-gray-600 col-span-7 rounded p-4">
+        <div className="font-bold">Stats :</div>
       </div>
-      <div className="grid grid-flow-row grid-rows-5 gap-4 bg-gray-600 col-span-3 rounded m-4 p-4 row-span-2">
+      <div className="flex flex-col w-full col-span-4 row-span-2">
+        <div className="font-bold">Challenges :</div>
         {challenges.length > 0
           ? challenges.map((challenge, index) => (
-              <ChallengeListitem
-                challenge={challenge}
-                key={`challenge-${index}`}
-              />
+              <div className="py-2">
+                <ChallengeListitem
+                  challenge={challenge}
+                  key={`challenge-${index}`}
+                />
+              </div>
             ))
           : 'This user did not create any challenges.'}
       </div>
