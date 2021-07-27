@@ -39,7 +39,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      Axios.get(`attempts/user/${props.match.params.id}`)
+      Axios.get(`stats/completion/${props.match.params.id}`)
         .then(({ data }) => {
           console.log(data.content);
         })
