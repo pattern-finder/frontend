@@ -7,6 +7,13 @@ import {
   ChallengeAttributes,
   ChallengeListitem,
 } from '../components/ChallengeListItem';
+import {
+  AttemptProps,
+  AttemptsCarousel,
+} from '../components/challenges/AttemptsCarousel';
+import { ChallengeStat, Stats } from '../components/ChallengeStat'
+
+
 
 type ProfileAttributes = {
   _id: string;
@@ -18,6 +25,9 @@ type ProfileAttributes = {
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
   const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
+  const [attempts, setAttempts] = useState([] as Stats[]);
+  const [bootstrap, setBootstrap] = useState({} as { _id: string });
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,9 +49,11 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      Axios.get(`attempts/user/${props.match.params.id}`)
+      Axios.get(`attempts/`)
         .then(({ data }) => {
           console.log(data.content);
+          const stats = data.content.filter((stat: Stats) => stat ?.user === props.match.params.id)
+          setAttempts(stats);
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -64,7 +76,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challenges: ${err.response?.data.message}`,
+              `Could not load challenges: ${err.response ?.data.message}`,
             );
           } else {
             toast.error(`Could not load challenges: ${err}`);
@@ -88,11 +100,11 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="">
           <div className="m-4">
             <div className="font-bold">Username :</div>
-            <div className="">{user?.username}</div>
+            <div className="">{user ?.username}</div>
           </div>
           <div className="m-4">
             <div className="font-bold">Email :</div>
-            <div className="">{user?.email}</div>
+            <div className="">{user ?.email}</div>
           </div>
         </div>
       </div>
@@ -101,18 +113,19 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       </div>
       <div className="grid bg-gray-600 col-span-7 rounded p-4">
         <div className="font-bold">Stats :</div>
+        <ChallengeStat className="col-span-12" attempts={attempts} />
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
         <div className="font-bold">Challenges :</div>
         {challenges.length > 0
           ? challenges.map((challenge, index) => (
-              <div className="py-2">
-                <ChallengeListitem
-                  challenge={challenge}
-                  key={`challenge-${index}`}
-                />
-              </div>
-            ))
+            <div className="py-2">
+              <ChallengeListitem
+                challenge={challenge}
+                key={`challenge-${index}`}
+              />
+            </div>
+          ))
           : 'This user did not create any challenges.'}
       </div>
     </div>

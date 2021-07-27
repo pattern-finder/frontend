@@ -54,6 +54,18 @@ function Navbar() {
           </div>
         )}
 
+        {isAuth() && (
+          <div className="m-auto">
+            <Link
+              to={`/edit/profile/`}
+              className="nav-links"
+            >
+              <i className="fas fa-info pr-2" />
+              Edit my profile
+            </Link>
+          </div>
+        )}
+
         {isAuth() ? (
           <div className="m-auto">
             <Link to="/" className="" onClick={(_) => signOut()}>
