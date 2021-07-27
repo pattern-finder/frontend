@@ -125,7 +125,6 @@ export const ChallengeStat = (props: {
           </div>
         </div>
       </div>
-
     </>
   );
 };

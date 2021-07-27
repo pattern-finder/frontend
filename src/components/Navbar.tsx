@@ -56,10 +56,7 @@ function Navbar() {
 
         {isAuth() && (
           <div className="m-auto">
-            <Link
-              to={`/edit/profile/`}
-              className="nav-links"
-            >
+            <Link to={`/edit/profile/`} className="nav-links">
               <i className="fas fa-info pr-2" />
               Edit my profile
             </Link>
