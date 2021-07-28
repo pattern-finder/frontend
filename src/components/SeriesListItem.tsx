@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import picspyLogo from '../assets/PicSpyLogo.png';
+import noProfilePic from '../assets/profile-icon.png'
+
 import { Link } from 'react-router-dom';
 
 interface SeriesAttributes {
@@ -10,12 +12,11 @@ interface SeriesAttributes {
     username: string;
     avatarUrl: string;
   };
+  isCourse: boolean;
 }
 
-export const SeriesListitem = (props: {
-  serie: SeriesAttributes;
-}) => {
-
+export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
+  console.log(props.serie)
   return (
     <div className="w-full bg-gray-600 rounded">
       <div className="grid grid-cols-2 gap-4 rounded  ">
@@ -33,9 +34,7 @@ export const SeriesListitem = (props: {
                     pathname: `/view/challengesSeries/idseries=${props.serie._id}`,
                   }}
                 >
-                  <button
-                    className=" top-0 right-0 bg-blue-500 px-2 rounded-lg h-10 w-20 hover:bg-blue-700 "
-                  >
+                  <button className=" top-0 right-0 bg-blue-500 px-2 py-1 rounded-lg hover:bg-blue-700 ">
                     View serie
                   </button>
                 </Link>
@@ -43,12 +42,26 @@ export const SeriesListitem = (props: {
             </div>
 
             <div className="ml-auto flex flex-row text-sm ">
-              <div className="my-auto">Created by {props.serie.owner.username}</div>
-              <img
-                className=" max-h-full h-8 object-contain"
-                src={props.serie.owner.username || picspyLogo}
-                alt="profile pic"
-              />
+              {props.serie.isCourse ? (
+                <>
+                  <img
+                    className=" max-h-full h-8 object-contain"
+                    src={picspyLogo}
+                    alt="profile pic"
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="my-auto">
+                    Created by {props.serie.owner.username}
+                  </div>
+                  <img
+                    className=" max-h-full h-8 object-contain"
+                    src={props.serie.owner.username || noProfilePic}
+                    alt="profile pic"
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
