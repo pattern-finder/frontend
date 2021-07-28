@@ -7,6 +7,7 @@ import { ChallengeListitem } from '../components/ChallengeForSeriesComponent';
 
 export const ChallengesForSeries = () => {
   const [challenges, setChallenges] = useState([]);
+  const [seriesName, setSeriesName] = useState("");
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -17,6 +18,7 @@ export const ChallengesForSeries = () => {
       Axios.get('/series/' + id)
         .then(({ data }) => {
           setChallenges(data.content.challenges);
+          setSeriesName(data.content.name)
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -35,6 +37,7 @@ export const ChallengesForSeries = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-4 m-5">
+        <div className="col-span-3 text-lg rounded bg-gray-600 p-4">{seriesName}</div>
         {challenges.length === 0 && <span>Nothing to show here.</span>}
         {challenges.map((challenge, index) => (
           <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
