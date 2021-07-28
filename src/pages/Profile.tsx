@@ -8,6 +8,9 @@ import {
   ChallengeListitem,
 } from '../components/ChallengeListItem';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { DonutMultiple, DonutElement, DonutLabel } from 'react-donut-component';
+import { Link } from 'react-router-dom';
+import { useAuthUser } from 'react-auth-kit';
 
 type ProfileAttributes = {
   _id: string;
@@ -41,6 +44,8 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   const [stats, setStats] = useState([] as DefaultSerieStats[]);
   const [execStats, setExecStats] = useState({} as ExecStats);
 
+  const getUser = useAuthUser();
+
   useEffect(() => {
     const fetchStats = async () => {
       Axios.get(`stats/default_series/${props.match.params.id}`)
@@ -63,7 +68,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       Axios.get(`stats/execs/${props.match.params.id}`)
         .then(({ data }) => {
           console.log(data.content);
-          setExecStats(data.content.series);
+          setExecStats(data.content);
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -118,7 +123,18 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
   return (
     <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 p-4">
       <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-gray-600 col-span-2 rounded ">
-        <div className=" rounded h-min px-16 py-6">
+        <div className="relative  rounded h-min px-16 py-6">
+          {getUser()?.sub === props.match.params.id && (
+            <Link to={`/edit/profile/`}>
+              <button
+                className="absolute bottom-0 right-0 bg-blue-500 px-2 rounded-l-lg h-10 w-20 "
+                onClick={(e) => console.log('blblbl')}
+              >
+                <i className="fas fa-edit"></i>
+              </button>
+            </Link>
+          )}
+
           <img
             alt="profile"
             className="max-h-full h-20 object-contain bg-cover bg-center mx-auto"
@@ -160,10 +176,35 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           })}
         </div>
       </div>
-      <div className="grid bg-gray-600 col-span-7 rounded p-4">
+      <div className="bg-gray-600 col-span-7 rounded p-4 overflow-y-hidden">
         <div className="font-bold">Stats :</div>
-        {execStats}
-        {/* <ChallengeStat className="col-span-12" attempts={attempts} /> */}
+        <div className="flex h-4/6 w-full">
+          <div className="h-auto w-auto m-auto">
+            <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
+              <DonutElement color="green" name="Success">
+                {execStats.nbSucessfullExecs}
+              </DonutElement>
+              <DonutElement color="darkred" name="Failure">
+                {execStats.nbExecs - execStats.nbSucessfullExecs}
+              </DonutElement>
+              <DonutLabel>Executions ({execStats.nbExecs})</DonutLabel>
+            </DonutMultiple>
+          </div>
+          <div className="h-auto w-auto m-auto">
+            <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
+              <DonutElement color="green" name="Success">
+                {execStats.nbValidatedChallenges}
+              </DonutElement>
+              <DonutElement color="darkred" name="Failure">
+                {execStats.nbParticipatedChallegnes -
+                  execStats.nbValidatedChallenges}
+              </DonutElement>
+              <DonutLabel>
+                Challenges ({execStats.nbParticipatedChallegnes})
+              </DonutLabel>
+            </DonutMultiple>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
         <div className="font-bold">Challenges :</div>
