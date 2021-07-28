@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import picspyLogo from '../assets/PicSpyLogo.png';
-import noProfilePic from '../assets/profile-icon.png'
+import noProfilePic from '../assets/profile-icon.png';
 
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ interface SeriesAttributes {
 }
 
 export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
-  console.log(props.serie)
+  console.log(props.serie);
   return (
     <div className="w-full bg-gray-600 rounded">
       <div className="grid grid-cols-2 gap-4 rounded  ">
