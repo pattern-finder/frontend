@@ -16,9 +16,7 @@ export const Series = () => {
         })
         .catch((err) => {
           if (err.isAxiosError) {
-            toast.error(
-              `Could not load series: ${err.response?.data.message}`,
-            );
+            toast.error(`Could not load series: ${err.response?.data.message}`);
           } else {
             toast.error(`Could not load series: ${err}`);
           }
