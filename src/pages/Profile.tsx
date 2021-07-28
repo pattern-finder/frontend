@@ -33,14 +33,13 @@ type ExecStats = {
   nbSucessfullExecs: number;
   nbValidatedChallenges: number;
   nbParticipatedChallegnes: number;
-}
-
+};
 
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
   const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
   const [stats, setStats] = useState([] as DefaultSerieStats[]);
-  const [execStats, setExecStats] = useState({} as ExecStats)
+  const [execStats, setExecStats] = useState({} as ExecStats);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -51,7 +50,9 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         })
         .catch((err) => {
           if (err.isAxiosError) {
-            toast.error(`Could not load series stats: ${err.response.data.message}`);
+            toast.error(
+              `Could not load series stats: ${err.response.data.message}`,
+            );
           } else {
             toast.error(`Could not load series stats: ${err}`);
           }
@@ -66,7 +67,9 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         })
         .catch((err) => {
           if (err.isAxiosError) {
-            toast.error(`Could not load executions stats: ${err.response.data.message}`);
+            toast.error(
+              `Could not load executions stats: ${err.response.data.message}`,
+            );
           } else {
             toast.error(`Could not load executions stats: ${err}`);
           }
@@ -136,19 +139,30 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       <div className="bg-gray-600 col-span-7 rounded p-4">
         <div className="font-bold pb-4">Progression in default series :</div>
         <div className="flex flex-col">
-        {(Array.isArray(stats) ? stats : []).map((s) => {
-          const totalchallenges = s.challenges.length
-          const validChallenges = s.challenges.filter(c => c.completed).length
-          return ( <div className="">
-            <div className="text-lg"> {s.name} </div>
-          <ProgressBar completed={Math.round(validChallenges * 100 /totalchallenges)} bgColor="#3B82F6" baseBgColor="#1F2937" />
-          {validChallenges}/{totalchallenges}  challenges completed
-          </div> )
-        })}
+          {(Array.isArray(stats) ? stats : []).map((s) => {
+            const totalchallenges = s.challenges.length;
+            const validChallenges = s.challenges.filter(
+              (c) => c.completed,
+            ).length;
+            return (
+              <div className="">
+                <div className="text-lg"> {s.name} </div>
+                <ProgressBar
+                  completed={Math.round(
+                    (validChallenges * 100) / totalchallenges,
+                  )}
+                  bgColor="#3B82F6"
+                  baseBgColor="#1F2937"
+                />
+                {validChallenges}/{totalchallenges} challenges completed
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="grid bg-gray-600 col-span-7 rounded p-4">
         <div className="font-bold">Stats :</div>
+        {execStats}
         {/* <ChallengeStat className="col-span-12" attempts={attempts} /> */}
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
