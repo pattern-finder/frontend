@@ -2,7 +2,7 @@ import React from 'react';
 import './HeroSection.css';
 import { Link } from 'react-router-dom';
 import picspyLogo from '../assets/PicSpyLogoGrand.png';
-
+//HeroSection
 function HeroSection() {
   return (
     <div className="hero-container">
@@ -24,7 +24,7 @@ function HeroSection() {
         <p className="linktochallenge">If you want to start click here!</p>
       </Link>
 
-
+ 
 
     </div>
 
