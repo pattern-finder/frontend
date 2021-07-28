@@ -14,7 +14,7 @@ function Navbar() {
     <nav className="t-4 max-h-16 h-16  bg-gray-600 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2fixed w-full z-50 shadow-lg">
       <Link
         to="/"
-        className="col-span-6 text-left  max-h-full font-sans text-3xl flex flex-row"
+        className="col-span-4 text-left  max-h-full font-sans text-3xl flex flex-row"
       >
         <img
           src={picspyLogo}
@@ -24,7 +24,7 @@ function Navbar() {
         <span className="my-auto flex content-center">PicSpy</span>
       </Link>
 
-      <div className="flex flex-row w-full max-h-full m-auto col-span-4 text-lg ">
+      
         <div className="m-auto">
           {/* This is a test route and it will be replaced with real ones when the site is done  */}
           <Link to="/challenges" className="nav-links">
@@ -87,7 +87,6 @@ function Navbar() {
             </Link>
           </div>
         )}
-      </div>
     </nav>
   );
 }

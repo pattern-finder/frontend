@@ -28,7 +28,7 @@ export const App = () => {
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <main className="h-screen w-full pt-16">
+          <main className="h-screen w-full">
             <Switch>
               <Route path="/sign-up" exact component={LoginPage} />
               <Route path="/challenges" exact component={ChallengeListPage} />
