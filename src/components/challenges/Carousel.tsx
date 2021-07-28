@@ -21,7 +21,7 @@ export const Carousel = (props: {
       <img
         className="h-4/6 w-80 object-contain m-auto"
         alt="pattern"
-        src={props.picturesUrls && props.picturesUrls[index].file}
+        src={(props.picturesUrls?.length > 0 && props.picturesUrls[index].file) || "#"}
       />
       <span className="text-center w-full">
         {index + 1}/{props.picturesUrls?.length || 0}

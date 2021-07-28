@@ -7,6 +7,7 @@ import {
   ChallengeAttributes,
   ChallengeListitem,
 } from '../components/ChallengeListItem';
+import ProgressBar from '@ramonak/react-progress-bar';
 
 type ProfileAttributes = {
   _id: string;
@@ -15,11 +16,63 @@ type ProfileAttributes = {
   avatarUrl: string;
 };
 
+type DefaultSerieStats = {
+  _id: string;
+  name: string;
+  challenges: {
+    _id: string;
+    name: string;
+    completed: boolean;
+    bestTime?: number;
+  }[];
+};
+
+type ExecStats = {
+  successRatio: number;
+  nbExecs: number;
+  nbSucessfullExecs: number;
+  nbValidatedChallenges: number;
+  nbParticipatedChallegnes: number;
+}
+
+
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
   const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
+  const [stats, setStats] = useState([] as DefaultSerieStats[]);
+  const [execStats, setExecStats] = useState({} as ExecStats)
 
   useEffect(() => {
+    const fetchStats = async () => {
+      Axios.get(`stats/default_series/${props.match.params.id}`)
+        .then(({ data }) => {
+          console.log(data.content);
+          setStats(data.content.series);
+        })
+        .catch((err) => {
+          if (err.isAxiosError) {
+            toast.error(`Could not load series stats: ${err.response.data.message}`);
+          } else {
+            toast.error(`Could not load series stats: ${err}`);
+          }
+        });
+    };
+
+    const execStats = async () => {
+      Axios.get(`stats/execs/${props.match.params.id}`)
+        .then(({ data }) => {
+          console.log(data.content);
+          setExecStats(data.content.series);
+        })
+        .catch((err) => {
+          if (err.isAxiosError) {
+            toast.error(`Could not load executions stats: ${err.response.data.message}`);
+          } else {
+            toast.error(`Could not load executions stats: ${err}`);
+          }
+        });
+    };
+
     const fetchUser = async () => {
       Axios.get(`/users/${props.match.params.id}`)
         .then(({ data }) => {
@@ -34,24 +87,8 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         });
     };
 
+    execStats();
     fetchUser();
-  }, [props.match.params.id]);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      Axios.get(`stats/default_series/${props.match.params.id}`)
-        .then(({ data }) => {
-          console.log(data.content);
-        })
-        .catch((err) => {
-          if (err.isAxiosError) {
-            toast.error(`Could not load profile: ${err.response.data.message}`);
-          } else {
-            toast.error(`Could not load profile: ${err}`);
-          }
-        });
-    };
-
     fetchStats();
   }, [props.match.params.id]);
 
@@ -96,8 +133,19 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
         </div>
       </div>
-      <div className="grid bg-gray-600 col-span-7 rounded p-4">
-        <div className="font-bold">Progression :</div>
+      <div className="bg-gray-600 col-span-7 rounded p-4">
+        <div className="font-bold pb-4">Progression in default series :</div>
+        <div className="flex flex-col">
+        {(Array.isArray(stats) ? stats : []).map((s) => {
+          const totalchallenges = s.challenges.length
+          const validChallenges = s.challenges.filter(c => c.completed).length
+          return ( <div className="">
+            <div className="text-lg"> {s.name} </div>
+          <ProgressBar completed={Math.round(validChallenges * 100 /totalchallenges)} bgColor="#3B82F6" baseBgColor="#1F2937" />
+          {validChallenges}/{totalchallenges}  challenges completed
+          </div> )
+        })}
+        </div>
       </div>
       <div className="grid bg-gray-600 col-span-7 rounded p-4">
         <div className="font-bold">Stats :</div>
