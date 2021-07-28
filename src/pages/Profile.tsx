@@ -7,11 +7,6 @@ import {
   ChallengeAttributes,
   ChallengeListitem,
 } from '../components/ChallengeListItem';
-import {
-  AttemptProps,
-  AttemptsCarousel,
-} from '../components/challenges/AttemptsCarousel';
-import { ChallengeStat, Stats } from '../components/ChallengeStat';
 
 type ProfileAttributes = {
   _id: string;
@@ -23,8 +18,7 @@ type ProfileAttributes = {
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
   const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
-  const [attempts, setAttempts] = useState([] as Stats[]);
-  const [bootstrap, setBootstrap] = useState({} as { _id: string });
+  
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,13 +40,9 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      Axios.get(`attempts/`)
+      Axios.get(`stats/default_series/${props.match.params.id}`)
         .then(({ data }) => {
           console.log(data.content);
-          const stats = data.content.filter(
-            (stat: Stats) => stat?.user === props.match.params.id,
-          );
-          setAttempts(stats);
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -64,7 +54,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     };
 
     fetchStats();
-  });
+  }, [props.match.params.id]);
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -112,7 +102,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       </div>
       <div className="grid bg-gray-600 col-span-7 rounded p-4">
         <div className="font-bold">Stats :</div>
-        <ChallengeStat className="col-span-12" attempts={attempts} />
+        {/* <ChallengeStat className="col-span-12" attempts={attempts} /> */}
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
         <div className="font-bold">Challenges :</div>
