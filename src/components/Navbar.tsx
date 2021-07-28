@@ -35,9 +35,27 @@ function Navbar() {
 
         {isAuth() && (
           <div className="m-auto">
+            <Link to="/series" className="nav-links">
+              <i className="fas fa-info pr-2" />
+              Series
+            </Link>
+          </div>
+        )}
+
+        {isAuth() && (
+          <div className="m-auto">
             <Link to="/create/challenge" className="nav-links">
               <i className="fas fa-plus pr-2" />
               Create challenge
+            </Link>
+          </div>
+        )}
+
+        {isAuth() && (
+          <div className="m-auto">
+            <Link to="/create/serie" className="nav-links">
+              <i className="fas fa-info pr-2" />
+              Create series
             </Link>
           </div>
         )}

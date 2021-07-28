@@ -36,6 +36,15 @@ video {
   margin-left: 4px;
 }
 
+
+.linktochallenge {
+  font-size: 25px;
+}
+
+.linktochallenge:hover {
+  color: #AAA;
+}
+
 @media screen and (max-width: 960px) {
   .hero-container > h1 {
     font-size: 70px;
@@ -52,4 +61,6 @@ video {
   .hero-container > p {
     font-size: 30px;
   }
+
 }
+
