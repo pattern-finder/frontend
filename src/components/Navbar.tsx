@@ -11,7 +11,7 @@ function Navbar() {
   const getUserSession = useAuthUser();
 
   return (
-    <nav className="t-4 max-h-16 h-16  bg-gray-900 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 border-gray-600 fixed w-full z-50">
+    <nav className="t-4 max-h-16 h-16  bg-gray-600 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2fixed w-full z-50 shadow-lg">
       <Link
         to="/"
         className="col-span-6 text-left  max-h-full font-sans text-3xl flex flex-row"
@@ -28,7 +28,7 @@ function Navbar() {
         <div className="m-auto">
           {/* This is a test route and it will be replaced with real ones when the site is done  */}
           <Link to="/challenges" className="nav-links">
-            <i className="fas fa-hard-hat pr-2" />
+            <i className="fas fa-th-list pr-2" />
             Challenges
           </Link>
         </div>
@@ -45,7 +45,7 @@ function Navbar() {
         {isAuth() && (
           <div className="m-auto">
             <Link to="/create/challenge" className="nav-links">
-              <i className="fas fa-info pr-2" />
+              <i className="fas fa-plus pr-2" />
               Create challenge
             </Link>
           </div>
@@ -66,7 +66,7 @@ function Navbar() {
               to={`/profile/${getUserSession()?.sub}`}
               className="nav-links"
             >
-              <i className="fas fa-info pr-2" />
+              <i className="fas fa-user pr-2" />
               My profile
             </Link>
           </div>
@@ -87,13 +87,6 @@ function Navbar() {
             </Link>
           </div>
         )}
-
-        {/* <div className="m-auto">
-          <Link to="/About" className="nav-links">
-            <i className="fas fa-info pr-2" />
-            About
-          </Link>
-        </div> */}
       </div>
     </nav>
   );
