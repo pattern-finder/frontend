@@ -18,7 +18,6 @@ type ProfileAttributes = {
 export const Profile = (props: { match: { params: { id: string } } }) => {
   const [user, setUser] = useState({} as ProfileAttributes);
   const [challenges, setChallenges] = useState([] as ChallengeAttributes[]);
-  
 
   useEffect(() => {
     const fetchUser = async () => {
