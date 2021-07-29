@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -5,17 +7,15 @@ import toast from 'react-hot-toast';
 import Axios from '../axios-config';
 import { ChallengeListitem } from '../components/ChallengeForSeriesComponent';
 
-export const ChallengesForSeries = () => {
+export const ChallengesForSeries = (props: {
+  match?: { params?: { id?: string } };
+}) => {
   const [challenges, setChallenges] = useState([]);
   const [seriesName, setSeriesName] = useState('');
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      var chaineGET = window.location.href;
-      var newString = chaineGET.split('=');
-      var id = newString[newString.length - 1];
-
-      Axios.get('/series/' + id)
+      Axios.get(`/series/${props.match?.params?.id}`)
         .then(({ data }) => {
           setChallenges(data.content.challenges);
           setSeriesName(data.content.name);
@@ -32,7 +32,7 @@ export const ChallengesForSeries = () => {
     };
 
     fetchChallenges();
-  }, []);
+  }, [props.match?.params?.id]);
 
   return (
     <>

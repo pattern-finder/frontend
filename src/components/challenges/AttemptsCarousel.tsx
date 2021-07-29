@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from 'react';
-import { useAuthUser } from 'react-auth-kit';
 
 export type AttemptProps = {
   code: string;
   stderr: string;
   stdout: string;
   phase: string;
-  status: string;
+  status: number;
   time: number;
   time_wall: number;
   used_memory: number;
@@ -26,8 +24,6 @@ export const AttemptsCarousel = (props: {
 
   const [showStderr, setShowStderr] = useState(false);
   const [showStdout, setShowStdout] = useState(false);
-
-  const currentUser = useAuthUser();
 
   if (props.attempts.length === 0) {
     return (
@@ -97,7 +93,11 @@ export const AttemptsCarousel = (props: {
         <div className="grid grid-flow-col grid-rows-2 gap-2 align-center">
           <div className="font-bold"> Phase : </div>
           <div className="flex flex-cols">
-            <div className="bg-green-500 rounded-full w-5 h-5" />
+            <div
+              className={`bg-${
+                props.attempts[shownAttemptIndex].status === 0 ? 'green' : 'red'
+              }-500 rounded-full w-5 h-5`}
+            />
             <p className="px-2">
               {props.attempts[shownAttemptIndex].phase || 'N/A'}
             </p>

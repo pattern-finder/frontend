@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import picspyLogo from '../assets/PicSpyLogo.png';
+import noProfilePic from '../assets/profile-icon.png';
+
 import { Link } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import axios from 'axios';
@@ -12,10 +14,11 @@ interface ChallengeAttributes {
   imageUrl: string;
   done: boolean;
   owner: string;
+  isCourse: string;
 }
 
 export const ChallengeListitem = ({
-  challenge: { _id, name, instructions, execBootstraps, owner },
+  challenge: { _id, name, instructions, execBootstraps, owner, isCourse },
 }: {
   challenge: ChallengeAttributes;
 }) => {
@@ -64,12 +67,30 @@ export const ChallengeListitem = ({
             </div>
 
             <div className="ml-auto flex flex-row text-sm ">
-              <div className="my-auto">Created by {user.username}</div>
-              <img
-                className=" max-h-full h-8 object-contain"
-                src={user.avatarUrl || picspyLogo}
-                alt="profile pic"
-              />
+              {isCourse ? (
+                <>
+                  <img
+                    className=" max-h-full h-8 object-contain"
+                    src={picspyLogo}
+                    alt="profile pic"
+                  />
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={`/profile/${user._id}`}
+                    className="flex flex-row text-sm"
+                  >
+                    <div className="my-auto">Created by {user.username}</div>
+                    <img
+                      className=" max-h-full h-8 object-contain"
+                      src={user.avatarUrl || noProfilePic}
+                      alt="profile pic"
+                    />
+                  </Link>
+                </>
+              )}
+
               {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/challenge/${_id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">

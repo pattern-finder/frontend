@@ -50,7 +50,6 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     const fetchStats = async () => {
       Axios.get(`stats/default_series/${props.match.params.id}`)
         .then(({ data }) => {
-          console.log(data.content);
           setStats(data.content.series);
         })
         .catch((err) => {
@@ -67,7 +66,6 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     const execStats = async () => {
       Axios.get(`stats/execs/${props.match.params.id}`)
         .then(({ data }) => {
-          console.log(data.content);
           setExecStats(data.content);
         })
         .catch((err) => {
@@ -126,10 +124,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="relative  rounded h-min px-16 py-6">
           {getUser()?.sub === props.match.params.id && (
             <Link to={`/edit/profile/`}>
-              <button
-                className="absolute bottom-0 right-0 bg-blue-500 px-2 rounded-l-lg h-10 w-20 "
-                onClick={(e) => console.log('blblbl')}
-              >
+              <button className="absolute bottom-0 right-0 bg-blue-500 px-2 rounded-l-lg h-10 w-20 ">
                 <i className="fas fa-edit"></i>
               </button>
             </Link>

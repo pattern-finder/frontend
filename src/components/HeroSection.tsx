@@ -19,7 +19,7 @@ function HeroSection() {
       <p>This wed site allows you to create and solve pattern </p>
       <p>detection exercises with images in C++ and Python</p>
 
-      <Link to="/view/challengesSeries/idseries=610161ef36c8526a260880a7">
+      <Link to="/serie/idseries=610161ef36c8526a260880a7">
         <p className="linktochallenge">If you want to start click here!</p>
       </Link>
     </div>

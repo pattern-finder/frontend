@@ -56,7 +56,13 @@ export const App = () => {
                 loginPath="/sign-up"
               />
               <PrivateRoute
-                path="/view/challengesSeries/:idseries"
+                path="/edit/serie/:id"
+                exact
+                component={CreateSeries}
+                loginPath="/sign-up"
+              />
+              <PrivateRoute
+                path="/serie/:id"
                 exact
                 component={ChallengesForSeries}
                 loginPath="/sign-up"
