@@ -1,10 +1,11 @@
 
 version: '3.4'
 services:
+  
   picspy-front:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - '${FRONTEND_EXTERNAL_PORT}:3000'
     volumes:

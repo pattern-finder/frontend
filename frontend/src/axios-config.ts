@@ -4,7 +4,7 @@ const Axios = axios.create({
   baseURL: `${
     process.env.REACT_APP_API_EXTERNAL_HOST
       ? process.env.REACT_APP_API_EXTERNAL_HOST
-      : `https://picspy-api.herokuapp.com`
+      : `https://api.picspy.vagahbond.com`
   }${
     process.env.REACT_APP_API_EXTERNAL_PORT
       ? `:${process.env.REACT_APP_API_EXTERNAL_PORT}`
