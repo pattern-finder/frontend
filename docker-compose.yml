@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '${FRONTEND_EXTERNAL_PORT}:3000'
+      - '${FRONTEND_EXTERNAL_PORT}:80'
     volumes:
       - ./src:/usr/src/app/src
     environment:
