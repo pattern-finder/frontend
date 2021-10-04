@@ -135,6 +135,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
             className="max-h-full h-20 object-contain bg-cover bg-center mx-auto"
             src={user.avatarUrl || icone}
           />
+          <div className="font-bold">{user.avatarUrl}</div>
         </div>
         <div className="">
           <div className="m-4">
