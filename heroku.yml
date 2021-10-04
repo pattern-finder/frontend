@@ -1,10 +1,14 @@
-
+networks:
+  backend:
+  frontend:
 
 build:
   docker:
     web: 
       dockerfile: frontend/Dockerfile.frontend
 
+    networks:
+      - frontend
 
   config:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
