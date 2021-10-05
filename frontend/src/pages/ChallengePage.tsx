@@ -7,7 +7,7 @@ import { Carousel } from '../components/challenges/Carousel';
 import toast from 'react-hot-toast';
 import {
   AttemptProps,
-  AttemptsCarousel, 
+  AttemptsCarousel,
 } from '../components/challenges/AttemptsCarousel';
 
 type Challenge = {
