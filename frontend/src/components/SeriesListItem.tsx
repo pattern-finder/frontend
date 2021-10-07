@@ -67,7 +67,26 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
                 </>
               ) : (
                 <>
+                  <Link
+                    to={`/profile/${user._id}`}
+                    className="flex flex-row text-sm"
+                  >
+                    <div className="my-auto">Created by {user.username}</div>
+                    <img
+                      className=" max-h-full h-8 object-contain"
+                      src={user.avatarUrl || noProfilePic}
+                      alt="profile pic"
+                    />
+                  </Link>
                 </>
+              )}
+
+              {user._id === getUserSession()?.sub && (
+                <Link to={`/edit/serie/${props.serie._id}`}>
+                  <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
+                    <i className="fas fa-edit"></i>
+                  </div>
+                </Link>
               )}
             </div>
           </div>
