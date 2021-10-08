@@ -86,7 +86,7 @@ export const ChallengeListitem = ({
                     <i className="fas fa-edit"></i>
                   </div>
                 </Link>
-              )}
+              )} 
             </div>
           </div>
         </div>
