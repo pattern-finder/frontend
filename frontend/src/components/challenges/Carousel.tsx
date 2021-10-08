@@ -7,7 +7,7 @@ export const Carousel = (props: {
   const [index, setIndex] = useState(0);
 
   function nextImage() {
-    const currentIndex = index;
+    const currentIndex = index; 
     setIndex(currentIndex + 1);
   }
 
