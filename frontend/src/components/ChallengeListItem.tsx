@@ -72,7 +72,8 @@ export const ChallengeListitem = ({
                   />
                 </>
               ) : (
-
+                <Link>
+                </>
               )}
 
               {user._id === getUserSession()?.sub && (
