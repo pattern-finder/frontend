@@ -89,7 +89,7 @@ export const ChallengeListitem = ({
               )} 
             </div>
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   );
