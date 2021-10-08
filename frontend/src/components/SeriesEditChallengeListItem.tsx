@@ -37,7 +37,6 @@ export const ChallengeListitem = ({
         setUser(data.content);
       })
       .catch((err) => {
-        toast.error(`Could not load owner: ${err}`);
       });
   }, [owner]);
 
