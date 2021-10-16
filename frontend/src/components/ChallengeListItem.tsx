@@ -76,13 +76,6 @@ export const ChallengeListitem = ({
                 </>
               )}
 
-              {user._id === getUserSession()?.sub && (
-                <Link to={`/edit/challenge/${_id}`}>
-                  <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
-                    <i className="fas fa-edit"></i>
-                  </div>
-                </Link>
-              )}
             </div>
           </div>
         </div>
