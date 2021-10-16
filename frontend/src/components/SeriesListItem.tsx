@@ -28,7 +28,6 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
         setUser(data.content);
       })
       .catch((err) => {
-        toast.error(`Could not load owner: ${err}`);
       });
   }, [props.serie.owner]);
 

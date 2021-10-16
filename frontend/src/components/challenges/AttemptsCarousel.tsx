@@ -11,7 +11,7 @@ export type AttemptProps = {
   time_wall: number;
   used_memory: number;
   csw_voluntary: number;
-  csw_forced: number;
+  csw_forced: number; 
   createdAt: string;
 };
 
