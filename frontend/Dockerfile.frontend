@@ -6,7 +6,6 @@ COPY ./package*.json ./
 
 RUN npm install
 
-RUN npm install react-slideshow-image
 RUN npm install cookie-parser
 COPY . .
 
