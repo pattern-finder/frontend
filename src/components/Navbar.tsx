@@ -11,10 +11,10 @@ function Navbar() {
   const getUserSession = useAuthUser();
 
   return (
-    <nav className="t-4 max-h-16 h-16  bg-gray-600 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2fixed w-full z-50 shadow-lg">
+    <nav className="t-4 max-h-16 h-16 bg-black grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 sticky w-full z-50 shadow-lg inset-x-0 top-0">
       <Link
         to="/"
-        className="col-span-4 text-left  max-h-full font-sans text-3xl flex flex-row"
+        className="col-span-4 text-left max-h-full font-sans text-3xl flex flex-row"
       >
         <img
           src={picspyLogo}
@@ -61,7 +61,7 @@ function Navbar() {
 
       {isAuth() && (
         <div className="m-auto">
-          <Link to={`/profile/${getUserSession()?.sub}`} className="nav-links">
+          <Link to={`/profile/${getUserSession() ?.sub}`} className="nav-links">
             <i className="fas fa-user pr-2" />
             My profile
           </Link>
@@ -76,13 +76,13 @@ function Navbar() {
           </Link>
         </div>
       ) : (
-        <div className="m-auto">
-          <Link to="/sign-up" className="nav-links">
-            <i className="fas fa-sign-in-alt pr-2" />
-            Login or register
+          <div className="m-auto">
+            <Link to="/sign-up" className="nav-links">
+              <i className="fas fa-sign-in-alt pr-2" />
+              Login or register
           </Link>
-        </div>
-      )}
+          </div>
+        )}
     </nav>
   );
 }

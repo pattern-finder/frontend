@@ -22,10 +22,10 @@ export const CreateExecBootstrapListElement = ({
   onChange: (execBootstrap: ExecBootstrap) => void;
   initialValues?: ExecBootstrap;
 }) => {
-  const [tests, setTests] = useState(initialValues?.tests || '');
+  const [tests, setTests] = useState(initialValues ?.tests || '');
 
   const [functionTemplate, setFunctionTemplate] = useState(
-    initialValues?.functionTemplate || '',
+    initialValues ?.functionTemplate || '',
   );
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export const CreateExecBootstrapListElement = ({
       tests,
       functionTemplate,
       language,
-      _id: initialValues?._id,
+      _id: initialValues ?._id,
     });
   }, [tests, functionTemplate]);
 

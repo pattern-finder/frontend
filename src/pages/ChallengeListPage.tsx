@@ -12,12 +12,13 @@ export const ChallengeListPage = () => {
     const fetchChallenges = async () => {
       Axios.get('/challenges')
         .then(({ data }) => {
+          console.log(data);
           setChallenges(data.content);
         })
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challenges: ${err.response?.data.message}`,
+              `Could not load challenges: ${err.response ?.data.message}`,
             );
           } else {
             toast.error(`Could not load challenges: ${err}`);

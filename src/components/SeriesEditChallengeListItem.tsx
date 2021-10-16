@@ -32,7 +32,7 @@ export const ChallengeListitem = ({
 
   useEffect(() => {
     axios
-      .get(owner)
+      .get(owner.replace(/picspy-api.herokuapp.com:\d+/, "https://picspy-api.herokuapp.com"))
       .then(({ data }) => {
         setUser(data.content);
       })
@@ -45,21 +45,21 @@ export const ChallengeListitem = ({
     <div className="relative">
       {selected ? (
         <button
-          className="bg-blue-500 rounded-tr-lg absolute hover:bg-blue-700 p-2  bottom-0 left-0"
+          className="bg-black rounded-tr-lg absolute hover:bg-blue-700 p-2  bottom-0 left-0"
           onClick={() => onClick(_id)}
         >
           <i className="fas fa-minus pr-2"></i>
         </button>
       ) : (
-        <button
-          className="bg-blue-500 rounded-br-lg absolute hover:bg-blue-700 p-2  top-0 left-0"
-          onClick={() => onClick(_id)}
-        >
-          <i className="fas fa-plus pr-2"></i>
-        </button>
-      )}
+          <button
+            className="bg-black rounded-br-lg absolute hover:bg-blue-700 p-2  top-0 left-0"
+            onClick={() => onClick(_id)}
+          >
+            <i className="fas fa-plus pr-2"></i>
+          </button>
+        )}
 
-      <div className="w-full h-full bg-gray-600 rounded p-10">
+      <div className="w-full h-full bg-pink-900 rounded p-10">
         <h2 className="text-lg font-bold"> {name} </h2>
 
         <div className="overflow-hidden">
@@ -77,18 +77,18 @@ export const ChallengeListitem = ({
                 />
               </>
             ) : (
-              <Link
-                to={`/profile/${user._id}`}
-                className="flex flex-row text-sm"
-              >
-                <div className="my-auto">Created by {user.username}</div>
-                <img
-                  className=" max-h-full h-8 object-contain"
-                  src={user.avatarUrl || noProfilePic}
-                  alt="profile pic"
-                />
-              </Link>
-            )}
+                <Link
+                  to={`/profile/${user._id}`}
+                  className="flex flex-row text-sm"
+                >
+                  <div className="my-auto">Created by {user.username}</div>
+                  <img
+                    className=" max-h-full h-8 object-contain"
+                    src={user.avatarUrl || noProfilePic}
+                    alt="profile pic"
+                  />
+                </Link>
+              )}
           </div>
         </div>
       </div>

@@ -26,6 +26,7 @@
     "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-slideshow-image": "^3.5.1",
     "react-video-js-player": "^1.1.1",
     "sass": "^1.32.12",
     "typescript": "^4.2.4",

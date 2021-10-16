@@ -31,13 +31,14 @@ export const ChallengeListitem = ({
     axios
       .get(owner)
       .then(({ data }) => {
+        console.log("sssssssssssssssssssss")
         setUser(data.content);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [owner]);
 
   return (
-    <div className="w-full bg-gray-600 rounded">
+    <div className="w-full bg-pink-900 rounded">
       <div className="grid grid-cols-2 gap-4 rounded  ">
         <div className="rounded m-15 px-4 py-2 col-span-2">
           <div className="image">
@@ -53,7 +54,7 @@ export const ChallengeListitem = ({
               <div className="flex flex-row grid-cols-8 gap-2 w-full">
                 {execBootstraps.map((bs) => (
                   <Link to={`/challenges/${_id}/${bs.language}`}>
-                    <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-2 py-1 bg-blue-500 hover:bg-blue-700">
+                    <div className="grid grid-rows-1 grid-cols-1 gap-4 rounded-full px-2 py-1 bg-black hover:bg-blue-700">
                       <span className="text-center">{bs.language}</span>
                       {/* {false ? (
                         <i className="fas fa-check pl-2" />
@@ -76,24 +77,24 @@ export const ChallengeListitem = ({
                   />
                 </>
               ) : (
-                <>
-                  <Link
-                    to={`/profile/${user._id}`}
-                    className="flex flex-row text-sm"
-                  >
-                    <div className="my-auto">Created by {user.username}</div>
-                    <img
-                      className=" max-h-full h-8 object-contain"
-                      src={user.avatarUrl || noProfilePic}
-                      alt="profile pic"
-                    />
-                  </Link>
-                </>
-              )}
+                  <>
+                    <Link
+                      to={`/profile/${user._id}`}
+                      className="flex flex-row text-sm"
+                    >
+                      <div className="my-auto">Created by {user.username}</div>
+                      <img
+                        className=" max-h-full h-8 object-contain"
+                        src={user.avatarUrl || noProfilePic}
+                        alt="profile pic"
+                      />
+                    </Link>
+                  </>
+                )}
 
-              {user._id === getUserSession()?.sub && (
+              {user._id === getUserSession() ?.sub && (
                 <Link to={`/edit/challenge/${_id}`}>
-                  <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
+                  <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
                     <i className="fas fa-edit"></i>
                   </div>
                 </Link>

@@ -17,7 +17,7 @@ export interface ChallengeAttributes {
   isCourse: boolean;
 }
 
-export const ChallengeListitem = ({
+export const SeriesList = ({
   challenge: { _id, name, instructions, execBootstraps, owner, isCourse },
 }: {
   challenge: ChallengeAttributes;
@@ -29,7 +29,7 @@ export const ChallengeListitem = ({
 
   useEffect(() => {
     axios
-      .get(owner.replace(/picspy-api.herokuapp.com:\d+/, "https://picspy-api.herokuapp.com"))
+      .get("https://picspy-api.herokuapp.com/users/".concat(owner))
       .then(({ data }) => {
         setUser(data.content);
       })

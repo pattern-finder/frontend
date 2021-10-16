@@ -43,7 +43,7 @@ export const LoginForm = () => {
       )
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`Could not login: ${err.response?.data.message}`, {
+          toast.error(`Could not login: ${err.response ?.data.message}`, {
             id: toastId,
           });
         } else {
@@ -101,7 +101,7 @@ export const LoginForm = () => {
         <button
           onClick={(e) => login()}
           type="button"
-          className="bg-blue-500 rounded-lg px-6 py-2"
+          className="bg-black rounded-lg px-6 py-2"
         >
           Login
         </button>
