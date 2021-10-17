@@ -65,17 +65,6 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
                 </>
               ) : (
                 <>
-                  <Link
-                    to={`/profile/${user._id}`}
-                    className="flex flex-row text-sm"
-                  >
-                    <div className="my-auto">Created by {user.username}</div>
-                    <img
-                      className=" max-h-full h-8 object-contain"
-                      src={user.avatarUrl || noProfilePic}
-                      alt="profile pic"
-                    />
-                  </Link>
                 </>
               )}
 
