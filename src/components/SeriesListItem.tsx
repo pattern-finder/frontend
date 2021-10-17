@@ -23,7 +23,12 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
   );
   useEffect(() => {
     axios
-      .get(props.serie.owner.replace(/picspy-api.herokuapp.com:\d+/, "https://picspy-api.herokuapp.com"))
+      .get(
+        props.serie.owner.replace(
+          /picspy-api.herokuapp.com:\d+/,
+          'https://picspy-api.herokuapp.com',
+        ),
+      )
       .then(({ data }) => {
         setUser(data.content);
       })
@@ -46,7 +51,7 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
               >
                 <button className=" top-0 right-0 bg-black px-2 py-1 rounded-lg hover:bg-blue-700 ">
                   View serie
-                  </button>
+                </button>
               </Link>
             </div>
 
@@ -60,22 +65,22 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
                   />
                 </>
               ) : (
-                  <>
-                    <Link
-                      to={`/profile/${user._id}`}
-                      className="flex flex-row text-sm"
-                    >
-                      <div className="my-auto">Created by {user.username}</div>
-                      <img
-                        className=" max-h-full h-8 object-contain"
-                        src={user.avatarUrl || noProfilePic}
-                        alt="profile pic"
-                      />
-                    </Link>
-                  </>
-                )}
+                <>
+                  <Link
+                    to={`/profile/${user._id}`}
+                    className="flex flex-row text-sm"
+                  >
+                    <div className="my-auto">Created by {user.username}</div>
+                    <img
+                      className=" max-h-full h-8 object-contain"
+                      src={user.avatarUrl || noProfilePic}
+                      alt="profile pic"
+                    />
+                  </Link>
+                </>
+              )}
 
-              {user._id === getUserSession() ?.sub && (
+              {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/serie/${props.serie._id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
                     <i className="fas fa-edit"></i>

@@ -15,11 +15,13 @@ export const ChallengesForSeries = (props: {
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      Axios.get(`/series/${props.match ?.params ?.id}`)
+      Axios.get(`/series/${props.match?.params?.id}`)
         .then(({ data }) => {
           data.content.challenges.map((c: { owner: string }) => {
-            console.log("https://picspy-api.herokuapp.com/users/".concat(c.owner));
-          })
+            console.log(
+              'https://picspy-api.herokuapp.com/users/'.concat(c.owner),
+            );
+          });
           console.log(data.content);
           setChallenges(data.content.challenges);
           setSeriesName(data.content.name);
@@ -27,7 +29,7 @@ export const ChallengesForSeries = (props: {
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challegnes: ${err.response ?.data.message}`,
+              `Could not load challegnes: ${err.response?.data.message}`,
             );
           } else {
             toast.error(`Could not load challegnes: ${err}`);
@@ -36,7 +38,7 @@ export const ChallengesForSeries = (props: {
     };
 
     fetchChallenges();
-  }, [props.match ?.params ?.id]);
+  }, [props.match?.params?.id]);
 
   return (
     <>

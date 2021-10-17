@@ -61,7 +61,7 @@ function Navbar() {
 
       {isAuth() && (
         <div className="m-auto">
-          <Link to={`/profile/${getUserSession() ?.sub}`} className="nav-links">
+          <Link to={`/profile/${getUserSession()?.sub}`} className="nav-links">
             <i className="fas fa-user pr-2" />
             My profile
           </Link>
@@ -76,13 +76,13 @@ function Navbar() {
           </Link>
         </div>
       ) : (
-          <div className="m-auto">
-            <Link to="/sign-up" className="nav-links">
-              <i className="fas fa-sign-in-alt pr-2" />
-              Login or register
+        <div className="m-auto">
+          <Link to="/sign-up" className="nav-links">
+            <i className="fas fa-sign-in-alt pr-2" />
+            Login or register
           </Link>
-          </div>
-        )}
+        </div>
+      )}
     </nav>
   );
 }

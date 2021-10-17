@@ -4,7 +4,8 @@ function About() {
       <h1 className="text-3xl p-10">About</h1>
 
       <div className="text-xl pb-5">
-        This website has been done for a school project named "Projet Annuel" in ESGI.
+        This website has been done for a school project named "Projet Annuel" in
+        ESGI.
       </div>
 
       <div className="text-xl">
@@ -14,9 +15,8 @@ function About() {
         <br />
         An algorithm is given by a user and the result is provided with its
         performance statistics.
+      </div>
     </div>
-    </div>
-
   );
 }
 

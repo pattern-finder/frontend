@@ -49,7 +49,7 @@ export const RegisterForm = () => {
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     let file = image;
 
-    if (e.target.files && e.target.files ?.length > 0) {
+    if (e.target.files && e.target.files?.length > 0) {
       file = e.target.files[0];
     }
 

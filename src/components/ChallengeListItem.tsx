@@ -29,7 +29,12 @@ export const ChallengeListitem = ({
 
   useEffect(() => {
     axios
-      .get(owner.replace(/picspy-api.herokuapp.com:\d+/, "https://picspy-api.herokuapp.com"))
+      .get(
+        owner.replace(
+          /picspy-api.herokuapp.com:\d+/,
+          'https://picspy-api.herokuapp.com',
+        ),
+      )
       .then(({ data }) => {
         setUser(data.content);
       })
@@ -68,20 +73,20 @@ export const ChallengeListitem = ({
                   />
                 </>
               ) : (
-                  <Link
-                    to={`/profile/${user._id}`}
-                    className="flex flex-row text-sm"
-                  >
-                    <div className="my-auto">Created by {user.username}</div>
-                    <img
-                      className=" max-h-full h-8 object-contain"
-                      src={user.avatarUrl || noProfilePic}
-                      alt="profile pic"
-                    />
-                  </Link>
-                )}
+                <Link
+                  to={`/profile/${user._id}`}
+                  className="flex flex-row text-sm"
+                >
+                  <div className="my-auto">Created by {user.username}</div>
+                  <img
+                    className=" max-h-full h-8 object-contain"
+                    src={user.avatarUrl || noProfilePic}
+                    alt="profile pic"
+                  />
+                </Link>
+              )}
 
-              {user._id === getUserSession() ?.sub && (
+              {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/challenge/${_id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
                     <i className="fas fa-edit"></i>

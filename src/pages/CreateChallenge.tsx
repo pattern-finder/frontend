@@ -44,10 +44,10 @@ export const CreateChallenge = (props: {
 
   //load existing challenge if exists
   useEffect(() => {
-    if (!props.match ?.params ?.id) {
+    if (!props.match?.params?.id) {
       return;
     }
-    const id = props.match ?.params ?.id;
+    const id = props.match?.params?.id;
 
     Axios.get(`/challenges/${id}`)
       .then(({ data }) => {
@@ -71,7 +71,7 @@ export const CreateChallenge = (props: {
       .catch((err) => {
         toast.error(`Failed to load challenge with id: ${id} \n ${err}`);
       });
-  }, [props.match ?.params ?.id]);
+  }, [props.match?.params?.id]);
 
   async function postChallenge() {
     const params = new FormData();
@@ -108,7 +108,7 @@ export const CreateChallenge = (props: {
           .catch((err) => {
             toast.error(
               `Could not add language option: ${
-              err.response.data.message || 'An unknown error occured'
+                err.response.data.message || 'An unknown error occured'
               }`,
               { id: toastId },
             );
@@ -118,7 +118,7 @@ export const CreateChallenge = (props: {
       .catch((err) => {
         toast.error(
           `Could not create challenge: ${
-          err.response.data.message || 'An unknown error occured'
+            err.response.data.message || 'An unknown error occured'
           }`,
           { id: toastId },
         );
@@ -126,7 +126,7 @@ export const CreateChallenge = (props: {
   }
 
   async function updateChallenge() {
-    const id = props.match ?.params ?.id;
+    const id = props.match?.params?.id;
 
     const params = new FormData();
     params.append('name', name);
@@ -167,7 +167,7 @@ export const CreateChallenge = (props: {
           .catch((err) => {
             toast.error(
               `Could not add or modify language option: ${
-              err.response.data.message || 'An unknown error occured'
+                err.response.data.message || 'An unknown error occured'
               }`,
               { id: toastId },
             );
@@ -177,7 +177,7 @@ export const CreateChallenge = (props: {
       .catch((err) => {
         toast.error(
           `Could not update challenge: ${
-          err ?.response ?.data ?.message || 'An unknown error occured'
+            err?.response?.data?.message || 'An unknown error occured'
           }`,
           { id: toastId },
         );
@@ -204,7 +204,7 @@ export const CreateChallenge = (props: {
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = [...images];
 
-    if (e.target.files && e.target.files ?.length > 0) {
+    if (e.target.files && e.target.files?.length > 0) {
       files.push(e.target.files[0]);
     }
 
@@ -236,7 +236,7 @@ export const CreateChallenge = (props: {
       .catch((err) => {
         toast.error(
           `Could not delete Image : ${
-          err ?.response ?.data ?.message || 'An unknown error occured'
+            err?.response?.data?.message || 'An unknown error occured'
           }`,
           { id: toastId },
         );
@@ -278,7 +278,7 @@ export const CreateChallenge = (props: {
         .catch((err) => {
           toast.error(
             `Could not delete Image : ${
-            err ?.response ?.data ?.message || 'An unknown error occured'
+              err?.response?.data?.message || 'An unknown error occured'
             }`,
             { id: toastId },
           );
@@ -296,16 +296,18 @@ export const CreateChallenge = (props: {
           <div className="col-span-5 bg-pink-900 rounded p-10 pt-8 relative overflow-hidden">
             <button
               className="absolute top-0 right-0 bg-black hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
-              onClick={props.match ?.params ?.id ? updateChallenge : postChallenge}
+              onClick={
+                props.match?.params?.id ? updateChallenge : postChallenge
+              }
             >
               Save
-          </button>
+            </button>
             <h1 className="text-3xl">Create your own challenge</h1>
             <div className="mt-2 flex flex-col items-start">
               <div className="flex flex-col items-start w-auto p-4">
                 <label className="text-lg" htmlFor="username">
                   Name
-              </label>
+                </label>
                 <input
                   className="text-black rounded-md py-1 px-2"
                   type="text"
@@ -318,7 +320,7 @@ export const CreateChallenge = (props: {
               <div className="flex flex-col items-start w-full p-4">
                 <label className="text-lg" htmlFor="username">
                   Instructions
-              </label>
+                </label>
                 <textarea
                   className="text-black rounded-md py-1 px-2 h-40 w-full"
                   name="instructions"
@@ -347,12 +349,14 @@ export const CreateChallenge = (props: {
             <div
               className={`h-auto text-center bg-pink-900 rounded p-5 flex flex-col items-center ${
                 usedLanguages.length % 2 === 0 && 'col-span-2'
-                }`}
+              }`}
             >
               <h2 className="text-lg mb-5">Add a language</h2>
               <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6 m-auto">
                 {languages
-                  .filter((l) => !usedLanguages.some((ul) => l.name === ul.name))
+                  .filter(
+                    (l) => !usedLanguages.some((ul) => l.name === ul.name),
+                  )
                   .map((language, index) => (
                     <div
                       className="w-full mx-auto bg-black hover:bg-blue-700 rounded-lg"

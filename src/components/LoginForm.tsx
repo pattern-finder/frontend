@@ -43,7 +43,7 @@ export const LoginForm = () => {
       )
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`Could not login: ${err.response ?.data.message}`, {
+          toast.error(`Could not login: ${err.response?.data.message}`, {
             id: toastId,
           });
         } else {

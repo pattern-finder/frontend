@@ -21,10 +21,10 @@ export const CreateSeries = (props: {
 
   //load existing challenge \if exists
   useEffect(() => {
-    if (!props.match ?.params ?.id) {
+    if (!props.match?.params?.id) {
       return;
     }
-    const id = props.match ?.params ?.id;
+    const id = props.match?.params?.id;
 
     Axios.get(`/series/${id}`)
       .then(({ data }) => {
@@ -36,7 +36,7 @@ export const CreateSeries = (props: {
       .catch((err) => {
         toast.error(`Failed to load serie with id: ${id} \n ${err}`);
       });
-  }, [props.match ?.params ?.id]);
+  }, [props.match?.params?.id]);
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -55,7 +55,7 @@ export const CreateSeries = (props: {
 
   async function updateSeries(
     challenges: string[],
-    id: string = props.match ?.params ?.id || '',
+    id: string = props.match?.params?.id || '',
   ) {
     const toastId = toast.loading('Adding challenges...');
     Axios.put(
@@ -83,7 +83,7 @@ export const CreateSeries = (props: {
       .catch((err) => {
         toast.error(
           `Could not update series: ${
-          err.response.data.message || 'An unknown error occured'
+            err.response.data.message || 'An unknown error occured'
           }`,
           { id: toastId },
         );
@@ -112,7 +112,7 @@ export const CreateSeries = (props: {
       .catch((err) => {
         toast.error(
           `Could not create series: ${
-          err.response.data.message || 'An unknown error occured'
+            err.response.data.message || 'An unknown error occured'
           }`,
           { id: toastId },
         );
@@ -126,7 +126,7 @@ export const CreateSeries = (props: {
           <button
             className="absolute top-0 right-0 bg-black hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
             onClick={() =>
-              props.match ?.params ?.id
+              props.match?.params?.id
                 ? updateSeries(selectedChallengesIds, props.match.params.id)
                 : postSerie()
             }

@@ -45,8 +45,8 @@ export const ChallengePage = (props: {
       const {
         data: { content },
       } = await Axios.get(
-        `attempts/find-by-user-and-bootstrap/${currentUser() ?.sub}/${
-        bootstrap._id
+        `attempts/find-by-user-and-bootstrap/${currentUser()?.sub}/${
+          bootstrap._id
         }`,
       );
       setAttempts(content);
@@ -68,7 +68,7 @@ export const ChallengePage = (props: {
       const bootstrap = (content as Challenge).execBootstraps.find(
         (eb) => eb.language === props.match.params.language,
       );
-      setStartLine(bootstrap ?.tests ?.split('\n') ?.length || 0);
+      setStartLine(bootstrap?.tests?.split('\n')?.length || 0);
       setBootstrap(bootstrap || ({} as { _id: string }));
     };
 
@@ -86,7 +86,7 @@ export const ChallengePage = (props: {
       const bootstrap = (content as Challenge).execBootstraps.find(
         (eb) => eb.language === props.match.params.language,
       );
-      setStartLine(bootstrap ?.tests ?.split('\n') ?.length || 0);
+      setStartLine(bootstrap?.tests?.split('\n')?.length || 0);
       setBootstrap(bootstrap || ({} as { _id: string }));
     };
 
@@ -94,9 +94,9 @@ export const ChallengePage = (props: {
   }, [props.match.params.id]);
 
   useEffect(() => {
-    const placeholder = challenge ?.execBootstraps ?.find(
+    const placeholder = challenge?.execBootstraps?.find(
       (eb) => eb.language === props.match.params.language,
-    ) ?.functionTemplate;
+    )?.functionTemplate;
 
     if (placeholder) {
       // setCodePlaceholder(placeholder);
@@ -110,7 +110,7 @@ export const ChallengePage = (props: {
     Axios.post(
       `/attempts`,
       {
-        execBootstrap: bootstrap ?._id,
+        execBootstrap: bootstrap?._id,
         code,
       },
       {
@@ -129,7 +129,7 @@ export const ChallengePage = (props: {
       })
       .catch((err) => {
         if (err.isAxiosError) {
-          toast.error(`An error occured: ${err.response ?.data.message}`, {
+          toast.error(`An error occured: ${err.response?.data.message}`, {
             id: toastId,
           });
         } else {

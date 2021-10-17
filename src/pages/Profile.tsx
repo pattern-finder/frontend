@@ -108,7 +108,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         .catch((err) => {
           if (err.isAxiosError) {
             toast.error(
-              `Could not load challenges: ${err.response ?.data.message}`,
+              `Could not load challenges: ${err.response?.data.message}`,
             );
           } else {
             toast.error(`Could not load challenges: ${err}`);
@@ -123,7 +123,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 p-4">
       <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-pink-900 col-span-2 rounded ">
         <div className="relative  rounded h-min px-16 py-6">
-          {getUser() ?.sub === props.match.params.id && (
+          {getUser()?.sub === props.match.params.id && (
             <Link to={`/edit/profile/`}>
               <button className="absolute bottom-0 right-0 bg-black px-2 rounded-l-lg ">
                 Edit profile
@@ -140,11 +140,11 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="">
           <div className="m-4">
             <div className="font-bold">Username :</div>
-            <div className="">{user ?.username}</div>
+            <div className="">{user?.username}</div>
           </div>
           <div className="m-4">
             <div className="font-bold">Email :</div>
-            <div className="">{user ?.email}</div>
+            <div className="">{user?.email}</div>
           </div>
         </div>
       </div>
@@ -208,13 +208,13 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="font-bold">Challenges :</div>
         {challenges.length > 0
           ? challenges.map((challenge, index) => (
-            <div className="py-2">
-              <ChallengeListitem
-                challenge={challenge}
-                key={`challenge-${index}`}
-              />
-            </div>
-          ))
+              <div className="py-2">
+                <ChallengeListitem
+                  challenge={challenge}
+                  key={`challenge-${index}`}
+                />
+              </div>
+            ))
           : 'This user did not create any challenges.'}
       </div>
     </div>

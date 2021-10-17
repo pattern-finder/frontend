@@ -64,7 +64,7 @@ export const ModifyProfile = () => {
   }
 
   useEffect(() => {
-    Axios.get(`/users/${getUser() ?.sub}`)
+    Axios.get(`/users/${getUser()?.sub}`)
       .then(({ data }) => {
         const user: ProfileAttributes = data.content;
         setUsername(user.username);
@@ -83,7 +83,7 @@ export const ModifyProfile = () => {
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     let file = image;
 
-    if (e.target.files && e.target.files ?.length > 0) {
+    if (e.target.files && e.target.files?.length > 0) {
       file = e.target.files[0];
     }
 

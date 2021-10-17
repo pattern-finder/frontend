@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import picspyLogo from '../assets/PicSpyLogoGrand.png';
-import { Slider } from '../components/Slide'
-
+import { Slider } from '../components/Slide';
 
 function HeroSection() {
   return (

@@ -18,7 +18,7 @@ export const LoginPage = () => {
             loggingIn
               ? ' rounded-br-lg  rounded-tl left-0 '
               : ' rounded-bl-lg  rounded-tr right-0 '
-            } `}
+          } `}
           onClick={switchState}
         >
           {loggingIn ? 'Register' : 'Login'}

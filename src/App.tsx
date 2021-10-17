@@ -4,7 +4,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import About from './pages/About';
-import Contact from './pages/Contact'
+import Contact from './pages/Contact';
 import { ChallengePage } from './pages/ChallengePage';
 import { ChallengeListPage } from './pages/ChallengeListPage';
 import Home from './pages/Home';
@@ -21,7 +21,6 @@ import { ChallengesForSeries } from './pages/ChallengesForSerie';
 import { Tuto } from './pages/Tuto';
 import background from './assets/background.jpg';
 
-
 export const App = () => {
   return (
     <AuthProvider
@@ -31,7 +30,6 @@ export const App = () => {
       cookieSecure={window.location.protocol === 'https:'}
     >
       <div style={{ backgroundImage: `url(${background})` }}>
-
         <BrowserRouter>
           <div className="App">
             <Navbar />

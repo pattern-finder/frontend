@@ -96,7 +96,7 @@ export const AttemptsCarousel = (props: {
             <div
               className={`bg-${
                 props.attempts[shownAttemptIndex].status === 0 ? 'green' : 'red'
-                }-500 rounded-full w-5 h-5`}
+              }-500 rounded-full w-5 h-5`}
             />
             <p className="px-2">
               {props.attempts[shownAttemptIndex].phase || 'N/A'}
@@ -160,7 +160,7 @@ export const AttemptsCarousel = (props: {
           showStdout
             ? 'opacity-100 z-20 h-screen w-screen top-0 left-0 bg-opacity-50'
             : 'opacity-0 z-0 h-0 w-0 inset-1/2 bg-opacity-0'
-          }`}
+        }`}
         onClick={() => setShowStdout(false)}
       >
         <div className="relative h-3/4 w-3/4 bg-pink-900 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
@@ -184,7 +184,7 @@ export const AttemptsCarousel = (props: {
           showStderr
             ? 'opacity-100 z-20 h-screen w-screen top-0 left-0 bg-opacity-50'
             : 'opacity-0 z-0 h-0 w-0 inset-1/2 bg-opacity-0'
-          }`}
+        }`}
         onClick={() => setShowStderr(false)}
       >
         <div className="relative h-3/4 w-3/4 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
