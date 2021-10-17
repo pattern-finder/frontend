@@ -64,11 +64,11 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
                   />
                 </>
               ) : (
-                <>
-                </>
-              )}
+                  <>
+                  </>
+                )}
 
-              {user._id === getUserSession()?.sub && (
+              {user._id === getUserSession() ?.sub && (
                 <Link to={`/edit/serie/${props.serie._id}`}>
                   <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
                     <i className="fas fa-edit"></i>

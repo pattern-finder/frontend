@@ -77,20 +77,17 @@ export const ChallengeListitem = ({
                   </>
                 )}
 
-<<<<<<< HEAD:src/components/ChallengeListItem.tsx
-            {user._id === getUserSession() ?.sub && (
-              <Link to={`/edit/challenge/${_id}`}>
-                <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
-                  <i className="fas fa-edit"></i>
-                </div>
-              </Link>
-            )}
-=======
->>>>>>> 91a2375dedd5ab7b6a99dec68431632b25f6cd4c:frontend/src/components/ChallengeListItem.tsx
+              {user._id === getUserSession() ?.sub && (
+                <Link to={`/edit/challenge/${_id}`}>
+                  <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
+                    <i className="fas fa-edit"></i>
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div >
   );
 };
