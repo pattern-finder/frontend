@@ -4,6 +4,7 @@ services:
   
   picspy-front:
     build:
+
       context: ./frontend
       dockerfile: Dockerfile.frontend
     ports:
