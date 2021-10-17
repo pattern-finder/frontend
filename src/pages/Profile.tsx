@@ -51,6 +51,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       Axios.get(`stats/default_series/${props.match.params.id}`)
         .then(({ data }) => {
           setStats(data.content.series);
+          console.log(data);
         })
         .catch((err) => {
           if (err.isAxiosError) {
@@ -120,12 +121,12 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
 
   return (
     <div className="h-auto w-full grid grid-flow-col grid-rows-2 grid-cols-12 gap-4 p-4">
-      <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-gray-600 col-span-2 rounded ">
+      <div className="grid grid-flow-row grid-rows-5 row-span-2 gap-4 bg-pink-900 col-span-2 rounded ">
         <div className="relative  rounded h-min px-16 py-6">
           {getUser()?.sub === props.match.params.id && (
             <Link to={`/edit/profile/`}>
-              <button className="absolute bottom-0 right-0 bg-blue-500 px-2 rounded-l-lg h-10 w-20 ">
-                <i className="fas fa-edit"></i>
+              <button className="absolute bottom-0 right-0 bg-black px-2 rounded-l-lg ">
+                Edit profile
               </button>
             </Link>
           )}
@@ -147,9 +148,9 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-600 col-span-7 rounded p-4">
+      <div className="bg-pink-900 col-span-7 rounded p-4">
         <div className="font-bold pb-4">Progression in default series :</div>
-        <div className="flex flex-col">
+        <div className="flex flex-col p-5">
           {(Array.isArray(stats) ? stats : []).map((s) => {
             const totalchallenges = s.challenges.length;
             const validChallenges = s.challenges.filter(
@@ -158,28 +159,30 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
             return (
               <div className="">
                 <div className="text-lg"> {s.name} </div>
-                <ProgressBar
-                  completed={Math.round(
-                    (validChallenges * 100) / totalchallenges,
-                  )}
-                  bgColor="#3B82F6"
-                  baseBgColor="#1F2937"
-                />
+                <div className="p-5">
+                  <ProgressBar
+                    completed={Math.round(
+                      (validChallenges * 100) / totalchallenges,
+                    )}
+                    bgColor="#3B82F6"
+                    baseBgColor="#1F2937"
+                  />
+                </div>
                 {validChallenges}/{totalchallenges} challenges completed
               </div>
             );
           })}
         </div>
       </div>
-      <div className="bg-gray-600 col-span-7 rounded p-4 overflow-y-hidden">
+      <div className="bg-pink-900 col-span-7 rounded p-4 overflow-y-hidden">
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
           <div className="h-auto w-auto m-auto">
             <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
-              <DonutElement color="green" name="Success">
+              <DonutElement color="seagreen" name="Success">
                 {execStats.nbSucessfullExecs}
               </DonutElement>
-              <DonutElement color="darkred" name="Failure">
+              <DonutElement color="tomato" name="Failure">
                 {execStats.nbExecs - execStats.nbSucessfullExecs}
               </DonutElement>
               <DonutLabel>Executions ({execStats.nbExecs})</DonutLabel>
@@ -187,10 +190,10 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           </div>
           <div className="h-auto w-auto m-auto">
             <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
-              <DonutElement color="green" name="Success">
+              <DonutElement color="seagreen" name="Success">
                 {execStats.nbValidatedChallenges}
               </DonutElement>
-              <DonutElement color="darkred" name="Failure">
+              <DonutElement color="tomato" name="Failure">
                 {execStats.nbParticipatedChallegnes -
                   execStats.nbValidatedChallenges}
               </DonutElement>

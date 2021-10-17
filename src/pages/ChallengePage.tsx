@@ -142,17 +142,17 @@ export const ChallengePage = (props: {
     <>
       <div className="py-6 flex flex-col justify-center">
         <div className="grid grid-cols-12 gap-2 rounded px-5 h-screen">
-          <div className="bg-gray-600 rounded m-15 p-4 col-span-9">
+          <div className="bg-pink-900 rounded m-15 p-4 col-span-9">
             <div className="font-bold text-xl mb-2 flex flex-row">
               {challenge.name}
-              <div className="bg-blue-500 py-1 px-2 rounded-full text-sm w-min ml-2">
+              <div className="bg-black py-1 px-2 rounded-full text-sm w-min ml-2">
                 {props.match.params.language}
               </div>
             </div>
             <p>{challenge.instructions}</p>
           </div>
           <Carousel
-            className="h-64 max-h-64 flex flex-col items-center bg-gray-600 rounded p-5 col-span-3"
+            className="h-64 max-h-64 flex flex-col items-center bg-pink-900 rounded p-5 col-span-3"
             picturesUrls={challenge.pictures}
           />
           <div className="rounded-lg h-full overflow-hidden flex flex-col justify-center items-center col-span-6">

@@ -23,7 +23,12 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
   );
   useEffect(() => {
     axios
-      .get(props.serie.owner)
+      .get(
+        props.serie.owner.replace(
+          /picspy-api.herokuapp.com:\d+/,
+          'https://picspy-api.herokuapp.com',
+        ),
+      )
       .then(({ data }) => {
         setUser(data.content);
       })
@@ -33,27 +38,21 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
   }, [props.serie.owner]);
 
   return (
-    <div className="w-full bg-gray-600 rounded">
+    <div className="w-full bg-pink-900 rounded">
       <div className="grid grid-cols-2 gap-4 rounded  ">
         <div className="rounded m-15 px-4 py-2 col-span-2">
-          <div className="image">
-            <div className="Name">
-              <h2> {props.serie.name} </h2>
-            </div>
-          </div>
+          <h2> {props.serie.name} </h2>
           <div className="flex flex-row mt-4 text-sm">
-            <div>
-              <div className="flex flex-row grid-cols-8 gap-2 w-full">
-                <Link
-                  to={{
-                    pathname: `/serie/${props.serie._id}`,
-                  }}
-                >
-                  <button className=" top-0 right-0 bg-blue-500 px-2 py-1 rounded-lg hover:bg-blue-700 ">
-                    View serie
-                  </button>
-                </Link>
-              </div>
+            <div className="flex flex-row grid-cols-8 gap-2 w-full">
+              <Link
+                to={{
+                  pathname: `/serie/${props.serie._id}`,
+                }}
+              >
+                <button className=" top-0 right-0 bg-black px-2 py-1 rounded-lg hover:bg-blue-700 ">
+                  View serie
+                </button>
+              </Link>
             </div>
 
             <div className="ml-auto flex flex-row text-sm ">
@@ -83,7 +82,7 @@ export const SeriesListitem = (props: { serie: SeriesAttributes }) => {
 
               {user._id === getUserSession()?.sub && (
                 <Link to={`/edit/serie/${props.serie._id}`}>
-                  <div className="rounded-lg px-2 py-1 ml-2 bg-blue-500 hover:bg-blue-700">
+                  <div className="rounded-lg px-2 py-1 ml-2 bg-black hover:bg-blue-700">
                     <i className="fas fa-edit"></i>
                   </div>
                 </Link>

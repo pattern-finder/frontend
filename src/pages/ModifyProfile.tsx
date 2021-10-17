@@ -91,9 +91,9 @@ export const ModifyProfile = () => {
   }
 
   return (
-    <div className="grid justify-items-center bg-gray-800 p-10">
-      <div className="bg-gray-600 rounded h-min px-16 py-6 transition-all relative">
-        <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
+    <div className="grid justify-items-center p-10">
+      <div className="bg-pink-900 rounded h-min px-16 py-6 transition-all relative">
+        <div className="h-auto text-center bg-pink-800 rounded p-5 flex flex-col items-center">
           {/*<div className="h-auto text-center bg-gray-600 rounded p-5">*/}
           <img
             alt="profile"
@@ -102,7 +102,7 @@ export const ModifyProfile = () => {
           />
           <div className="text-2xl font-bold text-center mb-8">{username}</div>
 
-          <label className="w-32 flex flex-col items-center p-5 bg-blue-500 hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
+          <label className="w-32 flex flex-col items-center p-5 bg-black hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
             <i className="fas fa-cloud-upload-alt fa-2x"></i>
             <span className="mt-2 text-base ">Browse for an avatar</span>
             <input
@@ -154,7 +154,7 @@ export const ModifyProfile = () => {
           <button
             onClick={(e) => save()}
             type="button"
-            className="bg-blue-500 hover:bg-blue-700 rounded-lg px-6 py-2 m-auto"
+            className="bg-black hover:bg-blue-700 rounded-lg px-6 py-2 m-auto"
           >
             Save
           </button>

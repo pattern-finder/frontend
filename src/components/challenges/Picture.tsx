@@ -5,7 +5,7 @@ type PictureProps = {
 
 export const Picture = ({ image, onRemoveImage }: PictureProps) => {
   return (
-    <div className="h-100 text-center bg-gray-600 rounded p-4 text-center relative overflow-hidden">
+    <div className="h-100 text-center bg-pink-900 rounded p-4 text-center relative overflow-hidden">
       <button
         className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
         onClick={(_) => onRemoveImage()}

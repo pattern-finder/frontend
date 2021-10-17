@@ -11,10 +11,10 @@ function Navbar() {
   const getUserSession = useAuthUser();
 
   return (
-    <nav className="t-4 max-h-16 h-16  bg-gray-600 grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2fixed w-full z-50 shadow-lg">
+    <nav className="t-4 max-h-16 h-16 bg-black grid grid-cols-10 gap-4 overflow-hidden shadow-sm border-b-2 sticky w-full z-50 shadow-lg inset-x-0 top-0">
       <Link
         to="/"
-        className="col-span-4 text-left  max-h-full font-sans text-3xl flex flex-row"
+        className="col-span-4 text-left max-h-full font-sans text-3xl flex flex-row"
       >
         <img
           src={picspyLogo}

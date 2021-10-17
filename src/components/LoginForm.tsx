@@ -101,7 +101,7 @@ export const LoginForm = () => {
         <button
           onClick={(e) => login()}
           type="button"
-          className="bg-blue-500 rounded-lg px-6 py-2"
+          className="bg-black rounded-lg px-6 py-2"
         >
           Login
         </button>

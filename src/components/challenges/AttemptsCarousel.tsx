@@ -28,7 +28,7 @@ export const AttemptsCarousel = (props: {
   if (props.attempts.length === 0) {
     return (
       <div
-        className={`h-full w-full bg-gray-600 rounded grid grid-flow-col grid-cols-8 grid-cols-1 p-4 ${props.className}`}
+        className={`h-full w-full bg-pink-900 rounded grid grid-flow-col grid-cols-8 grid-cols-1 p-4 ${props.className}`}
       >
         No attempt were made yet.
       </div>
@@ -44,7 +44,7 @@ export const AttemptsCarousel = (props: {
   return (
     <>
       <div
-        className={`h-full w-full bg-gray-600 rounded gap-4 p-4 grid grid-flow-col grid-cols-12 grid-rows-1 ${props.className}`}
+        className={`h-full w-full bg-pink-900 rounded gap-4 p-4 grid grid-flow-col grid-cols-12 grid-rows-1 ${props.className}`}
       >
         <div className="grid grid-flow-col grid-rows-2 col-span-2">
           <div className="font-bold"> Attempted at : </div>
@@ -156,14 +156,14 @@ export const AttemptsCarousel = (props: {
         </div>
       </div>
       <div
-        className={`transition-all duration-300 fixed bg-gray-900 flex ${
+        className={`transition-all duration-300 fixed flex ${
           showStdout
             ? 'opacity-100 z-20 h-screen w-screen top-0 left-0 bg-opacity-50'
             : 'opacity-0 z-0 h-0 w-0 inset-1/2 bg-opacity-0'
         }`}
         onClick={() => setShowStdout(false)}
       >
-        <div className="relative h-3/4 w-3/4 bg-gray-600 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
+        <div className="relative h-3/4 w-3/4 bg-pink-900 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
           <button
             className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
             onClick={(_) => setShowStdout(false)}
@@ -180,14 +180,14 @@ export const AttemptsCarousel = (props: {
       </div>
 
       <div
-        className={`transition-all duration-300 fixed bg-gray-900 flex ${
+        className={`transition-all duration-300 fixed flex ${
           showStderr
             ? 'opacity-100 z-20 h-screen w-screen top-0 left-0 bg-opacity-50'
             : 'opacity-0 z-0 h-0 w-0 inset-1/2 bg-opacity-0'
         }`}
         onClick={() => setShowStderr(false)}
       >
-        <div className="relative h-3/4 w-3/4 bg-gray-600 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
+        <div className="relative h-3/4 w-3/4 rounded text-center z-50 m-auto overflow-hidden shadow-lg">
           <button
             className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-1 px-3 rounded-bl-lg"
             onClick={(_) => setShowStderr(false)}

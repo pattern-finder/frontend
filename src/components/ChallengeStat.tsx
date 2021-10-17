@@ -29,7 +29,7 @@ export const ChallengeStat = (props: {
   if (props.attempts.length === 0) {
     return (
       <div
-        className={`h-full w-full bg-gray-600 rounded grid grid-flow-col grid-cols-8 grid-cols-1 p-4 ${props.className}`}
+        className={`h-full w-full bg-pink-900 rounded grid grid-flow-col grid-cols-8 grid-cols-1 p-4 ${props.className}`}
       >
         No attempt were made yet.
       </div>
@@ -45,7 +45,7 @@ export const ChallengeStat = (props: {
   return (
     <>
       <div
-        className={`h-full w-full bg-gray-600 rounded gap-4 p-4 grid grid-flow-col grid-cols-12 grid-rows-1 ${props.className}`}
+        className={`h-full w-full bg-pink-900 rounded gap-4 p-4 grid grid-flow-col grid-cols-12 grid-rows-1 ${props.className}`}
       >
         <div className="grid grid-flow-col grid-rows-2 col-span-2">
           <div className="font-bold"> Attempted at : </div>

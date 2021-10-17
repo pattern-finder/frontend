@@ -291,111 +291,117 @@ export const CreateChallenge = (props: {
 
   return (
     <>
-      <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
-        <div className="col-span-5 bg-gray-600 rounded p-10 pt-8 relative overflow-hidden">
-          <button
-            className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
-            onClick={props.match?.params?.id ? updateChallenge : postChallenge}
-          >
-            Save
-          </button>
-          <h1 className="text-3xl">Create your own challenge</h1>
-          <div className="mt-2 flex flex-col items-start">
-            <div className="flex flex-col items-start w-auto p-4">
-              <label className="text-lg" htmlFor="username">
-                Name
-              </label>
-              <input
-                className="text-black rounded-md py-1 px-2"
-                type="text"
-                name="name"
-                placeholder="name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </div>
-            <div className="flex flex-col items-start w-full p-4">
-              <label className="text-lg" htmlFor="username">
-                Instructions
-              </label>
-              <textarea
-                className="text-black rounded-md py-1 px-2 h-40 w-full"
-                name="instructions"
-                placeholder="instructions"
-                onChange={(e) => setInstructions(e.target.value)}
-                value={instructions}
-              />
+      <div className="">
+        <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
+          <div className="col-span-5 bg-pink-900 rounded p-10 pt-8 relative overflow-hidden">
+            <button
+              className="absolute top-0 right-0 bg-black hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
+              onClick={
+                props.match?.params?.id ? updateChallenge : postChallenge
+              }
+            >
+              Save
+            </button>
+            <h1 className="text-3xl">Create your own challenge</h1>
+            <div className="mt-2 flex flex-col items-start">
+              <div className="flex flex-col items-start w-auto p-4">
+                <label className="text-lg" htmlFor="username">
+                  Name
+                </label>
+                <input
+                  className="text-black rounded-md py-1 px-2"
+                  type="text"
+                  name="name"
+                  placeholder="name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                />
+              </div>
+              <div className="flex flex-col items-start w-full p-4">
+                <label className="text-lg" htmlFor="username">
+                  Instructions
+                </label>
+                <textarea
+                  className="text-black rounded-md py-1 px-2 h-40 w-full"
+                  name="instructions"
+                  placeholder="instructions"
+                  onChange={(e) => setInstructions(e.target.value)}
+                  value={instructions}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
-        {usedLanguages.map((language, index) => (
-          <CreateExecBootstrapListElement
-            key={`exec-bootstrap-${index}`}
-            language={language.name}
-            onChange={(ebPartial) =>
-              onExecBootstrapUpdate(ebPartial, language.name)
-            }
-            onRemove={() => onExecBootstrapRemove(language.name)}
-            initialValues={bootstraps[language.name]}
-          />
-        ))}
-        {languages.length > usedLanguages.length && (
-          <div
-            className={`h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center ${
-              usedLanguages.length % 2 === 0 && 'col-span-2'
-            }`}
-          >
-            <h2 className="text-lg mb-5">Add a language</h2>
-            <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6 m-auto">
-              {languages
-                .filter((l) => !usedLanguages.some((ul) => l.name === ul.name))
-                .map((language, index) => (
-                  <div
-                    className="w-full mx-auto bg-blue-500 hover:bg-blue-700 rounded-lg"
-                    key={`language-button-${index}`}
-                  >
-                    <button
-                      className="w-full h-full px-2 py-4"
-                      onClick={(_) => onAddLanguage(language.name)}
+        <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
+          {usedLanguages.map((language, index) => (
+            <CreateExecBootstrapListElement
+              key={`exec-bootstrap-${index}`}
+              language={language.name}
+              onChange={(ebPartial) =>
+                onExecBootstrapUpdate(ebPartial, language.name)
+              }
+              onRemove={() => onExecBootstrapRemove(language.name)}
+              initialValues={bootstraps[language.name]}
+            />
+          ))}
+          {languages.length > usedLanguages.length && (
+            <div
+              className={`h-auto text-center bg-pink-900 rounded p-5 flex flex-col items-center ${
+                usedLanguages.length % 2 === 0 && 'col-span-2'
+              }`}
+            >
+              <h2 className="text-lg mb-5">Add a language</h2>
+              <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6 m-auto">
+                {languages
+                  .filter(
+                    (l) => !usedLanguages.some((ul) => l.name === ul.name),
+                  )
+                  .map((language, index) => (
+                    <div
+                      className="w-full mx-auto bg-black hover:bg-blue-700 rounded-lg"
+                      key={`language-button-${index}`}
                     >
-                      {language.name}
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        className="w-full h-full px-2 py-4"
+                        onClick={(_) => onAddLanguage(language.name)}
+                      >
+                        {language.name}
+                      </button>
+                    </div>
+                  ))}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
-        {fetchedImages.map((image, index) => (
-          <Picture
-            image={image.file}
-            key={`linked-picture-${index}`}
-            onRemoveImage={() => removeFetchedImage(index, image)}
-          />
-        ))}
-        {images.map((image, index) => (
-          <Picture
-            image={image}
-            key={`loaded-picture-${index}`}
-            onRemoveImage={() => removeLocalImage(index)}
-          />
-        ))}
-        {images.length + fetchedImages.length < 10 && (
-          <div className="h-auto text-center bg-gray-600 rounded p-5 flex flex-col items-center">
-            <h2 className="text-lg mb-5">Add a picture</h2>
+        <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
+          {fetchedImages.map((image, index) => (
+            <Picture
+              image={image.file}
+              key={`linked-picture-${index}`}
+              onRemoveImage={() => removeFetchedImage(index, image)}
+            />
+          ))}
+          {images.map((image, index) => (
+            <Picture
+              image={image}
+              key={`loaded-picture-${index}`}
+              onRemoveImage={() => removeLocalImage(index)}
+            />
+          ))}
+          {images.length + fetchedImages.length < 10 && (
+            <div className="h-auto text-center bg-pink-900 rounded p-5 flex flex-col items-center">
+              <h2 className="text-lg mb-5">Add a picture</h2>
 
-            <label className="w-32 flex flex-col items-center px-4 py-6 bg-blue-500 hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
-              <i className="fas fa-cloud-upload-alt fa-2x"></i>
-              <span className="mt-2 text-base ">Browse</span>
-              <input type="file" className="hidden" onChange={onFileChange} />
-            </label>
-          </div>
-        )}
+              <label className="w-32 flex flex-col items-center px-4 py-6 bg-black hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
+                <i className="fas fa-cloud-upload-alt fa-2x"></i>
+                <span className="mt-2 text-base ">Browse</span>
+                <input type="file" className="hidden" onChange={onFileChange} />
+              </label>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

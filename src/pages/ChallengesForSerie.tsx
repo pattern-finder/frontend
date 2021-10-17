@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Axios from '../axios-config';
-import { ChallengeListitem } from '../components/ChallengeForSeriesComponent';
+import { SeriesList } from '../components/SeriesList';
 
 export const ChallengesForSeries = (props: {
   match?: { params?: { id?: string } };
@@ -17,6 +17,12 @@ export const ChallengesForSeries = (props: {
     const fetchChallenges = async () => {
       Axios.get(`/series/${props.match?.params?.id}`)
         .then(({ data }) => {
+          data.content.challenges.map((c: { owner: string }) => {
+            console.log(
+              'https://picspy-api.herokuapp.com/users/'.concat(c.owner),
+            );
+          });
+          console.log(data.content);
           setChallenges(data.content.challenges);
           setSeriesName(data.content.name);
         })
@@ -37,12 +43,12 @@ export const ChallengesForSeries = (props: {
   return (
     <>
       <div className="grid grid-cols-3 gap-4 m-5">
-        <div className="col-span-3 text-lg rounded bg-gray-600 p-4">
+        <div className="col-span-3 text-lg rounded bg-pink-900 p-4">
           {seriesName}
         </div>
         {challenges.length === 0 && <span>Nothing to show here.</span>}
         {challenges.map((challenge, index) => (
-          <ChallengeListitem challenge={challenge} key={`challenge-${index}`} />
+          <SeriesList challenge={challenge} key={`challenge-${index}`} />
         ))}
       </div>
     </>

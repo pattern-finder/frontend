@@ -42,6 +42,7 @@ export const CreateSeries = (props: {
     const fetchChallenges = async () => {
       Axios.get('/challenges')
         .then(({ data }) => {
+          // console.log(data.content);
           setChallenges(data.content);
         })
         .catch((err) => {
@@ -121,9 +122,9 @@ export const CreateSeries = (props: {
   return (
     <>
       <div className="grid grid-cols-5 gap-4 rounded m-5 p-10">
-        <div className="col-span-5 bg-gray-600 rounded p-10 pt-8 relative overflow-hidden">
+        <div className="col-span-5 bg-pink-900 rounded p-10 pt-8 relative overflow-hidden">
           <button
-            className="absolute top-0 right-0 bg-blue-500 hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
+            className="absolute top-0 right-0 bg-black hover:bg-blue-700 py-2 px-3 rounded-bl-lg text-lg"
             onClick={() =>
               props.match?.params?.id
                 ? updateSeries(selectedChallengesIds, props.match.params.id)
@@ -152,7 +153,7 @@ export const CreateSeries = (props: {
       </div>
 
       <div className="grid grid-cols-2 gap-4 rounded m-5 p-10">
-        <div className="h-auto text-center bg-#f3f3f3-600 rounded p-5 flex flex-col items-center col-span-2">
+        <div className="h-auto text-center rounded p-5 flex flex-col items-center col-span-2">
           <div className="grid grid-cols-3 gap-4 m-5" id="listChallenge">
             {selectedChallengesIds.length === 0 && (
               <span>There is no selected challenge.</span>
@@ -189,7 +190,6 @@ export const CreateSeries = (props: {
                 />
               ))}
           </div>
-          <div className="rounded-lg overflow-hidden grid grid-cols-1 gap-1 w-2/6 m-auto"></div>
         </div>
       </div>
     </>

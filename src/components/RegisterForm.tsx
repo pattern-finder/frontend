@@ -80,7 +80,7 @@ export const RegisterForm = () => {
           />
           <div className="text-2xl font-bold text-center mb-8">{username}</div>
 
-          <label className="w-32 flex flex-col items-center p-5 bg-blue-500 hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
+          <label className="w-32 flex flex-col items-center p-5 bg-black hover:bg-blue-700 rounded-md shadow-md tracking-wide cursor-pointer">
             <i className="fas fa-cloud-upload-alt fa-2x"></i>
             <span className="mt-2 text-base ">Browse for an avatar</span>
             <input
@@ -128,7 +128,7 @@ export const RegisterForm = () => {
       <div className="footer">
         <button
           type="button"
-          className="bg-blue-500 rounded-lg px-6 py-2"
+          className="bg-black rounded-lg px-6 py-2"
           onClick={(_) => createUser()}
         >
           Register
