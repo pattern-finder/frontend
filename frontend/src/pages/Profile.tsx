@@ -8,7 +8,7 @@ import {
   ChallengeListitem,
 } from '../components/ChallengeListItem';
 import ProgressBar from '@ramonak/react-progress-bar';
-import { DonutMultiple, DonutElement, DonutLabel } from 'react-donut-component';
+import { DonutMultiple, DonutElement, DonutLabel, Donut } from 'react-donut-component';
 import { Link } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 
