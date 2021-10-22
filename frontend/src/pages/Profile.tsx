@@ -179,7 +179,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
           <div className="h-auto w-auto m-auto">
-          Successfull executions
+            Successfull executions
             <Donut
               styleTrack={{ strokeWidth: 9, stroke: 'tomato' }}
               styleIndicator={{ stroke: 'seagreen', strokeLinecap: 'round' }}
@@ -188,7 +188,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
             </Donut>
           </div>
           <div className="h-auto w-auto m-auto">
-          Validated challenges
+            Validated challenges
             <Donut
               styleTrack={{ strokeWidth: 9, stroke: 'tomato' }}
               styleIndicator={{ stroke: 'seagreen', strokeLinecap: 'round' }}
