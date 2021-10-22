@@ -185,20 +185,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
               <DonutLabel>Ballon d'ors</DonutLabel>
             </DonutMultiple>
           </div>
-          <div className="h-auto w-auto m-auto">
-            <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
-              <DonutElement color="seagreen" name="Success">
-                {execStats.nbValidatedChallenges}
-              </DonutElement>
-              <DonutElement color="tomato" name="Failure">
-                {execStats.nbParticipatedChallegnes -
-                  execStats.nbValidatedChallenges}
-              </DonutElement>
-              <DonutLabel>
-                Challenges ({execStats.nbParticipatedChallegnes})
-              </DonutLabel>
-            </DonutMultiple>
-          </div>
+
         </div>
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
