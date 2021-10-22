@@ -183,7 +183,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
               styleTrack={{ strokeWidth: 9, stroke: 'tomato' }}
               styleIndicator={{ stroke: 'seagreen', strokeLinecap: 'round' }}
             >
-              {(execStats.nbSucessfullExecs / (execStats.nbExecs - execStats.nbSucessfullExecs)) * 100}
+              {(execStats.nbSucessfullExecs / execStats.nbExecs) * 100}
             </Donut>
           </div>
 
