@@ -179,11 +179,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
           <div className="h-auto w-auto m-auto">
-            <DonutMultiple>
-              <DonutElement color='brown' name="Messi">6</DonutElement>
-              <DonutElement color='black' name="CR7">5</DonutElement>
-              <DonutLabel>Ballon d'ors</DonutLabel>
-            </DonutMultiple>
+            <Donut>70</Donut>
           </div>
 
         </div>
