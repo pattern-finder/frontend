@@ -178,15 +178,11 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
       <div className="bg-pink-900 col-span-7 rounded p-4 overflow-y-hidden">
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
-          <div className="h-auto w-auto m-auto">azerty
-            <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
-              <DonutElement color="seagreen" name="Success">
-                {execStats.nbSucessfullExecs}
-              </DonutElement>
-              <DonutElement color="tomato" name="Failure">
-                {execStats.nbExecs - execStats.nbSucessfullExecs}
-              </DonutElement>
-              <DonutLabel>Executions ({execStats.nbExecs})</DonutLabel>
+          <div className="h-auto w-auto m-auto">
+            <DonutMultiple>
+              <DonutElement color='brown' name="Messi">6</DonutElement>
+              <DonutElement color='black' name="CR7">5</DonutElement>
+              <DonutLabel>Ballon d'ors</DonutLabel>
             </DonutMultiple>
           </div>
           <div className="h-auto w-auto m-auto">
