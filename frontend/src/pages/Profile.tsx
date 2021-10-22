@@ -8,7 +8,7 @@ import {
   ChallengeListitem,
 } from '../components/ChallengeListItem';
 import ProgressBar from '@ramonak/react-progress-bar';
-import { DonutMultiple, DonutElement, DonutLabel, Donut } from 'react-donut-component';
+import { Donut } from 'react-donut-component';
 import { Link } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 
@@ -179,7 +179,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
           <div className="h-auto w-auto m-auto">
-            <Donut>70</Donut>
+            <Donut>{(execStats.nbSucessfullExecs / execStats.nbExecs - execStats.nbSucessfullExecs) * 100}</Donut>
           </div>
 
         </div>
