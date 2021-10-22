@@ -179,6 +179,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
         <div className="font-bold">Stats :</div>
         <div className="flex h-4/6 w-full">
           <div className="h-auto w-auto m-auto">
+          Successfull executions
             <Donut
               styleTrack={{ strokeWidth: 9, stroke: 'tomato' }}
               styleIndicator={{ stroke: 'seagreen', strokeLinecap: 'round' }}
@@ -186,7 +187,15 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
               {Math.floor((execStats.nbSucessfullExecs / execStats.nbExecs) * 100)}
             </Donut>
           </div>
-
+          <div className="h-auto w-auto m-auto">
+          Validated challenges
+            <Donut
+              styleTrack={{ strokeWidth: 9, stroke: 'tomato' }}
+              styleIndicator={{ stroke: 'seagreen', strokeLinecap: 'round' }}
+            >
+              {Math.floor((execStats.nbValidatedChallenges / execStats.nbParticipatedChallegnes) * 100)}
+            </Donut>
+          </div>
         </div>
       </div>
       <div className="flex flex-col w-full col-span-4 row-span-2">
