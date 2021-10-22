@@ -67,6 +67,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
     const execStats = async () => {
       Axios.get(`stats/execs/${props.match.params.id}`)
         .then(({ data }) => {
+          console.log(data.content);
           setExecStats(data.content);
         })
         .catch((err) => {
@@ -180,7 +181,7 @@ export const Profile = (props: { match: { params: { id: string } } }) => {
           <div className="h-auto w-auto m-auto">
             <DonutMultiple animate size={250} strokeWidth={15} linecap="round">
               <DonutElement color="seagreen" name="Success">
-                {execStats.nbSucessfullExecs}
+                {3}
               </DonutElement>
               <DonutElement color="tomato" name="Failure">
                 {execStats.nbExecs - execStats.nbSucessfullExecs}
